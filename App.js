@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet, Text, View} from 'react-native';
+import React, {useState} from 'react';
+import { StyleSheet, Text, View, FlatList} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
@@ -8,6 +8,9 @@ import Scan from './components/Scan'
 import Profile from './components/Profile';
 import MyCart from './components/MyCart';
 import MyList from './components/MyList';
+//import { v4 as uuidv4 } from 'uuid';
+//import 'react-native-get-random-values'
+//import nanoid from 'nanoid'
 //FROM function to Pure to class command pallete-------------------
 
 //scanScreen-----------------------------------------------------
@@ -42,49 +45,38 @@ class ProfileScreen extends React.Component {
 }
 
 //ListScreen------------------------------------------------------
+//Random ID generator
+//item's id and name
+
 class ListScreen extends React.Component {
+  
   constructor(props) {
     super(props);
   }
-
+  
   render() {
     return (
       <View style={styles.container}>
         <MyList/>
-         <Button style={styles.button}
-          //onPress={() => this.props.navigation.push('Scan')} 
-          title="Add Store"
-        />
-        
       </View>
     );
   }
 }
 
-//functionc callscan
-function CallScan() {
-  return (
-    <Scan/>
-  )
-}
-
 //Shopscren---------------------------------------------------
-function ShopScreen (){
-  
+class ShopScreen extends React.Component {
+  constructor(props){
+    super(props);
+  }
+  render() {
   return (
-    <View style={styles.container}>
-      <Button style={styles.button}
-        //onPress={() => this.props.navigation.push('Scan')} 
-        title="Scan"
-      />
-    <View >
+    <View style={styles.scanner}>
+      <Scan/>
     </View>
-    </View>
-      
       //end containter
     );
-  
-}
+  }//render
+}//shopscreen
 
 
 
@@ -93,13 +85,10 @@ const Tab = createBottomTabNavigator();
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 60
+    paddingTop: 25,
+    
   },
   button :{
-    flex: 3,
     maxHeight: 160,
     maxWidth: 160,
     color: '#5f758e',
@@ -108,6 +97,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
    position: 'absolute',
   },
+  scanner:{
+    flex: 3,
+    justifyContent: 'flex-end'
+  }
 });
 
 
