@@ -51,6 +51,11 @@ class ListScreen extends React.Component {
     return (
       <View style={styles.container}>
         <MyList/>
+         <Button style={styles.button}
+          //onPress={() => this.props.navigation.push('Scan')} 
+          title="Add Store"
+        />
+        
       </View>
     );
   }
@@ -66,17 +71,17 @@ function CallScan() {
 //Shopscren---------------------------------------------------
 function ShopScreen (){
   
-    return (
-      <View style={styles.container}>
-      <View style={styles.button}>
-        <Button
-          //onPress={CallScan()}
-          title="Scan Now"
-        />
-      </View>
-      <View style={styles.button}>
-      </View>
-        </View>
+  return (
+    <View style={styles.container}>
+      <Button style={styles.button}
+        //onPress={() => this.props.navigation.push('Scan')} 
+        title="Scan"
+      />
+    <View >
+    </View>
+    </View>
+      
+      //end containter
     );
   
 }
@@ -84,18 +89,20 @@ function ShopScreen (){
 
 
 const Tab = createBottomTabNavigator();
-
+//styling-------------------------------------------------------
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    height: 60
   },
   button :{
-    flex: 1,
+    flex: 3,
     maxHeight: 160,
     maxWidth: 160,
+    color: '#5f758e',
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',
@@ -133,7 +140,7 @@ export default function App() {
                   : 'ios-barcode'
               }
 
-              // You can return any component that you like here!
+              
               return <Ionicons name={iconName} size={size} color={color} />;
             },
           })}
