@@ -1,26 +1,31 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity ,FlatList, Alert} from 'react-native';
-import { Button } from 'react-native-elements';
-import { getRandomBytesAsync } from 'expo-random';
+
 import Header from './Header';
 import ListItem from './ListItem';
 import AddItem from './AddItem';
+import { v4 as uuidv4 } from 'uuid';
+//import uuid from 'uuid';
+
 //start class
 //testing with dummy items
 
+var uuid = require('react-native-uuid');
 const MyList =() =>{
+  //this is our state, with item' id and setItems to manipulate the state of the item
   const [items, setItems] = useState([
+    //Dummy items to test 
     {
-      id: 1,
+      id: uuid.v4(),
       text: 'Milk',
     },{
-      id: 2,
+      id: uuid.v4(),
       text: 'Steak',
     },{
-      id: 3,
+      id: uuid.v4(),
       text: 'Cheese',
     },{
-      id: 4,
+      id: uuid.v4(),
       text: 'Bread',
     },
      
@@ -68,11 +73,10 @@ const handleEditChange = text => {
 const addItem = text => {
   if (!text) {
     Alert.alert(
-      'No item entered',
-      'Please enter an item when adding to your shopping list',
+      'Please enter an item to add to your shopping list',
       [
         {
-          text: 'Understood',
+          text: 'OK',
           style: 'cancel',
         },
       ],
@@ -80,7 +84,7 @@ const addItem = text => {
     );
   } else {
     setItems(prevItems => {
-      return [{id: getRandomBytesAsync, text}, ...prevItems];
+      return [{id: uuid.v4(), text}, ...prevItems];
     });
   }
 };
