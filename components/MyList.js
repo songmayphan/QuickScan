@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity ,FlatList, Alert} from 'react-native';
 import { Button } from 'react-native-elements';
-import { getRandomBytesAsync } from 'expo-random';
+//import { getRandomBytesAsync } from 'expo-random';
 import Header from './Header';
 import ListItem from './ListItem';
 import AddItem from './AddItem';
