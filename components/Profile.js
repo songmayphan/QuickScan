@@ -3,6 +3,9 @@ import { StyleSheet, Text, View } from 'react-native';
 //AWS
 import { withAuthenticator } from 'aws-amplify-react-native'
 
+//Profile class--------------------------------------------
+export default function Profile() {
+  
 //create a new Date instance----------------------
 const date = new Date()
 const hours = date.getHours()
@@ -33,21 +36,17 @@ else {
   timeOfDay = "night"
   styles.color = "#3F51B5"
 }
-
-//Profile class--------------------------------------------
-class Profile extends React.Component {
-  render() {
+  
     return (
       <View>
-          <Text style={styles}>
+          <Text>
             It's currently about {date.getHours()} o'clock!
             Good {timeOfDay}!
           </Text>
      </View>
       
     );
-  }
+  
 }
 
-export default withAuthenticator(Profile, { includeGreetings: true })
 
