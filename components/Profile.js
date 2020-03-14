@@ -1,5 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+//AWS
+import { withAuthenticator } from 'aws-amplify-react-native'
 
 //create a new Date instance----------------------
 const date = new Date()
@@ -33,7 +35,7 @@ else {
 }
 
 //Profile class--------------------------------------------
-export default class Profile extends React.Component {
+class Profile extends React.Component {
   render() {
     return (
       <View>
@@ -47,4 +49,5 @@ export default class Profile extends React.Component {
   }
 }
 
+export default withAuthenticator(Profile, { includeGreetings: true })
 

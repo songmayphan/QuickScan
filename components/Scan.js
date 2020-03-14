@@ -3,10 +3,14 @@ import { Alert, Text, View, StyleSheet, Button } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-function Scan() {
+
+
+export default function Scan() {
+
+  //inintial state----------------------------------------------
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
-
+  //useEffect hooks
   useEffect(() => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -14,6 +18,7 @@ function Scan() {
     })();
   }, []);
 
+  //once barcode is scanned------ ---------------------------------
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
    // alert(`UPC code for this item is ${data}`);
@@ -35,10 +40,10 @@ function Scan() {
   };
 
   if (hasPermission === null) {
-    return <Text>Requesting for camera permission</Text>;
+    return <Text style ={styles.text}>Requesting for camera permission</Text>;
   }
   if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
+    return <Text style={styles.text}>No access to camera</Text>;
   }
 
   return (
@@ -79,4 +84,19 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Scan;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 10
+  },
+  button: {
+    alignItems: 'center',
+    backgroundColor: '#bcd667',
+    padding:50
+  },
+  text:{
+    fontSize: 20,
+    justifyContent: 'center'
+  }
+})
