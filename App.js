@@ -3,8 +3,8 @@ import React, {useState} from 'react';
 import { withAuthenticator, Authenticator, SignIn } from 'aws-amplify-react-native'
 
 import Amplify from '@aws-amplify/core'
-import config from './aws-exports'
-Amplify.configure(config)
+import awsconfig from './aws-exports';
+Amplify.configure(awsconfig)
 //Navivgation
 import { StyleSheet, Text, View, FlatList} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';

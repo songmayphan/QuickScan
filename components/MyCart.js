@@ -1,16 +1,21 @@
 import React from 'react';
 import {StyleSheet, Text, View } from 'react-native';
 import { Button } from 'react-native-elements';
+import Barcode from 'react-native-barcode-expo';
 
 
 export default class MyCart extends React.Component {
+  _onPressButton(){
+    <Barcode value="Hello World" format="CODE128" />
+  }
   render() {
     return (
       <View style={styles.container}>
       <View style={styles.button}>
     <Button
-      //onPress={CallScan()}
+     onPress={this._onPressButton}
       title="Ready to check out?"
+      
     />
   </View>
     </View>
