@@ -1,10 +1,19 @@
 import React, { Component } from 'react';
+<<<<<<< HEAD
 //import QRCode from 'react-native-qrcode';
 import {Barcode} from 'react-native-barcode-expo';
 
 import { StyleSheet, View, TextInput, Text } from 'react-native';
 
 export default class Checkout extends Component {
+=======
+import QRCode from 'react-native-qrcode';
+import Barcode from 'react-native-barcode-expo';
+
+import { StyleSheet, View, TextInput, Text } from 'react-native';
+
+export default class BarcodeGen extends Component {
+>>>>>>> f156ae1cb8c21a60c8ff46583c90eb1449869dfc
   state = {
     text: 'Check Out',
   };

@@ -67,6 +67,26 @@ export default function Scan() {
   );
 }
 //styles
+<<<<<<< HEAD
+=======
+const styles = StyleSheet.create({
+  button: {
+    flex: 1,
+    maxHeight: 160,
+    maxWidth: 200,
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+    backgroundColor: '#bdc667'
+  },
+  text: {
+    color: 'white',
+    fontSize: 23,
+    textAlign: 'center',
+  },
+});
+
+>>>>>>> f156ae1cb8c21a60c8ff46583c90eb1449869dfc
 const styles = StyleSheet.create({
   button: {
     flex: 1,
