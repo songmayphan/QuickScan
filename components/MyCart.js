@@ -1,21 +1,32 @@
 import React from 'react';
 import {StyleSheet, Text, View } from 'react-native';
 import { Button } from 'react-native-elements';
+import Checkout from "./Checkout"
 
+
+
+ 
 
 export default class MyCart extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
+
     return (
       <View style={styles.container}>
-      <View style={styles.button}>
-    <Button
-      //onPress={CallScan()}
-      title="Ready to check out?"
-    />
-  </View>
+        <View style={styles.button}>
+          <Button
+            onPress={console.log("Checkout tapped")}
+            title="Tap to check out"
+        
+          />
+      </View>
     </View>
-    //end containter
-        );
+      //end containter
+    );
+    
   }
 }
 
@@ -35,4 +46,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
    
   },
+  input: {
+    height: 30,
+    borderColor: 'gray',
+    borderWidth: 1,
+    margin: 10,
+    borderRadius: 5,
+    padding: 5,
+    textAlign: 'center'
+}
 });

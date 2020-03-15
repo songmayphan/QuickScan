@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button } from 'react-native';
+import { Alert, Text, View, StyleSheet, Button } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -21,7 +21,22 @@ export default function Scan() {
   //once barcode is scanned------ ---------------------------------
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+   // alert(`UPC code for this item is ${data}`);
+   console.log(`UPC code for this item is ${data}`)
+   // APi calls for $data, look up data item
+    Alert.alert(
+      'Item Scanned',
+      'Add to cart?',
+      [
+        {
+          text: 'No',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {text: 'Yes', onPress: () => console.log('OK Pressed')},
+      ],
+      {cancelable: false},
+    );
   };
 
   if (hasPermission === null) {
@@ -33,42 +48,39 @@ export default function Scan() {
 
   return (
     <View
-      style={{
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
-      }}>
-      
-      <BarCodeScanner
-        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        style={StyleSheet.absoluteFillObject}
-      />
+    style={{
+      flex: 1,
+      flexDirection: 'column',
+      justifyContent: 'flex-end',
+    }}>
+    <BarCodeScanner
+    onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+    style={StyleSheet.absoluteFillObject}
+  />
+      {scanned &&
+      <Button
+        title={'Tap to Scan'} 
+        onPress={() => setScanned(false)} 
+      />}    
 
-      {scanned && 
-      
-      <TouchableOpacity
-         style={styles.button}
-         onPress={() => setScanned(false)}
-       >
-         <Text style={styles.text}> Tap to scan </Text>
-       </TouchableOpacity>}
-    </View>
+  </View>
   );
 }
-
+//styles
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingHorizontal: 10
-  },
   button: {
+    flex: 1,
+    maxHeight: 160,
+    maxWidth: 200,
     alignItems: 'center',
-    backgroundColor: '#bcd667',
-    padding:50
+    justifyContent: 'center',
+    textAlign: 'center',
+    backgroundColor: '#bdc667'
   },
-  text:{
-    fontSize: 20,
-    justifyContent: 'center'
-  }
-})
+  text: {
+    color: 'white',
+    fontSize: 23,
+    textAlign: 'center',
+  },
+});
+

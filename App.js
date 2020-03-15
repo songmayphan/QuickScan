@@ -12,20 +12,17 @@ import { Analytics } from 'aws-amplify';
 import { withAuthenticator } from 'aws-amplify-react-native';
 Analytics.disable();
 
-class App extends React.Component {
+export default class App extends React.Component {
   constructor(props) {
     super(props);
   }
-
   render() {
       return (
-         <div>
            <MainTabs/>
-         </div> 
       )
   }
 }
-export default withAuthenticator(App, {
+withAuthenticator(App, {
   // Render a sign out button once logged in
   includeGreetings: true, 
   // Show only certain components
