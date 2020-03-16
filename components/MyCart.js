@@ -1,29 +1,28 @@
 import React from 'react';
-import {StyleSheet, Text, View } from 'react-native';
+import {StyleSheet, Text, View , FlatList} from 'react-native';
 import { Button } from 'react-native-elements';
 import Checkout from "./Checkout"
 import Barcode from 'react-native-barcode-expo';
+import {Navigation} from "react-navigation"
 
 
  
 
 export default class MyCart extends React.Component {
-  checkOut() {
-    return (
-      <View style={styles.container}>
-      <Text style={styles.input}> Scan this barcode to check out! </Text>
-        <Barcode value="Your checkout Barcode" format="CODE128" />
-      </View>
-    );
-  }
+  handleClick = () => {
+    //alert('Button clicked!');
+    this.props.navigator.push(Checkout);
+}
   render() {
+    //const {navigate} = this.props.navigation; 
 
     return (
       <View style={styles.container}>
-        <View style={styles.button}>
-          <Button
-            onPress={() => this.checkOut()}
+        <View >
+          <Button 
+            onPress={() => this.handleClick()}
             title="Tap to check out"
+            color="black"
         
           />
       </View>

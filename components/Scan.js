@@ -2,14 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { Alert, Text, View, StyleSheet, Button } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import DialogInput from 'react-native-dialog-input';
 
 
 
-export default function Scan() {
+ const Scan= () => {
 
   //inintial state----------------------------------------------
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
+  const [quantity, setQuantity] = useState(0);
   //useEffect hooks
   useEffect(() => {
     (async () => {
@@ -18,8 +20,21 @@ export default function Scan() {
     })();
   }, []);
 
+  const handleQuantityTyped =()=> {
+    const [quantity, setQuantity] = useState(0);
+    setQuantity(quantity + 1);
+
+    console.log('got into handleQuantityTyped');
+    return (
+      <View>
+        <Button title="Increment" onPress={() =>setQuantity(quantity+1)} />
+      </View>
+    );
+    
+  }
   //once barcode is scanned------ ---------------------------------
   const handleBarCodeScanned = ({ type, data }) => {
+
     setScanned(true);
    // alert(`UPC code for this item is ${data}`);
    console.log(`UPC code for this item is ${data}`)
@@ -28,12 +43,13 @@ export default function Scan() {
       'Item Scanned',
       'Add to cart?',
       [
-        {
-          text: 'No',
+      
+      {text: 'No',
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
-        },
-        {text: 'Yes', onPress: () => console.log('OK Pressed')},
+      },
+        {text: 'Yes', 
+        onPress: () => {handleQuantityTyped()}}
       ],
       {cancelable: false},
     );
@@ -55,6 +71,7 @@ export default function Scan() {
     }}>
     <BarCodeScanner
     onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+    barCodeTypes={[BarCodeScanner.Constants.BarCodeType.upc_ean]}
     style={StyleSheet.absoluteFillObject}
   />
       {scanned &&
@@ -66,6 +83,7 @@ export default function Scan() {
   </View>
   );
 }
+
 //styles
 const styles = StyleSheet.create({
   button: {
@@ -84,3 +102,4 @@ const styles = StyleSheet.create({
   },
 });
 
+export default Scan;

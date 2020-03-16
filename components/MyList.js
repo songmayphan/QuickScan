@@ -5,7 +5,7 @@ import { Button } from 'react-native-elements';
 import Header from './Header';
 import ListItem from './ListItem';
 import AddItem from './AddItem';
-import { v4 as uuidv4 } from 'uuid';
+//import {  v4 as uuid } from 'uuidv4';
 //import uuid from 'uuid';
 
 //start class
@@ -15,20 +15,12 @@ var uuid = require('react-native-uuid');
 const MyList =() =>{
   //this is our state, with item' id and setItems to manipulate the state of the item
   const [items, setItems] = useState([
-    //Dummy items to test 
+    //Dummy item to test 
+    //arrays of object
     {
       id: uuid.v4(),
-      text: 'Milk',
-    },{
-      id: uuid.v4(),
-      text: 'Steak',
-    },{
-      id: uuid.v4(),
-      text: 'Cheese',
-    },{
-      id: uuid.v4(),
-      text: 'Bread',
-    },
+      text: 'Ramen',
+    }
      
   ])
   
@@ -114,8 +106,8 @@ const itemChecked = (id, text) => {
 //RETURN-------------------------------------------------------------------------------------
 return (
   <View style={styles.container}>
+    <Header/>
     <AddItem addItem={addItem} />
-    <Header title=" My Shopping List" />
     <FlatList
       data={items}
       renderItem={({item}) => (
