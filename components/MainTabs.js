@@ -11,11 +11,13 @@ import Scan from './Scan';
 import Profile from './Profile';
 import MyCart from './MyCart';
 import MyList from './MyList';
+//Amplify
 
-//import { v4 as uuidv4 } from 'uuid';
-//import 'react-native-get-random-values'
-//import nanoid from 'nanoid'
-//FROM function to Pure to class command pallete-------------------
+import { withAuthenticator } from 'aws-amplify-react-native';
+
+
+//-------------------------------------------------------------
+
 //CartScreen
 class CartScreen extends React.Component {
   constructor(props) {
@@ -35,7 +37,6 @@ class ProfileScreen extends React.Component {
   constructor(props) {
     super(props);
   }
-
   render() {
     return (
       <View style={styles.container}>
@@ -104,7 +105,7 @@ const styles = StyleSheet.create({
 const Tab = createBottomTabNavigator();
 
 
-export default class MainTabs extends React.Component {
+ class MainTabs extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -159,3 +160,10 @@ export default class MainTabs extends React.Component {
     
   }
 }
+export default withAuthenticator(MainTabs, {
+  // Render a sign out button once logged in
+  //includeGreetings: true, 
+  // Show only certain components
+  //authenticatorComponents: [MainTabs],
+  
+});

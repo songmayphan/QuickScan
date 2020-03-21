@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { withAuthenticator } from 'aws-amplify-react-native'
 
 //Profile class--------------------------------------------
-export default function Profile() {
+function Profile() {
   
 //create a new Date instance----------------------
 const date = new Date()
@@ -48,5 +48,5 @@ else {
     );
   
 }
-
+export default Profile;
 

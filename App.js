@@ -22,10 +22,4 @@ Analytics.disable();
       )
   }
 }
-export default withAuthenticator(App, {
-  // Render a sign out button once logged in
-  includeGreetings: true, 
-  // Show only certain components
-  //authenticatorComponents: [MainTabs],
-  
-});
+export default App;
