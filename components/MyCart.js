@@ -9,53 +9,35 @@ import {Navigation} from "react-navigation"
  
 
 export default class MyCart extends React.Component {
-  handleClick = () => {
-    //alert('Button clicked!');
-    this.props.navigator.push(Checkout);
-}
-  render() {
-    //const {navigate} = this.props.navigation; 
+  state = {
+    text: 'Check Out',
+  };
 
+  render() {
     return (
       <View style={styles.container}>
-        <View >
-          <Button 
-            onPress={() => this.handleClick()}
-            title="Tap to check out"
-            color="black"
-        
-          />
+      <Text style={styles.input}> Scan this barcode to check out! </Text>
+        <Barcode value="Your checkout Barcode" format="CODE128" />
       </View>
-    </View>
-      //end containter
     );
-    
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  button :{
-    flex: 1,
-    maxHeight: 160,
-    maxWidth: 200,
-    alignItems: 'center',
-    justifyContent: 'center',
-    textAlign: 'center',
-   
-  },
-  input: {
-    height: 30,
-    borderColor: 'gray',
-    borderWidth: 1,
-    margin: 10,
-    borderRadius: 5,
-    padding: 5,
-    textAlign: 'center'
-}
+    container: {
+        flex: 1,
+        backgroundColor: 'white',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+
+    input: {
+        height: 30,
+        borderColor: 'gray',
+        borderWidth: 1,
+        margin: 10,
+        borderRadius: 5,
+        padding: 5,
+        textAlign: 'center'
+    }
 });

@@ -22,29 +22,10 @@ import Dialog from "react-native-dialog";
   //Function to set quantity  --------------------------------------
   
   const Quantity=() =>{
-    const [state, setState] = useState(false)
+    const [quantity, setQuantity] = useState(0);
+    const onChange = (quanValue) => setQuantity(quanValue);
     console.log ("got in here")
-   
-    showDialog = () => {
-      this.setState( true );
-    };
-   
-     handleCancel = () => {
-      this.setState(false);
-    };
-
-    handleQuantity =(quantity) => {
-      console.log ("quantity entered");
-      console.log(quantity)
-    };
-
-    handleSubmit = () => {
-      // The user has pressed the "Delete" button, so here you can do your own logic.
-      // ...Your logic
-      this.setState({ dialogVisible: false });
-    };
     
-    console.log ("function ran")
     return (
       <View>
         <Button onPress={this.showDialog}></Button>
@@ -54,7 +35,7 @@ import Dialog from "react-native-dialog";
             Enter quantity for this product
           </Dialog.Description>
           <Dialog.Input 
-              label="Quantity" onChangeText={(quantity) => this.handleQuantity(quantity)}>
+              label="Quantity" onChangeText={onChange}>
           </Dialog.Input>
           <Dialog.Button label="Cancel" onPress={handleCancel()} />
           <Dialog.Button label="Submit" onPress={handleSubmit()}/>
@@ -70,7 +51,7 @@ import Dialog from "react-native-dialog";
    // alert(`UPC code for this item is ${data}`);
    console.log(`UPC code for this item is ${data}`)
     //Prompt user for quantity
-    /*Alert.alert(
+    Alert.alert(
       'Item Scanned',
       'Add to cart?',
       [
@@ -80,12 +61,12 @@ import Dialog from "react-native-dialog";
           style: 'cancel',
       },
         {text: 'Yes', 
-        onPress: () => Quantity()}
+        onPress={Quantity}}
       ],
       {cancelable: false},
     );
   };
-*/
+
 
     // APi calls for $data, look up data item
   function getBarcode() {
@@ -98,8 +79,8 @@ import Dialog from "react-native-dialog";
       console.error(error);
     });
 
-  }
-}  
+  };
+  
   
   //----Permission----------------------------------
   if (hasPermission === null) {
@@ -130,6 +111,7 @@ import Dialog from "react-native-dialog";
   </View>
   );
 }
+//end Scan.js
 
 //styles
 const styles = StyleSheet.create({
