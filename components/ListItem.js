@@ -32,14 +32,14 @@ const ListItem = ({
             onChangeText={handleEditChange}
           />
         ) : (
-          <Text
-            onPress={() => itemChecked(item.id, item.text)}
-            style={
-              checked.length ? styles.checkedItemText : styles.listItemText
-            }>
-            {item.text}
-          </Text>
-        )}
+            <Text
+              onPress={() => itemChecked(item.id, item.text)}
+              style={
+                checked.length ? styles.checkedItemText : styles.listItemText
+              }>
+              {item.text}
+            </Text>
+          )}
         <View style={styles.iconView}>
           {isEditing && editItemDetail.id === item.id ? (
             <Ionicons
@@ -49,15 +49,15 @@ const ListItem = ({
               onPress={() => saveEditItem(item.id, item.text)}
             />
           ) : (
-            !checked.length && (
-              <Ionicons
-                name="md-create"
-                size={20}
-                color="#5f758e"
-                onPress={() => editItem(item.id, item.text)}
-              />
-            )
-          )}
+              !checked.length && (
+                <Ionicons
+                  name="md-create"
+                  size={20}
+                  color="#5f758e"
+                  onPress={() => editItem(item.id, item.text)}
+                />
+              )
+            )}
           <Ionicons
             name="md-remove-circle"
             size={20}

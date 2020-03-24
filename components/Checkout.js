@@ -11,7 +11,7 @@ export default class BarcodeGen extends Component {
   render() {
     return (
       <View style={styles.container}>
-      <Text style={styles.input}> Scan this barcode to check out! </Text>
+        <Text style={styles.input}> Scan this barcode to check out! </Text>
         <Barcode value="Your checkout Barcode" format="CODE128" />
       </View>
     );
@@ -19,20 +19,20 @@ export default class BarcodeGen extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: 'white',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
 
-    input: {
-        height: 30,
-        borderColor: 'gray',
-        borderWidth: 1,
-        margin: 10,
-        borderRadius: 5,
-        padding: 5,
-        textAlign: 'center'
-    }
+  input: {
+    height: 30,
+    borderColor: 'gray',
+    borderWidth: 1,
+    margin: 10,
+    borderRadius: 5,
+    padding: 5,
+    textAlign: 'center'
+  }
 });

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-const AddItem = ({addItem}) => {
+const AddItem = ({ addItem }) => {
   const [text, setText] = useState('');
   const onChange = textValue => setText(textValue);
 

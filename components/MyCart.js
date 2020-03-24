@@ -1,12 +1,12 @@
 import React from 'react';
-import {StyleSheet, Text, View , FlatList} from 'react-native';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { Button } from 'react-native-elements';
 import Checkout from "./Checkout"
 import Barcode from 'react-native-barcode-expo';
-import {Navigation} from "react-navigation"
+import { Navigation } from "react-navigation"
 
 
- 
+
 
 export default class MyCart extends React.Component {
   state = {
@@ -16,7 +16,7 @@ export default class MyCart extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-      <Text style={styles.input}> Scan this barcode to check out! </Text>
+        <Text style={styles.input}> Scan this barcode to check out! </Text>
         <Barcode value="Your checkout Barcode" format="CODE128" />
       </View>
     );
@@ -24,20 +24,20 @@ export default class MyCart extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: 'white',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
 
-    input: {
-        height: 30,
-        borderColor: 'gray',
-        borderWidth: 1,
-        margin: 10,
-        borderRadius: 5,
-        padding: 5,
-        textAlign: 'center'
-    }
+  input: {
+    height: 30,
+    borderColor: 'gray',
+    borderWidth: 1,
+    margin: 10,
+    borderRadius: 5,
+    padding: 5,
+    textAlign: 'center'
+  }
 });
