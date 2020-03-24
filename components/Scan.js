@@ -88,12 +88,8 @@ const Scan = () => {
         flexDirection: 'column',
         justifyContent: 'center',
       }}>
-      <SearchBar
-        placeholder="Type Here..."
-        onChangeText={onChange}
-        value={search}
-      />
-      {/* <BarCodeScanner
+      
+      <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         barCodeTypes={[BarCodeScanner.Constants.BarCodeType.upc_ean]}
         style={StyleSheet.absoluteFillObject}
@@ -102,7 +98,7 @@ const Scan = () => {
         <Button
           title={'Tap to Scan'}
           onPress={() => setScanned(false)}
-        />} */}
+        />}
 
     </View>
   );
