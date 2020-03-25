@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, PropTypes } from 'react';
 
 //Navivgation
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, Text, View, FlatList, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { SearchBar } from 'react-native-elements';
+
+
 
 //Components
 import Scan from './Scan';
@@ -20,80 +22,97 @@ import MyList from './MyList';
 //-------------------------------------------------------------
 
 //CartScreen
-class CartScreen extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <MyCart />
-      </View>
-    );
-  }
-}
+const CartScreen = props => {
+  return <View style={styles.container}>
+    <MyCart />
+  </View>;
+};
 //ProfileScreen------------------------------------------------------
-class ProfileScreen extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    return (
-      <View style={styles.container}>
-        <Profile />
-      </View>
-    );
-  }
-}
+const ProfileScreen = props => {
+  return <View style={styles.container}>
+    <Profile />
+  </View>;
+};
 
 //ListScreen------------------------------------------------------
 
-class ListScreen extends React.Component {
-
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    return (
-      <View style={styles.container}>
-        <MyList />
-      </View>
-    );
-  }
-}
+const ListScreen = props => {
+  return <View style={styles.container}>
+    <MyList />
+  </View>;
+};
 
 //Shopscren---------------------------------------------------
- function ShopScreen() {
-  const stores = [
-    "Malarasa",
-    "Wally World"
+function ShopScreen() {
+  const STORES = [
+    {
+      id: 1,
+      name: 'Malarasa'
+    },
+    {
+      id: 2,
+      name: 'Wally World'
+    }
   ];
-  const [text, setText] = useState(stores);
-  const [result, setResult] = useState([]);
+
+  const [result, setResult] = useState(STORES);
 
   const onChange = textValue => setText(textValue);
 
-  useEffect(() => {
-    const results = stores.filter(store =>
-      store.toLowerCase().includes(text)
-    );
-    setSearchResults(results);
-  }, [text]); 
+  //----------------------------------------------
+  const handleMalarasa = () => {
+    console.log('got in malarasa')
+    return <View style={styles.container}>
+      <Scan />
+    </View>;
+  }
 
-    return (
-       <View style={styles.container}>
-         <SearchBar style={styles.shop}
-           placeholder="What store are you going to?"
-           onChangeText={onChange}
-           value={text}
-         />
-       </View>
+  //==============================www========================
+  const [click, setClick] = useState(false);
+  function handleWW() {
+
+    console.log("got in WW")
+
+    Alert.alert(
+      'Store',
+      'You picked Wally World',
+      [
+        {text: 'OK', onPress: () => console.log("ok pressed")},
+      ],
+      { cancelable: false }
+    )
+  }
 
 
-    );
-  
+  return (
+
+    <View style={{ flex: 1, justifyContent: 'center', padding: 50 }}>
+      <Text style={styles.text} > Choose your store </Text>
+      <TouchableOpacity
+        style={styles.btn}
+        onPress={handleWW}>
+        <Text style={styles.btnText}>
+          Wally World
+        </Text>
+      </TouchableOpacity>
+
+    
+      <TouchableOpacity
+        style={styles.btn}
+        title="Malarasa"
+        onPress={handleMalarasa}
+      >
+        <Text style={styles.btnText}>
+          Malarasa
+        </Text>
+      </TouchableOpacity>
+    </View>
+      
+
+
+  );
 }
+
 
 //styling-------------------------------------------------------
 const styles = StyleSheet.create({
@@ -104,26 +123,33 @@ const styles = StyleSheet.create({
     marginBottom: 0
 
   },
-  button: {
-    maxHeight: 160,
-    maxWidth: 160,
-    color: '#5f758e',
-    alignItems: 'center',
-    justifyContent: 'center',
+  text: {
+    height: 60,
+    padding: 8,
+    margin: 5,
     textAlign: 'center',
-    position: 'absolute',
+    fontSize: 20
   },
   header: {
     height: 60,
     padding: 15,
     backgroundColor: "red",
-    
   },
   shop: {
     height: 60,
     padding: 15,
     margin: 3,
     marginTop: 5
+  },
+  btn: {
+    backgroundColor: '#5f758e',
+    padding: 9,
+    margin: 3,
+  },
+  btnText: {
+    color: '#fff',
+    fontSize: 20,
+    textAlign: 'center',
   },
 });
 
