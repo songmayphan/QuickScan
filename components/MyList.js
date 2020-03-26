@@ -11,14 +11,14 @@ import AddItem from './AddItem';
 //start class
 //testing with dummy items
 
-var uuid = require('react-native-uuid');
+//var uuid = require('react-native-uuid');
 const MyList =() =>{
   //this is our state, with item' id and setItems to manipulate the state of the item
   const [items, setItems] = useState([
     //Dummy item to test 
     //arrays of object
     {
-      id: uuid.v4(),
+      id: Math.random,
       text: 'Ramen',
     }
      
@@ -77,7 +77,7 @@ const addItem = text => {
     );
   } else {
     setItems(prevItems => {
-      return [{id: uuid.v4(), text}, ...prevItems];
+      return [{id: Math.random, text}, ...prevItems];
     });
   }
 };

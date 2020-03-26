@@ -70,36 +70,36 @@ function ShopScreen() {
   function handleWW() {
 
     console.log("got in WW")
-
+    
     Alert.alert(
       'Store',
       'You picked Wally World',
       [
-        { text: 'OK', onPress: () => console.log("ok pressed") },
+        { text: 'OK', onPress: () => setScan(true)},
       ],
       { cancelable: false }
     )
-  }
+
+
+  } //end handleWW
 
 
   return (
 
     <View style={{ flex: 1, justifyContent: 'center', padding: 50 }}>
       <Text style={styles.text} > Choose your store </Text>
-      {scan ? <Scan /> : console.log("scan is not working")}
-      
-        <TouchableOpacity
-          style={styles.btn}
-          onPress=
-          {() => setScan(true)}
 
-
-        >
-          <Text style={styles.btnText}>
-            Wally World
+      <TouchableOpacity
+        style={styles.btn}
+        onPress=
+        {handleWW}
+      >
+        <Text style={styles.btnText}>
+          Wally World
         </Text>
-        </TouchableOpacity>
-      
+      </TouchableOpacity>
+      {scan ? console.log("scan is true"): console.log("scan is now false")}
+
 
 
       {/* <TouchableOpacity
