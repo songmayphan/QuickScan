@@ -43,7 +43,10 @@ const ListScreen = props => {
 };
 
 //Shopscren---------------------------------------------------
+//parent function
+
 function ShopScreen() {
+  const [scan, setScan] = useState(false);
   const STORES = [
     {
       id: 1,
@@ -55,10 +58,6 @@ function ShopScreen() {
     }
   ];
 
-  const [result, setResult] = useState(STORES);
-
-  const onChange = textValue => setText(textValue);
-
   //----------------------------------------------
   const handleMalarasa = () => {
     console.log('got in malarasa')
@@ -68,7 +67,6 @@ function ShopScreen() {
   }
 
   //==============================www========================
-  const [click, setClick] = useState(false);
   function handleWW() {
 
     console.log("got in WW")
@@ -77,7 +75,7 @@ function ShopScreen() {
       'Store',
       'You picked Wally World',
       [
-        {text: 'OK', onPress: () => console.log("ok pressed")},
+        { text: 'OK', onPress: () => console.log("ok pressed") },
       ],
       { cancelable: false }
     )
@@ -88,16 +86,23 @@ function ShopScreen() {
 
     <View style={{ flex: 1, justifyContent: 'center', padding: 50 }}>
       <Text style={styles.text} > Choose your store </Text>
-      <TouchableOpacity
-        style={styles.btn}
-        onPress={handleWW}>
-        <Text style={styles.btnText}>
-          Wally World
-        </Text>
-      </TouchableOpacity>
+      {scan ? <Scan /> : console.log("scan is not working")}
+      
+        <TouchableOpacity
+          style={styles.btn}
+          onPress=
+          {() => setScan(true)}
 
-    
-      <TouchableOpacity
+
+        >
+          <Text style={styles.btnText}>
+            Wally World
+        </Text>
+        </TouchableOpacity>
+      
+
+
+      {/* <TouchableOpacity
         style={styles.btn}
         title="Malarasa"
         onPress={handleMalarasa}
@@ -107,8 +112,8 @@ function ShopScreen() {
         </Text>
       </TouchableOpacity>
     </View>
-      
-
+       */}
+    </View>
 
   );
 }

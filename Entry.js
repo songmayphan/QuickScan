@@ -33,7 +33,7 @@ export default function Entry(){
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#5f758e',
     justifyContent: 'center',
   },
 });

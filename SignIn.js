@@ -12,7 +12,6 @@ export default function SignInPage (){
     isAuthenticated: false,
   });
 
-  console.log("im here 3");
 
   const {setAuthentication} = useContext(AuthenticationContext)
 
@@ -20,7 +19,7 @@ export default function SignInPage (){
       setUserInfo({...userInfo, [key]: value})
   };
   const signIn = () => {
-    console.log(userInfo.username, userInfo.password)
+    //console.log(userInfo.username, userInfo.password)
     Auth.signIn(userInfo.username, userInfo.password)
     .then(user => {
         setUserInfo({...userInfo, user: {user}, isAuthenticated: true});
@@ -30,7 +29,7 @@ export default function SignInPage (){
       console.log(userInfo.isAuthenticated)
     })
     .catch(err => console.log('error', err))
-  } ;
+  } ; 
     return (
       <View style={styles.container}>
         <Image
@@ -41,13 +40,13 @@ export default function SignInPage (){
         <TextInput
         onChangeText={value=> onChangeText('username', value)}
         style={styles.input}
-        placeholder='username'
+        placeholder='Enter your username'
         />
         <TextInput
         onChangeText={value=> onChangeText('password', value)}
         secureTextEntry={true}
         style={styles.input}
-        placeholder='password'
+        placeholder='Enter your password'
         />
         <Button title='sign in' onPress={signIn}/>
       </View>
