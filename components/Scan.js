@@ -10,9 +10,13 @@ import prompt from 'react-native-prompt-android';
 
 const Scan = () => {
 
+
+
   //inintial state----------------------------------------------
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
+  const [scanAgain, setScanAgain] = useState(false);
+  const [showStore, setShowStore] = useState(true)
   useEffect(() => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -23,12 +27,15 @@ const Scan = () => {
 
   //Function to set quantity  --------------------------------------
   //once barcode is scanned------ ---------------------------------
-  const [state, setstate] = useState(false);
+
   const handleBarCodeScanned = ({ type, data }) => {
 
-    setScanned(true);
     // alert(`UPC code for this item is ${data}`);
     console.log(`UPC code for this item is ${data}`)
+    setScanned(false);
+    setScanAgain(true)
+    setShowStore(false)
+    console.log("scan is now false")
     //Prompt user for quantity
     // return (
     //   <Prompt
@@ -76,29 +83,50 @@ const Scan = () => {
     return <Text style={styles.text}>No access to camera</Text>;
   }
 
+  function handleWW() {
+    console.log("got in WW")
+    Alert.alert('Store', 'Wally World picked', [
+      { text: 'OK', onPress: () => setScanned(true) },
+      { text: 'Cancel', onPress: () => console.log('cancel pressed') }
+    ], { cancelable: false });
+  } //end handleWW
 
+  function again() {
+    setScanAgain(false);
+    setScanned(true);
+    setShowStore(false)
+  }
   // --------------------------------------------RETURN----------------------------------------------
-  const [text, setText] = useState('');
-  const onChange = textValue => setText(textValue);
-
   return (
-    <View
-      style={{
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'center',
-      }}>
-      
-      <BarCodeScanner
-        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        barCodeTypes={[BarCodeScanner.Constants.BarCodeType.upc_ean]}
-        style={StyleSheet.absoluteFillObject}
-      />
-      {scanned &&
-        <Button
-          title={'Tap to Scan'}
-          onPress={() => setScanned(false)}
-        />}
+    <View style={styles.container}>
+      {showStore && (
+        <View style={styles.container}>
+          
+          <Text style={styles.text}> Choose your store </Text>
+          <TouchableOpacity style={styles.btn} onPress={handleWW}>
+            <Text style={styles.btnText}>Wally World</Text>
+          </TouchableOpacity>
+
+        </View>
+      )}
+
+      {/**true && expression always evaluates to expression, 
+ * and false && expression always evaluates to false.
+
+Therefore, if the condition is true, the element right after && will appear
+ in the output. If it is false, React will ignore and skip it.
+
+ */}
+      {scanned && (
+        <BarCodeScanner
+          onBarCodeScanned={handleBarCodeScanned}
+          barCodeTypes={[BarCodeScanner.Constants.BarCodeType.upc_ean]}
+          style={StyleSheet.absoluteFillObject}
+        />
+      )}
+
+      {/* condition ? true : false. */}
+      {scanAgain && <Button title={"Tap to Scan Again"} onPress={again} />}
 
     </View>
   );
@@ -107,18 +135,39 @@ const Scan = () => {
 
 //styles
 const styles = StyleSheet.create({
-  button: {
+  container: {
     flex: 1,
-    maxHeight: 160,
-    maxWidth: 200,
-    alignItems: 'center',
-    justifyContent: 'center',
-    textAlign: 'center',
-    backgroundColor: '#bdc667'
+    paddingTop: 25,
+    height: 60,
+    marginBottom: 0
+
   },
   text: {
-    color: 'white',
-    fontSize: 23,
+    height: 60,
+    padding: 8,
+    margin: 5,
+    textAlign: 'center',
+    fontSize: 20
+  },
+  header: {
+    height: 60,
+    padding: 15,
+    backgroundColor: "red",
+  },
+  shop: {
+    height: 60,
+    padding: 15,
+    margin: 3,
+    marginTop: 5
+  },
+  btn: {
+    backgroundColor: '#5f758e',
+    padding: 9,
+    margin: 3,
+  },
+  btnText: {
+    color: '#fff',
+    fontSize: 20,
     textAlign: 'center',
   },
 });
