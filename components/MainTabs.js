@@ -1,7 +1,7 @@
 import React, { useEffect, PropTypes } from 'react';
 
 //Navivgation
-import { StyleSheet, View, FlatList, TextInput } from 'react-native';
+import { StyleSheet, View, FlatList, TextInput, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
@@ -12,7 +12,6 @@ import { SearchBar } from 'react-native-elements';
 import Profile from './Profile';
 import MyCart from './MyCart';
 import MyList from './MyList';
-import  ShopScreen from './ShopScreen';
 import Scan from './Scan';
 //Amplify
 
@@ -30,7 +29,7 @@ const CartScreen = props => {
 //ProfileScreen------------------------------------------------------
 const ProfileScreen = props => {
   return <View style={styles.container}>
-    <Profile />
+    <Profile/>
   </View>;
 };
 

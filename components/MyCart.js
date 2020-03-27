@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { Button } from 'react-native-elements';
 import Checkout from "./Checkout"
@@ -7,21 +7,14 @@ import { Navigation } from "react-navigation"
 
 
 
-
-export default class MyCart extends React.Component {
-  state = {
-    text: 'Check Out',
-  };
-
-  render() {
-    return (
-      <View style={styles.container}>
+const MyCart = props => {
+  return <View style={styles.container}>
         <Text style={styles.input}> Scan this barcode to check out! </Text>
         <Barcode value="Your checkout Barcode" format="CODE128" />
-      </View>
-    );
-  }
-}
+      </View>;
+};
+
+export default MyCart;
 
 const styles = StyleSheet.create({
   container: {

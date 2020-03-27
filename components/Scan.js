@@ -6,7 +6,12 @@ import DialogInput from 'react-native-dialog-input';
 import Prompt from 'react-native-prompt-crossplatform';
 import Dialog from "react-native-dialog";
 import prompt from 'react-native-prompt-android';
+import { NavigationContainer, navigation } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
+//Components: 
+
+import MyCart from './MyCart';
 
 const Scan = () => {
 
@@ -17,6 +22,9 @@ const Scan = () => {
   const [scanned, setScanned] = useState(false);
   const [scanAgain, setScanAgain] = useState(false);
   const [showStore, setShowStore] = useState(true)
+  const [isMa, setisMa] = useState(false);
+  const [isWW, setisWW] = useState(false);
+  const [isDone, setisDone] = useState(false);
   useEffect(() => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -35,6 +43,33 @@ const Scan = () => {
     setScanned(false);
     setScanAgain(true)
     setShowStore(false)
+
+    //if Malarasa is picked
+    let dataScanned = ''
+    if(isMa){
+      console.log(`GETTING  ${data} FROM MALARASA`);
+       return fetch('http://18.189.32.71:3000/items/bystore/MALARASA')
+      .then(response => response.json())
+      .then(responseJson => {
+        return responseJson.items;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    }
+    if(isWW){
+      console.log(`GETTING  ${data} FROM wally World`);
+       return fetch('http://18.189.32.71:3000/items/bystore/WALLY%20WORLD')
+      .then(response => response.json())
+      .then(responseJson => {
+        return responseJson.items;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    }
+
+
     console.log("scan is now false")
     //Prompt user for quantity
     // return (
@@ -62,17 +97,6 @@ const Scan = () => {
 
 
   // APi calls for $data, look up data item================================================
-  function getBarcode() {
-    return fetch('http://18.189.32.71:3000/barcode/')
-      .then(response => response.json())
-      .then(responseJson => {
-        return responseJson.items;
-      })
-      .catch(error => {
-        console.error(error);
-      });
-
-  };
 
 
   //----Permission----------------------------------
@@ -85,17 +109,42 @@ const Scan = () => {
 
   function handleWW() {
     console.log("got in WW")
+    setisWW(true);
     Alert.alert('Store', 'Wally World picked', [
       { text: 'OK', onPress: () => setScanned(true) },
       { text: 'Cancel', onPress: () => console.log('cancel pressed') }
     ], { cancelable: false });
   } //end handleWW
 
+  function handleMalarasa() {
+    setisMa(true);
+    console.log("got in MALARASA")
+    Alert.alert('Store', 'Malarasa picked', [
+      { text: 'OK', onPress: () => setScanned(true) },
+      { text: 'Cancel', onPress: () => console.log('cancel pressed') }
+    ], { cancelable: false });
+  } //end handleMa
+
   function again() {
     setScanAgain(false);
     setScanned(true);
     setShowStore(false)
   }
+
+  function Done({navigate}) {
+    return (
+      <View style={{ flex: 3, justifyContent: 'center', alignItems: 'center' }}>
+        
+        <Button
+          title="Go to My Cart"
+          onPress={() => navigate(MyCart)}
+        />
+      </View>
+    );
+}
+  if (isDone) {
+  return Done({navigate})
+}
   // --------------------------------------------RETURN----------------------------------------------
   return (
     <View style={styles.container}>
@@ -105,6 +154,9 @@ const Scan = () => {
           <Text style={styles.text}> Choose your store </Text>
           <TouchableOpacity style={styles.btn} onPress={handleWW}>
             <Text style={styles.btnText}>Wally World</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.btn} onPress={handleMalarasa}>
+            <Text style={styles.btnText}>Malarasa</Text>
           </TouchableOpacity>
 
         </View>
@@ -127,6 +179,14 @@ Therefore, if the condition is true, the element right after && will appear
 
       {/* condition ? true : false. */}
       {scanAgain && <Button title={"Tap to Scan Again"} onPress={again} />}
+
+      
+
+      {/* {isWW ? getBarcodeFromWW : console.log("nada")}
+      {isMa ? getBarcodefromMa : console.log("nadadada")} */}
+
+      {scanAgain && <Button style={{flex:3}}title={"I'm done shopping"} onPress= {() => {setisDone(true) }}/>}
+      
 
     </View>
   );
