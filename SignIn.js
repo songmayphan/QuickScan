@@ -1,15 +1,19 @@
 import React, { useState, useContext } from 'react';
-import { StyleSheet, View, TextInput, Button, Image } from 'react-native'
+import { StyleSheet, View, TextInput, Button, Image, TouchableOpacity, Text } from 'react-native'
 
 import { Auth } from 'aws-amplify';
 import {AuthenticationContext} from "./contexts/Authentication"
 
 export default function SignInPage (){
+
+ 
+
   const [userInfo, setUserInfo] = useState({
     username: '',
     password: '',
     user: {},
     isAuthenticated: false,
+    
   });
 
 
@@ -32,11 +36,18 @@ export default function SignInPage (){
   } ; 
     return (
       <View style={styles.container}>
-        <Image
-          style={styles.logo}
-          source={require('./assets/icon.png')}
-        />
-      
+
+        <View style = {{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'} }>
+          
+          <Image
+            style={styles.logo}
+            source={require('./assets/icon.png')}
+            resizeMode = {'contain'}
+            
+          />
+        </View>
+       
+      <View style = {{flex:1}}>
         <TextInput
         onChangeText={value=> onChangeText('username', value)}
         style={styles.input}
@@ -47,8 +58,18 @@ export default function SignInPage (){
         secureTextEntry={true}
         style={styles.input}
         placeholder='Enter your password'
+        
         />
-        <Button title='sign in' onPress={signIn}/>
+
+      <TouchableOpacity  title = 'sign in' onPress={signIn} style = 
+        {{backgroundColor: "red",margin: 5, color: 'yellow', borderWidth: 1, borderColor: '#2196F3', height: 50, width: 140, alignSelf: 'center', justifyContent: 'center', borderRadius: 6}} > 
+        <Text style = {{textAlign: 'center', textAlignVertical: 'center', color: '#2196F3' }}>Text here</Text>
+      </TouchableOpacity >
+
+      </View>
+       
+        
+
       </View>
     );
   }
@@ -56,18 +77,30 @@ export default function SignInPage (){
 const styles = StyleSheet.create({
   input: {
     height: 50,
-    borderBottomWidth: 2,
-    borderBottomColor: '#2196F3',
-    margin: 10,
+    borderWidth: 2,
+    borderColor: '#2196F3',
+    margin: 23,
+    marginTop: 1,
+    borderRadius: 6,
+    textAlign: 'center',
+    fontSize: 30,
+    fontFamily: 'Times New Roman',
+    fontWeight: 'bold',
+    //padding: 20,
+    //lineHeight: 25,
   },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    flexDirection: 'column',
+    backgroundColor: '#eee',
     justifyContent: 'center',
+    borderWidth: 2,
+    borderColor: 'red',
   },
   logo: {
-    width: 200, 
-    height: 200, 
-    alignSelf: 'center' 
+    width: 200,
+    height: 200,
+    alignSelf: 'center',
+   
   }
 });
