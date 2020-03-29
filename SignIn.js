@@ -63,7 +63,7 @@ export default function SignInPage (){
 
       <TouchableOpacity  title = 'sign in' onPress={signIn} style = 
         {{backgroundColor: "red",margin: 5, color: 'yellow', borderWidth: 1, borderColor: '#2196F3', height: 50, width: 140, alignSelf: 'center', justifyContent: 'center', borderRadius: 6}} > 
-        <Text style = {{textAlign: 'center', textAlignVertical: 'center', color: '#2196F3' }}>Text here</Text>
+        <Text style = {{textAlign: 'center', textAlignVertical: 'center', color: '#2196F3' }}>Submit</Text>
       </TouchableOpacity >
 
       </View>
