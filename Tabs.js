@@ -15,11 +15,12 @@ function SignInTabs() {
         <NavigationContainer independent={true}>
             <SignInTab.Navigator >
                 <SignInTab.Screen
-                    style={styles.container}
+                    options = {{tabBarLabel: 'Sign In', lableStyle: {color: 'red'},tabBarStyle: {fontSize: 30}}}
                     name="Sign In"
                     component={SignIn}
                 />
                 <SignInTab.Screen
+                    
                     name="Sign Up"
                     component={SignUp}
                 />
