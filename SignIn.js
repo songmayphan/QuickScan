@@ -62,7 +62,7 @@ export default function SignInPage (){
         />
 
       <TouchableOpacity  title = 'sign in' onPress={signIn} style = 
-        {{backgroundColor: "red",margin: 5, color: 'yellow', borderWidth: 1, borderColor: '#2196F3', height: 50, width: 140, alignSelf: 'center', justifyContent: 'center', borderRadius: 6}} > 
+        {{backgroundColor: "#bdc667",margin: 5, color: 'yellow', borderWidth: 1, borderColor: '#2196F3', height: 50, width: 140, alignSelf: 'center', justifyContent: 'center', borderRadius: 6}} > 
         <Text style = {{textAlign: 'center', textAlignVertical: 'center', color: '#2196F3' }}>Submit</Text>
       </TouchableOpacity >
 
@@ -77,14 +77,14 @@ export default function SignInPage (){
 const styles = StyleSheet.create({
   input: {
     height: 50,
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: '#2196F3',
     margin: 23,
     marginTop: 1,
-    borderRadius: 6,
+    borderRadius: 3,
     textAlign: 'center',
-    fontSize: 30,
-    fontFamily: 'Times New Roman',
+    fontSize: 20,
+    //fontFamily: 'Times New Roman',
     fontWeight: 'bold',
     //padding: 20,
     //lineHeight: 25,
@@ -94,12 +94,12 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: '#eee',
     justifyContent: 'center',
-    borderWidth: 2,
-    borderColor: 'red',
+    //borderWidth: 2,
+    //borderColor: '#bdc667',
   },
   logo: {
-    width: 200,
-    height: 200,
+    width: 150,
+    height: 150,
     alignSelf: 'center',
    
   }
