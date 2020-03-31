@@ -8,7 +8,10 @@ import {
   ActivityIndicator
 } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import {
+  TouchableOpacity,
+  TouchableHighlight
+} from "react-native-gesture-handler";
 import axios from "axios";
 import DialogInput from "react-native-dialog-input";
 import Prompt from "react-native-prompt-crossplatform";
@@ -52,9 +55,9 @@ const Scan = () => {
     Alert.alert(
       "Scanned",
       `You scanned ${itemName}. Add this to cart?`,
-      
+
       [
-        { text: "Yes", onPress: () => console.log("item scanned ok pressed")},
+        { text: "Yes", onPress: () => console.log("item scanned ok pressed") },
         { text: "Cancel", onPress: () => console.log("cancel pressed") }
       ],
       { cancelable: false }
@@ -102,8 +105,8 @@ const Scan = () => {
     }
   }; //end fetchWW
   //FETCH MALARASA==================================================================
-  const fetchMA = async (dataScanned) => {
-    console.log("got into fetch MA")
+  const fetchMA = async dataScanned => {
+    console.log("got into fetch MA");
     try {
       const response = await fetch(
         "http://18.189.32.71:3000/items/bystore/MALARASA"
@@ -156,7 +159,6 @@ const Scan = () => {
       console.log("is MA is true");
       fetchMA(data);
       if (isLoading) {
-
         console.log("API is loading");
         return (
           <View style={{ flex: 1, paddingTop: 300 }}>
@@ -169,7 +171,7 @@ const Scan = () => {
       //if is WW is true, meaning the picked store was Wally World
       //this ensures that the rescanning process will work everytime we chose to scan again
       //the api will be loaded
-      
+
       //if return type here
     } else {
       console.log("isMa is now false");
@@ -192,7 +194,6 @@ const Scan = () => {
       //if is WW is true, meaning the picked store was Wally World
       //this ensures that the rescanning process will work everytime we chose to scan again
       //the api will be loaded
-      
     } else {
       console.log("isWW is false");
     }
@@ -284,21 +285,32 @@ Therefore, if the condition is true, the element right after && will appear
         />
       )}
 
-      {/* condition ? true : false. */}
-      {scanAgain && <Button title={"Tap to Scan Again"} onPress={again} />}
-
       {/* {isWW ? getBarcodeFromWW : console.log("nada")}
       {isMa ? getBarcodefromMa : console.log("nadadada")} */}
 
       {scanAgain && (
-        <Button
-          style={styles.text}
-          title={"I'm done shopping"}
-          onPress={() => {
-            setisDone(true);
-          }}
-        />
+        <View style={styles.container_buttons}>
+          <View style={styles.btn_done}>
+            <TouchableHighlight
+              onPress={() => {
+              setisDone(true);
+              }}
+            >
+              <Text style={styles.btnText}> I'm done shopping</Text>
+            </TouchableHighlight>
+          </View>
+
+          <View style={styles.btn_again}>
+            <TouchableHighlight 
+            onPress={again}
+            >
+              <Text style={styles.btnText}> Tap to scan again </Text>
+            </TouchableHighlight>
+          </View>
+        </View>
       )}
+
+      {/* condition ? true : false. */}
       {/* {(dataSource != null)   && <Text> {dataSource.NAME}</Text> } */}
     </View>
   );
@@ -312,9 +324,16 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 25,
     height: 60,
-    marginBottom: 0
+    marginBottom: 10
   },
+  container_buttons:{
+    flex: 3,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    position: 'relative'
 
+  },
   text: {
     height: 60,
     padding: 8,
@@ -335,11 +354,29 @@ const styles = StyleSheet.create({
   },
   btn: {
     backgroundColor: "#5f758e",
-    padding: 9,
-    margin: 3
+    padding: 10,
+    margin: 10, 
+    borderRadius: 10
+    
+  },
+  btn_done: {
+    backgroundColor: "#D00000",
+    padding: 15,
+    margin: 10,
+    marginLeft: 10,
+    borderRadius: 10,
+    alignSelf: "flex-end"
+  },
+  btn_again: {
+    backgroundColor: "#bdc667",
+    padding: 15,
+    margin: 10,
+    marginLeft: 10,
+    borderRadius: 10,
+    alignSelf: "flex-start"
   },
   btnText: {
-    color: "#fff",
+    color: "#ffffff",
     fontSize: 20,
     textAlign: "center"
   }
