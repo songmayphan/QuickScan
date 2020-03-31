@@ -73,13 +73,30 @@ export default function SignUpPage() {
         style={styles.input}
         placeholder='name'
         />
-        <Button title='sign up' onPress={signUp}/>
+
+        <Button 
+          color= '#FFFF'
+          
+          ontWeight= 'bold'
+          title='sign up' 
+          onPress={signUp}
+        />
+
+
         <TextInput
+        
         onChangeText={value=> onChangeText('confirmationCode', value)}
         style={styles.input}
         placeholder='code'
         />
-        <Button title='confirm sign up' onPress={confirmSignUp}/>
+
+        <Button 
+          
+          color= '#FFFF'
+          title='confirm sign up' 
+          onPress={confirmSignUp}
+        />
+
       </View>
     );
   }
@@ -88,15 +105,24 @@ export default function SignUpPage() {
 
 const styles = StyleSheet.create({
   input: {
-    height: 50,
-    borderBottomWidth: 2,
-    borderBottomColor: '#2196F3',
-    margin: 10
+    height: 35,
+    borderWidth: 1,
+    borderColor: '#3b1f2b',
+    margin: 23,
+    marginTop: 1,
+    borderRadius: 3,
+    textAlign: 'center',
+    fontSize: 25,
+    color: '#FFFF',
+    //fontFamily: 'Times New Roman',
+    fontWeight: 'bold',
+
 
   },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    flexDirection: 'column',
+    backgroundColor: '#5f758e',
     justifyContent: 'center',
   },
   logo: {

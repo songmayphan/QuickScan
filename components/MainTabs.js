@@ -74,7 +74,7 @@ export const styles = StyleSheet.create({
     margin: 3,
   },
   btnText: {
-    color: '#fff',
+    color: '#ffff',
     fontSize: 20,
     textAlign: 'center',
   },
