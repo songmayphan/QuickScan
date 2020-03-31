@@ -39,9 +39,17 @@ else {
   
     return (
       <View>
-          <Text>
-            It's currently about {date.getHours()} o'clock!
-            Good {timeOfDay}!
+            <Text style = {{textAlign: 'center', textAlignVertical: 'center', 
+            color: '#383961', fontWeight: 'bold',  flex: 0, marginTop: 140, 
+            fontWeight: 'bold', fontSize: 30}}>
+              {"\n"}
+              {"\n"}
+              Good {timeOfDay}! 
+              {"\n"}
+              {"\n"}
+              It's currently {date.getHours()} o'clock!
+  
+            
           </Text>
      </View>
       
