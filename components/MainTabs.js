@@ -126,6 +126,7 @@ class MainTabs extends React.Component {
           //Icon change when clicking the button
           tabBarOptions={{
             activeTintColor: '#BDC667',
+            
             inactiveTintColor: '#5f758e',
           }}>
 

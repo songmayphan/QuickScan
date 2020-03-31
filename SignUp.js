@@ -46,6 +46,7 @@ export default function SignUpPage() {
         <Image
           style={styles.logo}
           source={require('./assets/icon.png')}
+          resizeMode = {'contain'}
         />
         <TextInput
         onChangeText={value=> onChangeText('username', value)}
@@ -77,7 +78,7 @@ export default function SignUpPage() {
         <Button 
           color= '#FFFF'
           
-          ontWeight= 'bold'
+          fontWeight= 'bold'
           title='sign up' 
           onPress={signUp}
         />
@@ -85,9 +86,9 @@ export default function SignUpPage() {
 
         <TextInput
         
-        onChangeText={value=> onChangeText('confirmationCode', value)}
-        style={styles.input}
-        placeholder='code'
+          onChangeText={value=> onChangeText('confirmationCode', value)}
+          style={styles.input}
+          placeholder='code'
         />
 
         <Button 
@@ -126,8 +127,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   logo: {
-    width: 200, 
-    height: 200, 
+    width: 175, 
+    height: 175, 
     alignSelf: 'center' 
   }
 });
