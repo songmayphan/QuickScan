@@ -23,6 +23,7 @@ import MyCart from "./MyCart";
 
 const Scan = () => {
   //inintial states----------------------------------------------
+
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [scanAgain, setScanAgain] = useState(false);
@@ -31,11 +32,12 @@ const Scan = () => {
   const [isWW, setisWW] = useState(false);
   const [isDone, setisDone] = useState(false);
 
-  //API STATES
+  //API STATES==============================================
   const [isLoading, setisLoading] = useState(true);
   const [dataSource, setdataSource] = useState(null);
+  const [fetchedItems, setFetcheditems] = useState([]);
 
-  //scanner useEffect
+  //scanner REQUEST CAMERA
   useEffect(() => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -43,7 +45,74 @@ const Scan = () => {
     })();
   }, []);
 
-  //Function to set quantity  --------------------------------------
+  //FunctionS to fetch --------------------------------------
+  const fetchWW = async (dataScanned) => {
+    console.log("got into fetch WW")
+    try {
+      const response = await fetch('http://18.189.32.71:3000/items/bystore/WALLY%20WORLD')
+      await response.json()
+      .then((data) => {
+        //setFetcheditems(data);
+        setisLoading(false);
+        // cleaning the response
+        data.map((item) =>{
+          delete item._id;
+          delete item.DESCRIPTION;
+          delete item.STORE;
+          delete item.MANUFACTURER;
+          delete item.QUANTITY;
+          setFetcheditems(() => [...fetchedItems, item])
+          //console.log(` data.length = ${data.length}`);
+         
+
+        }) //end item function
+        
+        //console.log(data[1]);
+        var dataScanned_trimmed = dataScanned.slice(1,-1);
+          console.log(`trimmed data is now ${dataScanned_trimmed}`);
+          for (var i = 0; i < data.length; i++){
+            // look for the entry with a matching `dataScanned` value
+            if (data[i].ID == dataScanned_trimmed){
+               // we found it
+              // item[i].ID is the matched result
+              console.log(data[i]);
+            }
+          }
+
+
+
+      }); //end try
+
+    }
+    catch (error) {
+      console.error(error);
+    }
+  }//end fetchWW
+  //FETCH MALARASA==================================================================
+  const fetchMA = async () => {
+    try {
+      const response = await fetch('http://18.189.32.71:3000/items/bystore/WALLY%20WORLD')
+      await response.json()
+      .then((data) => {
+        //setFetcheditems(data);
+        setisLoading(false);
+        // cleaning the response
+        data.map((item) =>{
+          delete item._id;
+          delete item.DESCRIPTION;
+          delete item.STORE;
+          delete item.MANUFACTURER;
+          delete item.QUANTITY;
+          setFetcheditems(() => [...fetchedItems, item])
+          console.log(item);
+        })
+      });
+    }
+    catch (error) {
+      console.error(error);
+    }
+  }//end fecthMA
+
   //once barcode is scanned------ ---------------------------------
 
   const handleBarCodeScanned = ({ type, data }) => {
@@ -53,55 +122,55 @@ const Scan = () => {
     setScanAgain(true); //can scan again now
     setShowStore(false); //doesn't show store anymore
 
-    //if Malarasa is picked-----------------------------
-    let dataScanned = "";
+    //if Malarasa is picked------------------------------------------------MALARASA---------------------------
+    
     if (isMa) {
+      console.log ("is MA is true")
       if (isLoading) {
+        console.log("API is loading")
+      }
+      else{
+        console.log("API is now loaded and is now false")
+      }
+      //if is WW is true, meaning the picked store was Wally World
+      //this ensures that the rescanning process will work everytime we chose to scan again 
+      //the api will be loaded
+      fetchMA();
         return (
-          <View style={styles.container}>
+          <View style={{ flex: 1, paddingTop: 300 }}>
             <ActivityIndicator />
           </View>
         );
-      } 
-      console.log(`GETTING  ${data} FROM MALARASA`);
-      return fetch("http://18.189.32.71:3000/items/bystore/MALARASA")
-        .then(response => response.json())
-        .then(responseJson => {
-          return responseJson.item;
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    }
-    //if WW is picked-=----------------------------
-    if (isWW) {
-      console.log("isWw is true!")
-      // if (isLoading) {
-      //   console.log("API is loading in WW")
-      //   return (
-      //     <View style={styles.container}>
-      //       <ActivityIndicator />
-      //     </View>
-      //   );
-      // }
-
-      console.log(`GETTING  ${data} FROM wally World`);
-      return fetch("http://18.189.32.71:3000/items/bystore/WALLY%20WORLD")
-        .then(response => response.json())
-        .then(responseJson => {
-          //return responseJson.items;
-          setisLoading(false);
-          setdataSource(responseJson.items); //datasource is now a a set of names
-          console.log(`ALL items ${dataSource}`);
-        })
-        .catch(error => {
-          console.error(error);
-        });
-      
-    }
+      //if return type here
+  }
 
     else{
-      console.log("got in HandleBarcode but isWW is false")
+      console.log("isMa is now false")
+    }
+
+    //if WW is picked-=-----------------------------------------------WALLY WORLD---------------------------
+    if (isWW) {
+      console.log ("is WW is true")
+      if (isLoading) {
+        console.log("API is loading")
+      }
+      else{
+        console.log("API is now loaded and is now false")
+      }
+      //if is WW is true, meaning the picked store was Wally World
+      //this ensures that the rescanning process will work everytime we chose to scan again 
+      //the api will be loaded
+      fetchWW(data); //parse in the dataScanned
+        return (
+          <View style={{ flex: 1, paddingTop: 300 }}>
+            <ActivityIndicator />
+          </View>
+        );
+      //if return type here
+  }
+
+    else{
+      console.log("isWW is false")
     }
 
     
@@ -153,7 +222,7 @@ const Scan = () => {
       { cancelable: false }
     );
   } //end handleWW
-
+//handleMa=======================================================
   function handleMalarasa() {
     setisMa(true);
     console.log("got in MALARASA");
@@ -167,13 +236,13 @@ const Scan = () => {
       { cancelable: false }
     );
   } //end handleMa
-
+//scan again------------------------------------------------------------------
   function again() {
     setScanAgain(false);
     setScanned(true);
     setShowStore(false);
   }
-
+//done shopping---------------------------------------------------------
   function Done({ navigate }) {
     return (
       <View style={{ flex: 3, justifyContent: "center", alignItems: "center" }}>
@@ -184,7 +253,7 @@ const Scan = () => {
   if (isDone) {
     return Done({ navigate });
   }
-  // ------------------------------------Scan--------Render---------------------------------------------
+  // ------------------------------------Scan--------Render-----------------------SCAN RENDER----------------------
   
 
     
@@ -212,7 +281,7 @@ Therefore, if the condition is true, the element right after && will appear
         {scanned && (
           <BarCodeScanner
             onBarCodeScanned={handleBarCodeScanned}
-            barCodeTypes={[BarCodeScanner.Constants.BarCodeType.upc_ean]}
+            barCodeTypes={[BarCodeScanner.Constants.BarCodeType.upc_e]}
             style={StyleSheet.absoluteFillObject}
           />
         )}
@@ -238,8 +307,10 @@ Therefore, if the condition is true, the element right after && will appear
       </View>
     );
   
-};
-//end Scan.js
+}; //end scan=====================================================================
+
+export default Scan;
+
 
 //styles
 const styles = StyleSheet.create({
@@ -280,4 +351,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Scan;
+

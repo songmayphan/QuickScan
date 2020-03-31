@@ -1,136 +1,115 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity ,FlatList, Alert} from 'react-native';
-import { Button } from 'react-native-elements';
-//import { getRandomBytesAsync } from 'expo-random';
-import Header from './Header';
-import ListItem from './ListItem';
-import AddItem from './AddItem';
-//import {  v4 as uuid } from 'uuidv4';
-//import uuid from 'uuid';
+import { StyleSheet, Text, View, Button, TextInput, ScrollView, ActivityIndicator } from 'react-native';
+import { SearchBar } from 'react-native-elements';
 
-//start class
-//testing with dummy items
+export default function MyList() {
 
-//var uuid = require('react-native-uuid');
-const MyList =() =>{
-  //this is our state, with item' id and setItems to manipulate the state of the item
-  const [items, setItems] = useState([
-    //Dummy item to test 
-    //arrays of object
-    {
-      id: Math.random,
-      text: 'Ramen',
-    }
-     
-  ])
-  
-// Flag true if user is currently editing an item----------
-const [editStatus, editStatusChange] = useState(false);
-
-// State to capture information about the item being edited---------------
-const [editItemDetail, editItemDetailChange] = useState({
-  id: null,
-  text: null,
-});
-
-const [checkedItems, checkedItemChange] = useState([]);
-//DELETE ITEM-------------------------------------------
-const deleteItem = id => {
-  setItems(prevItems => {
-    return prevItems.filter(item => item.id !== id);
+  // States
+  const [enteredItem, setEnteredItem] = useState('');
+  const [desiredItems, setDesiredItems] = useState([]);
+  const [fetchedItems, setFetcheditems] = useState([]);
+  const [isItLoading, setIfItsLoading] = useState(true);
+  const [searchbarState, setSearchBarState] = useState({
+    search: ''
   });
-};
-//styling-------------------------------------------------------
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
 
-// Submit the users edits to the overall items state
-const saveEditItem = (id, text) => {
-  setItems(prevItems => {
-    return prevItems.map(item =>
-      item.id === editItemDetail.id ? {id, text: editItemDetail.text} : item,
-    );
-  });
-  // Flip edit status back to false
-  editStatusChange(!editStatus);
-};
-
-// Event handler to capture users text input as they edit an item
-const handleEditChange = text => {
-  editItemDetailChange({id: editItemDetail.id, text});
-};
-//ADD ITEM-------------------------------------------------------
-const addItem = text => {
-  if (!text) {
-    Alert.alert(
-      'Please enter an item to add to your shopping list',
-      [
-        {
-          text: 'OK',
-          style: 'cancel',
-        },
-      ],
-      {cancelable: true},
-    );
-  } else {
-    setItems(prevItems => {
-      return [{id: Math.random, text}, ...prevItems];
-    });
-  }
-};
-
-// capture old items ID and text when user clicks edit
-const editItem = (id, text) => {
-  editItemDetailChange({
-    id,
-    text,
-  });
-  return editStatusChange(!editStatus);
-};
-//chECKED ITEM
-const itemChecked = (id, text) => {
-  const isChecked = checkedItems.filter(checkedItem => checkedItem.id === id);
-  isChecked.length
-    ? // remove item from checked items state (uncheck)
-      checkedItemChange(prevItems => {
-        return [...prevItems.filter(item => item.id !== id)];
-      })
-    : // Add item to checked items state
-      checkedItemChange(prevItems => {
-        return [...prevItems.filter(item => item.id !== id), {id, text}];
+  // Get function for the items
+  const componentDidMount = async () => {
+    try {
+      const response = await fetch('http://18.189.32.71:3000/items/')
+      await response.json()
+      .then((data) => {
+        //setFetcheditems(data);
+        setIfItsLoading(false);
+        // cleaning the response
+        data.map((item) =>{
+          delete item._id;
+          delete item.DESCRIPTION;
+          setFetcheditems(() => [...fetchedItems, item])
+          console.log(item);
+        })
       });
-};
-//RETURN-------------------------------------------------------------------------------------
-return (
-  <View style={styles.container}>
-    <Header/>
-    <AddItem addItem={addItem} />
-    <FlatList
-      data={items}
-      renderItem={({item}) => (
-        <ListItem
-          item={item}
-          deleteItem={deleteItem}
-          editItem={editItem}
-          isEditing={editStatus}
-          editItemDetail={editItemDetail}
-          saveEditItem={saveEditItem}
-          handleEditChange={handleEditChange}
-          itemChecked={itemChecked}
-          checkedItems={checkedItems}
-        />
-      )}
-    />
-  </View>
-);
-};
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
+    }
+    catch (error) {
+      console.error(error);
+    }
+  }
+  
+  // Searchbar function handlers
+  const itemInputHandler = (textEntered)=> {
+    setEnteredItem(textEntered);
+  };
 
-export default MyList
+  const addItemHandler = () =>{
+    setDesiredItems(currentItems => [...desiredItems, enteredItem]);
+  };
+
+  const SearchFilterFunction = (text) => {
+    //passing the inserted text in textinput
+    const newData = fetchedItems.filter((item) => {
+      //applying filter for the inserted text in search bar
+      const itemData = item.NAME ? item.NAME.toUpperCase() : ''.toUpperCase();
+      const textData = text.toUpperCase();
+      return itemData.indexOf(textData) > -1;
+    });
+    //setSearchBarState(() => [...searchbarState, {search: data}])
+  }
+
+    if (isItLoading === true) {
+      componentDidMount();
+      return (
+        <View style={{ flex: 1, paddingTop: 300 }}>
+          <ActivityIndicator />
+        </View>
+      );
+    }
+
+  return (
+    <View style={styles.screen}>
+      <View>
+      <SearchBar
+      onChangeText={itemInputHandler} 
+      value={enteredItem}
+          onChangeText={text => SearchFilterFunction(text)}
+          onClear={text => SearchFilterFunction('')}
+          placeholder="Type Here..."
+          />
+      </View>
+      <View style={styles.inputContainer}> 
+        <TextInput placeholder="ITEM" style={styles.input} onChangeText={itemInputHandler} value={enteredItem}/>
+        <Button title="ADD" onPress={addItemHandler}/>
+      </View>
+      <ScrollView>
+        {desiredItems.map((item)=> 
+        <View style={styles.itemList} key={item}> 
+        <Text> {item}  </Text> 
+        </View>
+         )}
+      </ScrollView>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  screen: {
+    padding: 60
+  },
+  inputContainer:{
+    flexDirection: 'row', 
+    justifyContent: 'space-between', 
+    alignItems: 'center'
+  },
+  input:{
+    borderBottomColor: 'black',
+   borderBottomWidth: 1, 
+   padding: 10, 
+   width: '80%' 
+  }, 
+  itemList:{
+    padding: 10,
+    backgroundColor: '#ccc',
+    borderColor: 'black',
+    borderWidth: 1,   
+    marginVertical: 10
+  }
+});
