@@ -8,8 +8,11 @@ import {
   ActivityIndicator
 } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import axios from 'axios';
+import {
+  TouchableOpacity,
+  TouchableHighlight
+} from "react-native-gesture-handler";
+import axios from "axios";
 import DialogInput from "react-native-dialog-input";
 import Prompt from "react-native-prompt-crossplatform";
 import Dialog from "react-native-dialog";
@@ -45,73 +48,101 @@ const Scan = () => {
     })();
   }, []);
 
+  //function to print item to screen
+
+  function printItem(itemName) {
+    console.log("printITEM called");
+    Alert.alert(
+      "Scanned",
+      `You scanned ${itemName}. Add this to cart?`,
+
+      [
+        { text: "Yes", onPress: () => console.log("item scanned ok pressed") },
+        { text: "Cancel", onPress: () => console.log("cancel pressed") }
+      ],
+      { cancelable: false }
+    );
+  }
+
   //FunctionS to fetch --------------------------------------
-  const fetchWW = async (dataScanned) => {
-    console.log("got into fetch WW")
+  const fetchWW = async dataScanned => {
+    console.log("got into fetch WW");
     try {
-      const response = await fetch('http://18.189.32.71:3000/items/bystore/WALLY%20WORLD')
-      await response.json()
-      .then((data) => {
+      const response = await fetch(
+        "http://18.189.32.71:3000/items/bystore/WALLY%20WORLD"
+      );
+      await response.json().then(data => {
         //setFetcheditems(data);
         setisLoading(false);
         // cleaning the response
-        data.map((item) =>{
+        data.map(item => {
           delete item._id;
           delete item.DESCRIPTION;
           delete item.STORE;
           delete item.MANUFACTURER;
           delete item.QUANTITY;
-          setFetcheditems(() => [...fetchedItems, item])
+          setFetcheditems(() => [...fetchedItems, item]);
           //console.log(` data.length = ${data.length}`);
-         
+        }); //end item function
 
-        }) //end item function
-        
         //console.log(data[1]);
-        var dataScanned_trimmed = dataScanned.slice(1,-1);
-          console.log(`trimmed data is now ${dataScanned_trimmed}`);
-          for (var i = 0; i < data.length; i++){
-            // look for the entry with a matching `dataScanned` value
-            if (data[i].ID == dataScanned_trimmed){
-               // we found it
-              // item[i].ID is the matched result
-              console.log(data[i]);
-            }
+        var dataScanned_trimmed = dataScanned.slice(1, -1);
+        console.log(`trimmed data is now ${dataScanned_trimmed}`);
+        for (var i = 0; i < data.length; i++) {
+          // look for the entry with a matching `dataScanned` value
+          if (data[i].ID == dataScanned_trimmed) {
+            // we found it
+            // item[i].ID is the matched result
+            console.log(data[i]);
+            console.log(data[i].NAME);
+            //console.log(typeof(data[i].NAME))
+            printItem(data[i].NAME);
           }
-
-
-
+        }
       }); //end try
-
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error);
     }
-  }//end fetchWW
+  }; //end fetchWW
   //FETCH MALARASA==================================================================
-  const fetchMA = async () => {
+  const fetchMA = async dataScanned => {
+    console.log("got into fetch MA");
     try {
-      const response = await fetch('http://18.189.32.71:3000/items/bystore/WALLY%20WORLD')
-      await response.json()
-      .then((data) => {
+      const response = await fetch(
+        "http://18.189.32.71:3000/items/bystore/MALARASA"
+      );
+      await response.json().then(data => {
         //setFetcheditems(data);
         setisLoading(false);
         // cleaning the response
-        data.map((item) =>{
+        data.map(item => {
           delete item._id;
           delete item.DESCRIPTION;
           delete item.STORE;
           delete item.MANUFACTURER;
           delete item.QUANTITY;
-          setFetcheditems(() => [...fetchedItems, item])
-          console.log(item);
-        })
+          setFetcheditems(() => [...fetchedItems, item]);
+          //console.log(item);
+        });
+
+        var dataScanned_trimmed = dataScanned.slice(1, -1);
+        console.log(`trimmed data is now ${dataScanned_trimmed}`);
+        for (var i = 0; i < data.length; i++) {
+          // look for the entry with a matching `dataScanned` value
+          if (data[i].ID == dataScanned_trimmed) {
+            // we found it
+            // item[i].ID is the matched result
+            console.log(data[i]);
+            console.log(data[i].NAME);
+            //console.log(typeof(data[i].NAME))
+            printItem(data[i].NAME);
+          }
+        }
       });
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error);
     }
-  }//end fecthMA
+  }; //end fecthMA
 
   //once barcode is scanned------ ---------------------------------
 
@@ -123,79 +154,49 @@ const Scan = () => {
     setShowStore(false); //doesn't show store anymore
 
     //if Malarasa is picked------------------------------------------------MALARASA---------------------------
-    
+
     if (isMa) {
-      console.log ("is MA is true")
+      console.log("is MA is true");
+      fetchMA(data);
       if (isLoading) {
-        console.log("API is loading")
-      }
-      else{
-        console.log("API is now loaded and is now false")
-      }
-      //if is WW is true, meaning the picked store was Wally World
-      //this ensures that the rescanning process will work everytime we chose to scan again 
-      //the api will be loaded
-      fetchMA();
+        console.log("API is loading");
         return (
           <View style={{ flex: 1, paddingTop: 300 }}>
             <ActivityIndicator />
           </View>
         );
-      //if return type here
-  }
+      } else {
+        console.log("API is now loaded and is now false");
+      }
+      //if is WW is true, meaning the picked store was Wally World
+      //this ensures that the rescanning process will work everytime we chose to scan again
+      //the api will be loaded
 
-    else{
-      console.log("isMa is now false")
+      //if return type here
+    } else {
+      console.log("isMa is now false");
     }
 
     //if WW is picked-=-----------------------------------------------WALLY WORLD---------------------------
     if (isWW) {
-      console.log ("is WW is true")
-      if (isLoading) {
-        console.log("API is loading")
-      }
-      else{
-        console.log("API is now loaded and is now false")
-      }
-      //if is WW is true, meaning the picked store was Wally World
-      //this ensures that the rescanning process will work everytime we chose to scan again 
-      //the api will be loaded
+      console.log("is WW is true");
       fetchWW(data); //parse in the dataScanned
+      if (isLoading) {
+        console.log("API is loading");
         return (
           <View style={{ flex: 1, paddingTop: 300 }}>
             <ActivityIndicator />
           </View>
         );
-      //if return type here
-  }
-
-    else{
-      console.log("isWW is false")
+      } else {
+        console.log("API is now loaded and is now false");
+      }
+      //if is WW is true, meaning the picked store was Wally World
+      //this ensures that the rescanning process will work everytime we chose to scan again
+      //the api will be loaded
+    } else {
+      console.log("isWW is false");
     }
-
-    
-    //Prompt user for quantity
-    // return (
-    //   <Prompt
-    //     title="Say something"
-    //     placeholder="Enter Some Text"
-    //     isVisible= {true}
-    //     onChangeText={(text) => {
-    //         setState({ promptValue: text });
-    //     }}
-    //     onCancel={() => {
-    //       this.setState({
-    //         promptValue: '',
-    //         visiblePrompt: false,
-    //       });
-    //     }}
-    //     onSubmit={() => {
-    //       this.setState({
-    //         visiblePrompt: false,
-    //       });
-    //     }}
-    //   />
-    // )
   };
 
   // APi calls for $data, look up data item================================================
@@ -211,7 +212,7 @@ const Scan = () => {
   function handleWW() {
     console.log("got in WW");
     setisWW(true);
-    
+
     Alert.alert(
       "Store",
       "Wally World picked",
@@ -222,7 +223,7 @@ const Scan = () => {
       { cancelable: false }
     );
   } //end handleWW
-//handleMa=======================================================
+  //handleMa=======================================================
   function handleMalarasa() {
     setisMa(true);
     console.log("got in MALARASA");
@@ -236,13 +237,13 @@ const Scan = () => {
       { cancelable: false }
     );
   } //end handleMa
-//scan again------------------------------------------------------------------
+  //scan again------------------------------------------------------------------
   function again() {
     setScanAgain(false);
     setScanned(true);
     setShowStore(false);
   }
-//done shopping---------------------------------------------------------
+  //done shopping---------------------------------------------------------
   function Done({ navigate }) {
     return (
       <View style={{ flex: 3, justifyContent: "center", alignItems: "center" }}>
@@ -254,63 +255,68 @@ const Scan = () => {
     return Done({ navigate });
   }
   // ------------------------------------Scan--------Render-----------------------SCAN RENDER----------------------
-  
 
-    
-    return (
-      <View style={styles.container}>
-        {showStore && (
-          <View style={styles.container}>
-            <Text style={styles.text}> Choose your store </Text>
-            <TouchableOpacity style={styles.btn} onPress={handleWW}>
-              <Text style={styles.btnText}>Wally World</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.btn} onPress={handleMalarasa}>
-              <Text style={styles.btnText}>Malarasa</Text>
-            </TouchableOpacity>
-          </View>
-        )}
+  return (
+    <View style={styles.container}>
+      {showStore && (
+        <View style={styles.container}>
+          <Text style={styles.text}> Choose your store </Text>
+          <TouchableOpacity style={styles.btn} onPress={handleWW}>
+            <Text style={styles.btnText}>Wally World</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.btn} onPress={handleMalarasa}>
+            <Text style={styles.btnText}>Malarasa</Text>
+          </TouchableOpacity>
+        </View>
+      )}
 
-        {/**true && expression always evaluates to expression, 
+      {/**true && expression always evaluates to expression, 
  * and false && expression always evaluates to false.
 
 Therefore, if the condition is true, the element right after && will appear
  in the output. If it is false, React will ignore and skip it.
 
  */}
-        {scanned && (
-          <BarCodeScanner
-            onBarCodeScanned={handleBarCodeScanned}
-            barCodeTypes={[BarCodeScanner.Constants.BarCodeType.upc_e]}
-            style={StyleSheet.absoluteFillObject}
-          />
-        )}
-       
-        {/* condition ? true : false. */}
-        {scanAgain && <Button title={"Tap to Scan Again"} onPress={again} />}
+      {scanned && (
+        <BarCodeScanner
+          onBarCodeScanned={handleBarCodeScanned}
+          barCodeTypes={[BarCodeScanner.Constants.BarCodeType.upc_e]}
+          style={StyleSheet.absoluteFillObject}
+        />
+      )}
 
-        {/* {isWW ? getBarcodeFromWW : console.log("nada")}
+      {/* {isWW ? getBarcodeFromWW : console.log("nada")}
       {isMa ? getBarcodefromMa : console.log("nadadada")} */}
 
-        {scanAgain && (
-          <Button
-            style={styles.text}
-            title={"I'm done shopping"}
-            onPress={() => {
+      {scanAgain && (
+        <View style={styles.container_buttons}>
+          <View style={styles.btn_done}>
+            <TouchableHighlight
+              onPress={() => {
               setisDone(true);
-            }}
-          />
-          
-        )}
-           {/* {(dataSource != null)   && <Text> {dataSource.NAME}</Text> } */}
-        
-      </View>
-    );
-  
+              }}
+            >
+              <Text style={styles.btnText}> I'm done shopping</Text>
+            </TouchableHighlight>
+          </View>
+
+          <View style={styles.btn_again}>
+            <TouchableHighlight 
+            onPress={again}
+            >
+              <Text style={styles.btnText}> Tap to scan again </Text>
+            </TouchableHighlight>
+          </View>
+        </View>
+      )}
+
+      {/* condition ? true : false. */}
+      {/* {(dataSource != null)   && <Text> {dataSource.NAME}</Text> } */}
+    </View>
+  );
 }; //end scan=====================================================================
 
 export default Scan;
-
 
 //styles
 const styles = StyleSheet.create({
@@ -318,9 +324,16 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 25,
     height: 60,
-    marginBottom: 0
+    marginBottom: 10
   },
-  
+  container_buttons:{
+    flex: 3,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    position: 'relative'
+
+  },
   text: {
     height: 60,
     padding: 8,
@@ -341,14 +354,30 @@ const styles = StyleSheet.create({
   },
   btn: {
     backgroundColor: "#5f758e",
-    padding: 9,
-    margin: 3
+    padding: 10,
+    margin: 10, 
+    borderRadius: 10
+    
+  },
+  btn_done: {
+    backgroundColor: "#D00000",
+    padding: 15,
+    margin: 10,
+    marginLeft: 10,
+    borderRadius: 10,
+    alignSelf: "flex-end"
+  },
+  btn_again: {
+    backgroundColor: "#bdc667",
+    padding: 15,
+    margin: 10,
+    marginLeft: 10,
+    borderRadius: 10,
+    alignSelf: "flex-start"
   },
   btnText: {
-    color: "#fff",
+    color: "#ffffff",
     fontSize: 20,
     textAlign: "center"
   }
 });
-
-
