@@ -19,7 +19,7 @@ export default MyCart;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#5f758e',
     alignItems: 'center',
     justifyContent: 'center'
   },
@@ -31,6 +31,9 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 5,
     padding: 5,
-    textAlign: 'center'
+    textAlign: 'center',
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 20
   }
 });
