@@ -51,13 +51,13 @@ const Scan = () => {
   //function to print item to screen
 
   function printItem(itemName) {
-    console.log("printITEM called");
+    //console.log("printITEM called");
     Alert.alert(
       "Scanned",
       `You scanned ${itemName}. Add this to cart?`,
 
       [
-        { text: "Yes", onPress: () => console.log("item scanned ok pressed") },
+        { text: "Yes", onPress: () => console.log("item willl be added to cart") },
         { text: "Cancel", onPress: () => console.log("cancel pressed") }
       ],
       { cancelable: false }
@@ -66,7 +66,7 @@ const Scan = () => {
 
   //FunctionS to fetch --------------------------------------
   const fetchWW = async dataScanned => {
-    console.log("got into fetch WW");
+    //console.log("got into fetch WW");
     try {
       const response = await fetch(
         "http://18.189.32.71:3000/items/bystore/WALLY%20WORLD"
@@ -87,7 +87,7 @@ const Scan = () => {
 
         //console.log(data[1]);
         var dataScanned_trimmed = dataScanned.slice(1, -1);
-        console.log(`trimmed data is now ${dataScanned_trimmed}`);
+        //console.log(`trimmed data is now ${dataScanned_trimmed}`);
         for (var i = 0; i < data.length; i++) {
           // look for the entry with a matching `dataScanned` value
           if (data[i].ID == dataScanned_trimmed) {
@@ -106,7 +106,6 @@ const Scan = () => {
   }; //end fetchWW
   //FETCH MALARASA==================================================================
   const fetchMA = async dataScanned => {
-    console.log("got into fetch MA");
     try {
       const response = await fetch(
         "http://18.189.32.71:3000/items/bystore/MALARASA"
@@ -124,9 +123,11 @@ const Scan = () => {
           setFetcheditems(() => [...fetchedItems, item]);
           //console.log(item);
         });
+        
 
+        //trimming the first and last digit of the generated barcode
         var dataScanned_trimmed = dataScanned.slice(1, -1);
-        console.log(`trimmed data is now ${dataScanned_trimmed}`);
+        //console.log(`trimmed data is now ${dataScanned_trimmed}`);
         for (var i = 0; i < data.length; i++) {
           // look for the entry with a matching `dataScanned` value
           if (data[i].ID == dataScanned_trimmed) {
@@ -148,7 +149,7 @@ const Scan = () => {
 
   const handleBarCodeScanned = ({ type, data }) => {
     // alert(`UPC code for this item is ${data}`);
-    console.log(`UPC code for this item is ${data}`);
+    console.log(`ID scanned for this item is ${data}`);
     setScanned(false); //can't render scan until pressed scanAgain
     setScanAgain(true); //can scan again now
     setShowStore(false); //doesn't show store anymore
@@ -173,13 +174,11 @@ const Scan = () => {
       //the api will be loaded
 
       //if return type here
-    } else {
-      console.log("isMa is now false");
     }
 
     //if WW is picked-=-----------------------------------------------WALLY WORLD---------------------------
     if (isWW) {
-      console.log("is WW is true");
+      
       fetchWW(data); //parse in the dataScanned
       if (isLoading) {
         console.log("API is loading");
@@ -194,8 +193,6 @@ const Scan = () => {
       //if is WW is true, meaning the picked store was Wally World
       //this ensures that the rescanning process will work everytime we chose to scan again
       //the api will be loaded
-    } else {
-      console.log("isWW is false");
     }
   };
 
@@ -310,8 +307,7 @@ Therefore, if the condition is true, the element right after && will appear
         </View>
       )}
 
-      {/* condition ? true : false. */}
-      {/* {(dataSource != null)   && <Text> {dataSource.NAME}</Text> } */}
+      {/* condition ? true : false. */}   
     </View>
   );
 }; //end scan=====================================================================
