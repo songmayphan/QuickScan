@@ -13,6 +13,14 @@ const MyCart = props => {
         <Barcode value="Your checkout Barcode" format="CODE128" />
       </View>;
 };
+export function addToCart(item){
+  console.log("addToCart in MyCart.js called")
+  console.log(`this item is ${item}`)
+  return(<View> 
+    <Text> this item is ${item} </Text>
+  </View>)
+}
+
 
 export default MyCart;
 
@@ -34,3 +42,4 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   }
 });
+

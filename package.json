@@ -40,6 +40,7 @@
     "react-native-uuid": "^1.4.9",
     "react-native-web": "~0.11.7",
     "react-navigation": "^4.3.3",
+    "react-navigation-hooks": "^1.1.0",
     "uuid": "^6.0.6"
   },
   "devDependencies": {
