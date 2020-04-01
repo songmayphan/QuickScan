@@ -12,6 +12,8 @@ import {
   TouchableOpacity,
   TouchableHighlight
 } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native"
+import { NativeRouter, Switch, Route } from "react-router-native";
 
 import axios from "axios";
 import DialogInput from "react-native-dialog-input";
@@ -38,6 +40,7 @@ const Scan = () => {
 
   //After api called states-------------
   const [addToCart, setaddToCart] = useState(false);
+  const navigation = useNavigation();
 
   //API STATES==============================================
   const [isLoading, setisLoading] = useState(true);
@@ -64,7 +67,7 @@ const Scan = () => {
 
       [
         { text: "Cancel", onPress: () => console.log("cancel pressed") },
-        { text: "Yes",  onPress: () => setaddToCart(true)},
+        { text: "Yes",  onPress: () => console.log("item will be added to cart")},
       ],
       { cancelable: false }
     );
