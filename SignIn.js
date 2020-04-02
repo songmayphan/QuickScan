@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { StyleSheet, View, TextInput, Button, Image, TouchableOpacity, Text } from 'react-native'
+import Dialog, { DialogContent } from 'react-native-popup-dialog'
 
 import { Auth } from 'aws-amplify';
 import {AuthenticationContext} from "./contexts/Authentication"

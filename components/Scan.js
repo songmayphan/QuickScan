@@ -66,7 +66,7 @@ const Scan = () => {
       `You scanned ${itemToAdd.NAME}. Add this to cart?`,
 
       [
-        { text: "Cancel", onPress: () => console.log("cancel pressed") },
+        { text: "Cancel", onPress: () => console.log("cancel")},
         { text: "Yes",  onPress: () => console.log("item will be added to cart")},
       ],
       { cancelable: false }
@@ -106,7 +106,7 @@ const Scan = () => {
             console.log(data[i].NAME);
             //console.log(typeof(data[i].NAME))
             setfoundItem(data[i])
-            printItem(foundItem);
+            printItem(data[i]);
           }
         }
       }); //end try
@@ -252,6 +252,7 @@ const Scan = () => {
     setScanAgain(false);
     setScanned(true);
     setShowStore(false);
+    setfoundItem("")
   }
   //done shopping---------------------------------------------------------
   function Done({ navigate }) {

@@ -26,15 +26,14 @@ export default({ history, location })  => (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-<<<<<<< HEAD
+
     backgroundColor: '#5f758e',
     alignItems: 'center',
-    justifyContent: 'center'
-=======
+    justifyContent: 'center',
     backgroundColor: "white",
     alignItems: "center",
     justifyContent: "center"
->>>>>>> 83b7db4bfc93a7db8464db477cbe99fda34b9e31
+
   },
 
   input: {
@@ -44,11 +43,11 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 5,
     padding: 5,
-<<<<<<< HEAD
+
     textAlign: 'center',
     color: 'white',
     fontWeight: 'bold',
-=======
+
     textAlign: "center"
   },
   text: {
@@ -56,7 +55,7 @@ const styles = StyleSheet.create({
     padding: 8,
     margin: 5,
     textAlign: "center",
->>>>>>> 83b7db4bfc93a7db8464db477cbe99fda34b9e31
+
     fontSize: 20
   }
 });

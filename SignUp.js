@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { StyleSheet, Text, View, TextInput, Button, Image } from 'react-native'
+import Dialog, { DialogContent } from 'react-native-popup-dialog'
 
 import { Auth } from 'aws-amplify';
 
