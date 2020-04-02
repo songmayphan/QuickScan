@@ -5,30 +5,70 @@ import {
   View,
   FlatList,
   TouchableOpacity,
-  NativeAppEventEmitter
+  NativeAppEventEmitter,
+  Alert
 } from "react-native";
 import { Button } from "react-native-elements";
 import Checkout from "./Checkout";
 import Barcode from "react-native-barcode-expo";
 import { Navigation } from "react-navigation";
 import { useNavigation } from "@react-navigation/native";
+import Header from "./Header";
+import ListItem from "./ListItem";
 
-export default({ history, location })  => (
+const MyCart = () => {
+  const [items, setItems] = useState([
+    {
+      NAME: "Milk",
+      ID: "1234",
+      PRICE: 5.0,
+      QUAN: 0
+    },
+    {
+      NAME: "Cheese",
+      ID: "3216",
+      PRICE: 4.0,
+      QUAN: 0
+    },
+    {
+      NAME: "Orange",
+      ID: "5454",
+      PRICE: 2.0,
+      QUAN: 0
+    }
+  ]);
+
+  //function to delete item from my cart
+  const deleteItem = ID => {
+    setItems(prevItems => {
+      return prevItems.filter(item => item.ID !== ID);
+    });
+  };
+  //total
+
+  let totalPrice = 0 
   
+  return (
     <View style={styles.container}>
-      <Text>{JSON.stringify(location.state)}</Text>
-      <Button title="change page" onPress={() => history.push("/")} />
+      <Header title="My Cart" />
+      <FlatList
+        data={items}
+        renderItem={({ item }) => (
+          <ListItem item={item} deleteItem={deleteItem} />
+        )}
+        keyExtractor={(item, index) => index.toString()}
+      />
+      <Text style={styles.text}> TOTAL PRICE: ${totalPrice} </Text>
+
       <Text style={styles.input}> Scan this barcode to check out! </Text>
       <Barcode value="Your checkout Barcode" format="CODE128" />
     </View>
-  
-)
+  );
+}; //end mycart
+export default MyCart;
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "white",
-    alignItems: "center",
-    justifyContent: "center"
+    flex: 1
   },
 
   input: {
@@ -44,7 +84,7 @@ const styles = StyleSheet.create({
     height: 60,
     padding: 8,
     margin: 5,
-    textAlign: "center",
+    textAlign: "left",
     fontSize: 20
   }
 });
