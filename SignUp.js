@@ -53,7 +53,7 @@ export default function SignUpPage() {
       } )
 
     .catch(err => {console.log('error', err)
-        Alert.alert('sign up error', 'failed to register, please try again')
+        Alert.alert('User Already Exists', ' Please try a new user')
   })
       }    
   } 
