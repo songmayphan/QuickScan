@@ -16,12 +16,12 @@ Header.defaultProps = {
 const styles = StyleSheet.create({
   header: {
     height: 60,
-    padding: 15,
+    padding: 20,
     backgroundColor: '#bdc667',
   },
   text: {
     color: 'white',
-    fontSize: 23,
+    fontSize: 30,
     textAlign: 'center',
   },
 });

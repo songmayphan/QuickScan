@@ -35,9 +35,12 @@ export default function SignInPage (){
     })
     .catch(err => console.log('error', err))
   } ; 
+
     return (
+
       <View style={styles.container}>
 
+        
         <View style = {{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'} }>
           
           <Image
