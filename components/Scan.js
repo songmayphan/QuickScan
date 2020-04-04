@@ -15,13 +15,13 @@ import {
 import { useNavigation } from "@react-navigation/native"
 import { NativeRouter, Switch, Route } from "react-router-native";
 
-import axios from "axios";
-import DialogInput from "react-native-dialog-input";
-import Prompt from "react-native-prompt-crossplatform";
-import Dialog from "react-native-dialog";
-import prompt from "react-native-prompt-android";
-import { NavigationContainer, navigation } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+//import axios from "axios";
+//import DialogInput from "react-native-dialog-input";
+//import Prompt from "react-native-prompt-crossplatform";
+//import Dialog from "react-native-dialog";
+//import prompt from "react-native-prompt-android";
+//import { NavigationContainer, navigation } from "@react-navigation/native";
+//import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 //Components:
 

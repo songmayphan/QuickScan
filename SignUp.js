@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Image } from 'react-native'
+import { StyleSheet, Text, View, TextInput, Button, Image, Alert } from 'react-native'
 import Dialog, { DialogContent } from 'react-native-popup-dialog'
 
 import { Auth } from 'aws-amplify';
@@ -18,8 +18,24 @@ export default function SignUpPage() {
   const onChangeText = (key, value) => {
     setUserInfo({...userInfo, [key]: value})
 };
-
+//=================sign-up alerts=========================
   const signUp = () => {
+    if(!userInfo.username || !userInfo.password || !userInfo.email || !userInfo.phone_number 
+      || !userInfo.name )
+      {
+        Alert.alert('Missing fields', 'Please fill in all fields in the form')
+      }
+      else if( !validateEmail(userInfo.email)){ console.log('entered else if')
+      Alert.alert('Please enter valid email','')}
+      else if(userInfo.password.length < 4 ){
+        Alert.alert('Please enter password longer than 4', 'Requires letter and numbers')
+      }
+      else if(!validatePhoneNumber(userInfo.phone_number)){
+        Alert.alert('Invalid phone number','Please enter valid 10 or 11 digit number.')
+      }
+
+      else{ 
+
     Auth.signUp({
       username: userInfo.username,
       password: userInfo.password,
@@ -29,18 +45,42 @@ export default function SignUpPage() {
         name: userInfo.name
       }
     })
-    .then(() => console.log('success'))
-    .catch(err => console.log('error', err))
 
+  
+    //=================sign up messages===========================
+    .then(() => {console.log('success') 
+      Alert.alert('email confirmation', 'Please check email box for confirmation code')
+      } )
+
+    .catch(err => {console.log('error', err)
+        Alert.alert('sign up error', 'failed to register, please try again')
+  })
+      }    
+  } 
+//=================Validate email and phone number===================
+  function validateEmail(elementValue){      
+    var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return emailPattern.test(elementValue); 
   }
+
+  function validatePhoneNumber(number){
+  
+    var phonePattern = /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/  
+    return phonePattern.test(number)
+    //return true
+    }
 
   const confirmSignUp = () => {
     Auth.confirmSignUp(userInfo.username, userInfo.confirmationCode)
     .then(() => {
       console.log('success')
+      Alert.alert('Sign-up Successful','Please go to sign-in page')
       console.log(userInfo);
     })
-    .catch(err => console.log('error', err))
+    .catch(err => {console.log('error', err)
+      Alert.alert('Sign-up code error',err)
+  
+  })
   }
     return (
       <View style={styles.container}>

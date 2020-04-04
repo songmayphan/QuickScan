@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
-import { StyleSheet, View, TextInput, Button, Image, TouchableOpacity, Text } from 'react-native'
-import Dialog, { DialogContent } from 'react-native-popup-dialog'
+import { StyleSheet, View, TextInput, Button, Image, TouchableOpacity, Text, Alert } from 'react-native'
+
 
 import { Auth } from 'aws-amplify';
 import {AuthenticationContext} from "./contexts/Authentication"
@@ -33,7 +33,9 @@ export default function SignInPage (){
     .then(() => {
       console.log(userInfo.isAuthenticated)
     })
-    .catch(err => console.log('error', err))
+    .catch(err => {console.log('error', err)
+    Alert.alert('Invalid Sign-In','User Name or Password is Incorrect')
+  })
   } ; 
 
     return (
