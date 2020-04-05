@@ -36,6 +36,7 @@ export default function SignUpPage() {
 
       else{ 
 
+//===================Authentication================================
     Auth.signUp({
       username: userInfo.username,
       password: userInfo.password,
@@ -47,7 +48,7 @@ export default function SignUpPage() {
     })
 
   
-    //=================sign up messages===========================
+//=================sign up messages=================================
     .then(() => {console.log('success') 
       Alert.alert('email confirmation', 'Please check email box for confirmation code')
       } )
@@ -69,7 +70,7 @@ export default function SignUpPage() {
     return phonePattern.test(number)
     //return true
     }
-
+//====================Confirm Sig-up====================================
   const confirmSignUp = () => {
     Auth.confirmSignUp(userInfo.username, userInfo.confirmationCode)
     .then(() => {
@@ -82,6 +83,8 @@ export default function SignUpPage() {
   
   })
   }
+
+  //===============Returns================================================
     return (
       <View style={styles.container}>
         <Image
@@ -145,6 +148,8 @@ export default function SignUpPage() {
 
 //export default withAuthenticator(App, { includeGreetings: true })
 
+
+//==================+Styels ============================================
 const styles = StyleSheet.create({
   input: {
     height: 35,

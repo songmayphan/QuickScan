@@ -48,9 +48,11 @@ const MyCart = () => {
 
   let totalPrice = 0 
   
+//======================Returns========================================  
+
   return (
     <View style={styles.container}>
-      <Header title="My Cart" />
+       <Header style = {styles.text} title="My Cart" /> 
       <FlatList
         data={items}
         renderItem={({ item }) => (
@@ -66,9 +68,18 @@ const MyCart = () => {
   );
 }; //end mycart
 export default MyCart;
+
+
+//===================Styles===============================================
 const styles = StyleSheet.create({
+
   container: {
-    flex: 1
+    flex: 1,
+    fontWeight: 'bold',
+    fontSize: 10,
+    height: 35,
+    padding: 8,
+    margin: 5,
   },
 
   input: {
@@ -80,7 +91,7 @@ const styles = StyleSheet.create({
     padding: 5,
 
     textAlign: 'center',
-    color: 'white',
+    color: '#3b1f2b',
     fontWeight: 'bold',
 
     textAlign: "center"
@@ -90,6 +101,7 @@ const styles = StyleSheet.create({
     padding: 8,
     margin: 5,
     textAlign: "left",
-    fontSize: 20
+    fontSize: 30,
+    fontWeight: 'bold',
   }
 });

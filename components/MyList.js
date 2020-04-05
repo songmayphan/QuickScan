@@ -108,6 +108,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between', 
     alignItems: 'center',
     textAlign: 'center',
+    fontWeight: 'bold',
     
     
   },
@@ -119,6 +120,7 @@ const styles = StyleSheet.create({
    textAlign: 'center',
     fontSize: 25,
     color: 'black',
+    fontWeight: 'bold',
     
     
   }, 
