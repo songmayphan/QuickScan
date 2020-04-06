@@ -21,30 +21,23 @@ const MyCart = (itemToAdd) => {
   //since we need an array of object in order for FlatList to work
   //we need to make an array to push the scanned objectt in
 
-  let arrayOfItems = []
-  arrayOfItems.push(itemToAdd)
-  console.log(`itemtoADd in Mycart  ${itemToAdd}` )
-  console.log(arrayOfItems)
-  // const [items, setItems] = useState([
-  //   {
-  //     NAME: "Milk",
-  //     ID: "1234",
-  //     PRICE: 5.0,
-  //     QUAN: 0
-  //   },
-  //   {
-  //     NAME: "Cheese",
-  //     ID: "3216",
-  //     PRICE: 4.0,
-  //     QUAN: 0
-  //   },
-  //   {
-  //     NAME: "Orange",
-  //     ID: "5454",
-  //     PRICE: 2.0,
-  //     QUAN: 0
-  //   }
-  // ]);
+   let arrayOfItems = []
+  // arrayOfItems.push(itemToAdd)
+  // console.log(`itemtoADd in Mycart  ${itemToAdd}` )
+  // console.log(arrayOfItems)
+  const [items, setItems] = useState([
+    {
+      NAME: "Milk",
+      ID: "1234",
+      PRICE: 5.0,
+      QUAN: 0
+    },
+  ]);
+  console.log(items);
+  if (itemToAdd != null){
+    setItems(items.concat(itemToAdd)) //add new item to list
+  }
+
 
   //function to delete item from my cart
   const deleteItem = ID => {
@@ -60,7 +53,7 @@ const MyCart = (itemToAdd) => {
     <View style={styles.container}>
       <Header title="My Cart" />
       <FlatList
-        data={arrayOfItems}
+        data={items}
         renderItem={({ item }) => (
           <ListItem item={item} deleteItem={deleteItem} />
         )}
