@@ -60,6 +60,7 @@ confirmSignUp(){
     return (
       <View style={styles.container}>
         <Text style={styles.text}> Welcome to QuickScan</Text>
+
         <TextInput
         onChangeText={value=> this.onChangeText('username', value)}
         style={styles.input}
@@ -71,7 +72,7 @@ confirmSignUp(){
         style={styles.input}
         placeholder='Enter password'
         />
-        <TouchableOpacity onPress={<SignIn/>}>
+        <TouchableOpacity  onPress={<SignIn/>}>
             <Text style = {styles.button}>
                SIGN IN
             </Text>
@@ -138,7 +139,8 @@ const styles = StyleSheet.create({
   },
   text:{
     fontSize: 23,
-    alignContent: 'center'
+    alignContent: 'center',
+    
   },
   button: {
     borderWidth: 1,
@@ -148,7 +150,8 @@ const styles = StyleSheet.create({
     alignContent:"center",
     textAlign: "center",
     backgroundColor: "#2196F3",
-    textDecorationColor: "#ffffff"
+    textDecorationColor: "#ffffff",
+    
  },
  signup:{
    color: "#2196f3",

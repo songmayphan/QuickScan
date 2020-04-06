@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, Button, TextInput, ScrollView, ActivityIndicator } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 
+
 export default function MyList() {
 
   // States
@@ -12,6 +13,7 @@ export default function MyList() {
   const [searchbarState, setSearchBarState] = useState({
     search: ''
   });
+
 
   // Get function for the items
   const componentDidMount = async () => {
@@ -66,19 +68,27 @@ export default function MyList() {
 
   return (
     <View style={styles.screen}>
+
       <View>
       <SearchBar
-      onChangeText={itemInputHandler} 
-      value={enteredItem}
+          onChangeText={itemInputHandler} 
+          value={enteredItem}
           onChangeText={text => SearchFilterFunction(text)}
           onClear={text => SearchFilterFunction('')}
           placeholder="Type Here..."
           />
       </View>
+
       <View style={styles.inputContainer}> 
-        <TextInput placeholder="ITEM" style={styles.input} onChangeText={itemInputHandler} value={enteredItem}/>
+        <TextInput placeholder="ITEM" style={styles.input} 
+          onChangeText={itemInputHandler} 
+            value={enteredItem}
+        />
+
         <Button title="ADD" onPress={addItemHandler}/>
+
       </View>
+
       <ScrollView>
         {desiredItems.map((item)=> 
         <View style={styles.itemList} key={item}> 
@@ -86,6 +96,7 @@ export default function MyList() {
         </View>
          )}
       </ScrollView>
+
     </View>
   );
 }
@@ -97,19 +108,31 @@ const styles = StyleSheet.create({
   inputContainer:{
     flexDirection: 'row', 
     justifyContent: 'space-between', 
-    alignItems: 'center'
+    alignItems: 'center',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    
+    
   },
   input:{
     borderBottomColor: 'black',
    borderBottomWidth: 1, 
    padding: 10, 
-   width: '80%' 
+   width: '80%',
+   textAlign: 'center',
+    fontSize: 25,
+    color: 'black',
+    fontWeight: 'bold',
+    
+    
   }, 
   itemList:{
     padding: 10,
-    backgroundColor: '#ccc',
+    backgroundColor: '#5f758e',
     borderColor: 'black',
     borderWidth: 1,   
-    marginVertical: 10
+    marginVertical: 10,
+    
+    
   }
 });
