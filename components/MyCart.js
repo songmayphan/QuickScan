@@ -16,6 +16,7 @@ import { useNavigation } from "@react-navigation/native";
 import Header from "./Header";
 import ListItem from "./ListItem";
 
+
 const MyCart = () => {
   const [items, setItems] = useState([
     {
@@ -47,12 +48,15 @@ const MyCart = () => {
   //total
 
   let totalPrice = 0 
-  
+
+ 
 //======================Returns========================================  
+
 
   return (
     <View style={styles.container}>
-       <Header style = {styles.text} title="My Cart" /> 
+       <Header  title= "My Cart" /> 
+
       <FlatList
         data={items}
         renderItem={({ item }) => (

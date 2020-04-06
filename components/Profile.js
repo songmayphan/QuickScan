@@ -2,6 +2,21 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 //AWS
 import { withAuthenticator } from 'aws-amplify-react-native'
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+
+
+const Stack = createStackNavigator();
+
+function HomeScreen() {
+  
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Home Screen</Text>
+    </View>
+  );
+}
+
 
 //Profile class--------------------------------------------
 function Profile() {
@@ -9,6 +24,7 @@ function Profile() {
 //create a new Date instance----------------------
 const date = new Date()
 const hours = date.getHours()
+
 
 //Styling------------------------------------------
 const styles = StyleSheet.create({
@@ -20,6 +36,7 @@ const styles = StyleSheet.create({
     color: "#ffff",
   },
 });
+
 
 //time of day-----------------------------------------
 let timeOfDay

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, Button, TextInput, ScrollView, ActivityIndicator } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 
+
 export default function MyList() {
 
   // States
@@ -12,6 +13,7 @@ export default function MyList() {
   const [searchbarState, setSearchBarState] = useState({
     search: ''
   });
+
 
   // Get function for the items
   const componentDidMount = async () => {
