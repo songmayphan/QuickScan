@@ -6,7 +6,8 @@ import {
   FlatList,
   TouchableOpacity,
   NativeAppEventEmitter,
-  Alert
+  Alert,
+  ScrollView
 } from "react-native";
 import { Button } from "react-native-elements";
 import Checkout from "./Checkout";
@@ -16,33 +17,39 @@ import { useNavigation } from "@react-navigation/native";
 import Header from "./Header";
 import ListItem from "./ListItem";
 
+const MyCart = (itemToAdd) => {
+  //since we need an array of object in order for FlatList to work
+  //we need to make an array to push the scanned objectt in
 
-const MyCart = () => {
-  const [items, setItems] = useState([
-    {
-      NAME: "Milk",
-      ID: "1234",
-      PRICE: 5.0,
-      QUAN: 0
-    },
-    {
-      NAME: "Cheese",
-      ID: "3216",
-      PRICE: 4.0,
-      QUAN: 0
-    },
-    {
-      NAME: "Orange",
-      ID: "5454",
-      PRICE: 2.0,
-      QUAN: 0
-    }
-  ]);
+  let arrayOfItems = []
+  arrayOfItems.push(itemToAdd)
+  console.log(`itemtoADd in Mycart  ${itemToAdd}` )
+  console.log(arrayOfItems)
+  // const [items, setItems] = useState([
+  //   {
+  //     NAME: "Milk",
+  //     ID: "1234",
+  //     PRICE: 5.0,
+  //     QUAN: 0
+  //   },
+  //   {
+  //     NAME: "Cheese",
+  //     ID: "3216",
+  //     PRICE: 4.0,
+  //     QUAN: 0
+  //   },
+  //   {
+  //     NAME: "Orange",
+  //     ID: "5454",
+  //     PRICE: 2.0,
+  //     QUAN: 0
+  //   }
+  // ]);
 
   //function to delete item from my cart
   const deleteItem = ID => {
     setItems(prevItems => {
-      return prevItems.filter(item => item.ID !== ID);
+      return prevItems.filter(itemToAdd => itemToAdd.ID !== ID);
     });
   };
   //total
@@ -58,7 +65,7 @@ const MyCart = () => {
        <Header  title= "My Cart" /> 
 
       <FlatList
-        data={items}
+        data={arrayOfItems}
         renderItem={({ item }) => (
           <ListItem item={item} deleteItem={deleteItem} />
         )}

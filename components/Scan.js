@@ -67,7 +67,7 @@ const Scan = () => {
 
       [
         { text: "Cancel", onPress: () => console.log("cancel")},
-        { text: "Yes",  onPress: () => console.log("item will be added to cart")},
+        { text: "Yes",  onPress: () => MyCart(itemToAdd)},
       ],
       { cancelable: false }
     );
@@ -105,7 +105,6 @@ const Scan = () => {
             console.log(data[i]);
             console.log(data[i].NAME);
             //console.log(typeof(data[i].NAME))
-            setfoundItem(data[i])
             printItem(data[i]);
           }
         }
@@ -252,7 +251,6 @@ const Scan = () => {
     setScanAgain(false);
     setScanned(true);
     setShowStore(false);
-    setfoundItem("")
   }
   //done shopping---------------------------------------------------------
   function Done({ navigate }) {
