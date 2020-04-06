@@ -55,10 +55,15 @@ const MyCart = (itemToAdd) => {
   //total
 
   let totalPrice = 0 
-  
+
+ 
+//======================Returns========================================  
+
+
   return (
     <View style={styles.container}>
-      <Header title="My Cart" />
+       <Header  title= "My Cart" /> 
+
       <FlatList
         data={arrayOfItems}
         renderItem={({ item }) => (
@@ -74,9 +79,18 @@ const MyCart = (itemToAdd) => {
   );
 }; //end mycart
 export default MyCart;
+
+
+//===================Styles===============================================
 const styles = StyleSheet.create({
+
   container: {
-    flex: 1
+    flex: 1,
+    fontWeight: 'bold',
+    fontSize: 10,
+    height: 35,
+    padding: 8,
+    margin: 5,
   },
 
   input: {
@@ -86,6 +100,11 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 5,
     padding: 5,
+
+    textAlign: 'center',
+    color: '#3b1f2b',
+    fontWeight: 'bold',
+
     textAlign: "center"
   },
   text: {
@@ -93,6 +112,7 @@ const styles = StyleSheet.create({
     padding: 8,
     margin: 5,
     textAlign: "left",
-    fontSize: 20
+    fontSize: 30,
+    fontWeight: 'bold',
   }
 });

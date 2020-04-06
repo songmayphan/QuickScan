@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Image } from 'react-native'
+import { StyleSheet, Text, View, TextInput, Button, Image, Alert } from 'react-native'
+import Dialog, { DialogContent } from 'react-native-popup-dialog'
 
 import { Auth } from 'aws-amplify';
 
@@ -17,8 +18,25 @@ export default function SignUpPage() {
   const onChangeText = (key, value) => {
     setUserInfo({...userInfo, [key]: value})
 };
-
+//=================sign-up alerts=========================
   const signUp = () => {
+    if(!userInfo.username || !userInfo.password || !userInfo.email || !userInfo.phone_number 
+      || !userInfo.name )
+      {
+        Alert.alert('Missing fields', 'Please fill in all fields in the form')
+      }
+      else if( !validateEmail(userInfo.email)){ console.log('entered else if')
+      Alert.alert('Please enter valid email','')}
+      else if(userInfo.password.length < 4 ){
+        Alert.alert('Please enter password longer than 4', 'Requires letter and numbers')
+      }
+      else if(!validatePhoneNumber(userInfo.phone_number)){
+        Alert.alert('Invalid phone number','Please enter valid 10 or 11 digit number.')
+      }
+
+      else{ 
+
+//===================Authentication================================
     Auth.signUp({
       username: userInfo.username,
       password: userInfo.password,
@@ -28,24 +46,51 @@ export default function SignUpPage() {
         name: userInfo.name
       }
     })
-    .then(() => console.log('success'))
-    .catch(err => console.log('error', err))
 
+  
+//=================sign up messages=================================
+    .then(() => {console.log('success') 
+      Alert.alert('email confirmation', 'Please check email box for confirmation code')
+      } )
+
+    .catch(err => {console.log('error', err)
+        Alert.alert('User Already Exists', ' Please try a new user')
+  })
+      }    
+  } 
+//=================Validate email and phone number===================
+  function validateEmail(elementValue){      
+    var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return emailPattern.test(elementValue); 
   }
 
+  function validatePhoneNumber(number){
+  
+    var phonePattern = /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/  
+    return phonePattern.test(number)
+    //return true
+    }
+//====================Confirm Sig-up====================================
   const confirmSignUp = () => {
     Auth.confirmSignUp(userInfo.username, userInfo.confirmationCode)
     .then(() => {
       console.log('success')
+      Alert.alert('Sign-up Successful','Please go to sign-in page')
       console.log(userInfo);
     })
-    .catch(err => console.log('error', err))
+    .catch(err => {console.log('error', err)
+      Alert.alert('Sign-up code error',err)
+  
+  })
   }
+
+  //===============Returns================================================
     return (
       <View style={styles.container}>
         <Image
           style={styles.logo}
           source={require('./assets/icon.png')}
+          resizeMode = {'contain'}
         />
         <TextInput
         onChangeText={value=> onChangeText('username', value)}
@@ -73,35 +118,63 @@ export default function SignUpPage() {
         style={styles.input}
         placeholder='name'
         />
-        <Button title='sign up' onPress={signUp}/>
-        <TextInput
-        onChangeText={value=> onChangeText('confirmationCode', value)}
-        style={styles.input}
-        placeholder='code'
+
+        <Button 
+          color= '#FFFF'
+          
+          fontWeight= 'bold'
+          title='sign up' 
+          onPress={signUp}
         />
-        <Button title='confirm sign up' onPress={confirmSignUp}/>
+
+
+        <TextInput
+        
+          onChangeText={value=> onChangeText('confirmationCode', value)}
+          style={styles.input}
+          placeholder='code'
+        />
+
+        <Button 
+          
+          color= '#FFFF'
+          title='confirm sign up' 
+          onPress={confirmSignUp}
+        />
+
       </View>
     );
   }
 
 //export default withAuthenticator(App, { includeGreetings: true })
 
+
+//==================+Styels ============================================
 const styles = StyleSheet.create({
   input: {
-    height: 50,
-    borderBottomWidth: 2,
-    borderBottomColor: '#2196F3',
-    margin: 10
+    height: 35,
+    borderWidth: 1,
+    borderColor: '#3b1f2b',
+    margin: 23,
+    marginTop: 1,
+    borderRadius: 3,
+    textAlign: 'center',
+    fontSize: 25,
+    color: '#FFFF',
+    //fontFamily: 'Times New Roman',
+    fontWeight: 'bold',
+
 
   },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    flexDirection: 'column',
+    backgroundColor: '#5f758e',
     justifyContent: 'center',
   },
   logo: {
-    width: 200, 
-    height: 200, 
+    width: 175, 
+    height: 175, 
     alignSelf: 'center' 
   }
 });

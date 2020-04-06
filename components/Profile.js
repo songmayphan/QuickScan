@@ -2,6 +2,21 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 //AWS
 import { withAuthenticator } from 'aws-amplify-react-native'
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+
+
+const Stack = createStackNavigator();
+
+function HomeScreen() {
+  
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Home Screen</Text>
+    </View>
+  );
+}
+
 
 //Profile class--------------------------------------------
 function Profile() {
@@ -9,6 +24,8 @@ function Profile() {
 //create a new Date instance----------------------
 const date = new Date()
 const hours = date.getHours()
+
+
 //Styling------------------------------------------
 const styles = StyleSheet.create({
   container: {
@@ -16,9 +33,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    color: "#ffffff",
+    color: "#ffff",
   },
 });
+
 
 //time of day-----------------------------------------
 let timeOfDay
@@ -39,9 +57,17 @@ else {
   
     return (
       <View>
-          <Text>
-            It's currently about {date.getHours()} o'clock!
-            Good {timeOfDay}!
+            <Text style = {{textAlign: 'center', textAlignVertical: 'center', 
+            color: '#383961', fontWeight: 'bold',  flex: 0, marginTop: 140, 
+            fontWeight: 'bold', fontSize: 30, backgroundColor: '#5f758e'}}>
+              {"\n"}
+              {"\n"}
+              Good {timeOfDay}! 
+              {"\n"}
+              {"\n"}
+              It's currently {date.getHours()} o'clock!
+              {"\n"}
+              {"\n"}
           </Text>
      </View>
       
