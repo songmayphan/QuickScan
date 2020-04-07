@@ -5,7 +5,8 @@ import {
   View,
   StyleSheet,
   Button,
-  ActivityIndicator
+  ActivityIndicator,
+  NativeModules
 } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import {
@@ -27,6 +28,7 @@ import { NativeRouter, Switch, Route } from "react-router-native";
 
 import MyCart from "./MyCart";
 
+
 const Scan = () => {
   //inintial states----------------------------------------------
 
@@ -47,7 +49,10 @@ const Scan = () => {
   const [dataSource, setdataSource] = useState(null);
   const [fetchedItems, setFetcheditems] = useState([]);
   const [foundItem, setfoundItem] = useState("");
+  module.exports = {foundItem};
+  
 
+  
   //scanner REQUEST CAMERA
   useEffect(() => {
     (async () => {
@@ -56,8 +61,15 @@ const Scan = () => {
     })();
   }, []);
 
+  //useEffect for when foundItem changes
+  useEffect(() => {
+    console.log(`founditem in USEEFFECT ${foundItem.NAME}`)
+    
+  }, [foundItem]);
   //function to print item to screen
-
+  //function to export added item
+  
+  
   function printItem(itemToAdd) {
     //console.log(`product param in printItem is ${itemToAdd}`);
     //console.log( typeof(itemToAdd))
@@ -67,7 +79,7 @@ const Scan = () => {
 
       [
         { text: "Cancel", onPress: () => console.log("cancel")},
-        { text: "Yes",  onPress: () => MyCart(itemToAdd)},
+        { text: "Yes",  onPress: () => setfoundItem(itemToAdd)},
       ],
       { cancelable: false }
     );
@@ -319,11 +331,31 @@ Therefore, if the condition is true, the element right after && will appear
         </View>
       )}
       
+      
 
       {/* condition ? true : false. */}   
     </View>
   );
+
 }; //end scan=====================================================================
+
+// export const returnScannedItem = (foundItem) =>{
+//   console.log("------------------export function---------")
+//   if (!foundItem){
+    
+//     console.log("foundItem IS undefined IN EXPORT")
+//     return {"ID": "00000",
+//             "NAME" : "TestName",
+//             "PRICE": 0.00,
+//             "UPC" : "000000000"}
+//   }else{
+//     console.log("FOUNDITEM!!!!!!!!!!!!!!!!!!")
+//     console.log(`FOUNDITEM NAME IS ${foundItem.NAME}`)
+//     return foundItem;
+
+//   }
+// }
+
 
 export default Scan;
 

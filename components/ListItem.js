@@ -12,7 +12,7 @@ import NumericInput from "react-native-numeric-input";
 const ListItem = ({ item, deleteItem}) => {
   const [quantity, setQuantity] = useState(1); //default quantity is 1 
   const [totalItem, settotalItem] = useState(0); //total item default is 0
-  console.log(`Quantity ${quantity}`)
+  //console.log(`Quantity ${quantity}`)
   return (
     <TouchableOpacity style={styles.listItem}>
       <View style={styles.listItemView}>
