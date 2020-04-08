@@ -63,3 +63,39 @@ export default function MyList() {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  screen: {
+    padding: 40
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  input: {
+    borderBottomColor: 'black',
+    borderBottomWidth: 1,
+    padding: 10,
+    width: '80%'
+  },
+  itemList: {
+    padding: 10,
+    backgroundColor: '#ccc',
+    borderColor: 'black',
+    borderWidth: 1,
+    marginVertical: 10,
+    flexDirection: 'column'
+  },
+  addButtonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 20,
+    alignItems: 'center'
+  },
+  button: {
+    alignItems: "center",
+    backgroundColor: "#DDDDDD",
+    padding: 10
+  }
+});
