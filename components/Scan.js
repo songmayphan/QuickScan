@@ -13,8 +13,10 @@ import {
   TouchableOpacity,
   TouchableHighlight
 } from "react-native-gesture-handler";
-import { useNavigation } from "@react-navigation/native"
-import { NativeRouter, Switch, Route } from "react-router-native";
+
+//redux
+import { useSelector, useDispatch } from 'react-redux'
+import {addItem, deleteItem} from '../redux/ducks'
 
 //import axios from "axios";
 //import DialogInput from "react-native-dialog-input";
@@ -25,7 +27,6 @@ import { NativeRouter, Switch, Route } from "react-router-native";
 //import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 //Components:
-
 import MyCart from "./MyCart";
 
 
@@ -42,14 +43,18 @@ const Scan = () => {
 
   //After api called states-------------
   const [addToCart, setaddToCart] = useState(false);
-  const navigation = useNavigation();
 
   //API STATES==============================================
   const [isLoading, setisLoading] = useState(true);
   const [dataSource, setdataSource] = useState(null);
   const [fetchedItems, setFetcheditems] = useState([]);
   const [foundItem, setfoundItem] = useState("");
-  module.exports = {foundItem};
+
+//reedux
+const items = useSelector(state => state)
+const dispatch = useDispatch()
+const add_item = item => dispatch(addItem(item))
+const delete_item = id => dispatch(deleteItem(id))
   
 
   
@@ -79,10 +84,11 @@ const Scan = () => {
 
       [
         { text: "Cancel", onPress: () => console.log("cancel")},
-        { text: "Yes",  onPress: () => setfoundItem(itemToAdd)},
+        { text: "Yes",  onPress: () => add_item(itemToAdd)},
       ],
       { cancelable: false }
     );
+    console.log(`items array is now ${items}`);
   }
 
   //FunctionS to fetch --------------------------------------

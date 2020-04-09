@@ -1,44 +1,51 @@
-import React, { useEffect, PropTypes } from 'react';
+import React, { useEffect, PropTypes } from "react";
 
 //Navivgation
-import { StyleSheet, View, FlatList, TextInput, Button } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons } from '@expo/vector-icons';
-import { SearchBar } from 'react-native-elements';
+import { StyleSheet, View, FlatList, TextInput, Button } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Ionicons } from "@expo/vector-icons";
+import { SearchBar } from "react-native-elements";
 
-
-
-import Profile from './Profile';
-import MyCart from './MyCart';
-import MyList from './MyList';
-import Scan from './Scan';
+//redux
+import { Provider } from "react-redux";
+import store from "../redux/store";
+//components
+import MyCart from "./MyCart";
+import Profile from "./Profile";
+import MyList from "./MyList";
+import Scan from "./Scan";
 //Amplify
 
 //import { withAuthenticator } from 'aws-amplify-react-native';
 
-
 //-------------------------------------------------------------
 
 //CartScreen
-const CartScreen = props => {
-  return <View style={styles.container}>
-    <MyCart />
-  </View>;
+const CartScreen = (props) => {
+  return (
+    <View style={styles.container}>
+      <MyCart />
+    </View>
+  );
 };
 //ProfileScreen------------------------------------------------------
-const ProfileScreen = props => {
-  return <View style={styles.container}>
-    <Profile/>
-  </View>;
+const ProfileScreen = (props) => {
+  return (
+    <View style={styles.container}>
+      <Profile />
+    </View>
+  );
 };
 
 //ListScreen------------------------------------------------------
 
-const ListScreen = props => {
-  return <View style={styles.container}>
-    <MyList />
-  </View>;
+const ListScreen = (props) => {
+  return (
+    <View style={styles.container}>
+      <MyList />
+    </View>
+  );
 };
 
 //styling-------------------------------------------------------
@@ -47,15 +54,14 @@ export const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 25,
     height: 60,
-    marginBottom: 0
-
+    marginBottom: 0,
   },
   text: {
     height: 60,
     padding: 8,
     margin: 5,
-    textAlign: 'center',
-    fontSize: 20
+    textAlign: "center",
+    fontSize: 20,
   },
   header: {
     height: 60,
@@ -66,25 +72,23 @@ export const styles = StyleSheet.create({
     height: 60,
     padding: 15,
     margin: 3,
-    marginTop: 5
+    marginTop: 5,
   },
   btn: {
-    backgroundColor: '#5f758e',
+    backgroundColor: "#5f758e",
     padding: 9,
     margin: 3,
   },
   btnText: {
-    color: '#ffff',
+    color: "#ffff",
     fontSize: 20,
-    textAlign: 'center',
+    textAlign: "center",
   },
 });
-
 
 //App-----------------------------------------------------------
 
 const Tab = createBottomTabNavigator();
-
 
 class MainTabs extends React.Component {
   constructor(props) {
@@ -93,53 +97,41 @@ class MainTabs extends React.Component {
 
   render() {
     return (
-      <NavigationContainer>
-        <Tab.Navigator
-          screenOptions={({ route }) => ({
-            tabBarIcon: ({ focused, color, size }) => {
-              let iconName;
+      <Provider store={store}>
+        <NavigationContainer>
+          <Tab.Navigator
+            screenOptions={({ route }) => ({
+              tabBarIcon: ({ focused, color, size }) => {
+                let iconName;
 
-              if (route.name === 'My Cart') {
-                iconName = focused
-                  ? 'ios-basket'
-                  : 'ios-basket'
-              } else if (route.name === 'My List') {
-                iconName = focused
-                  ? 'ios-list'
-                  : 'ios-list-box';
-              }
-              else if (route.name === 'Profile') {
-                iconName = focused
-                  ? 'md-person'
-                  : 'md-person'
-              }
-              else if (route.name === 'Shop') {
-                iconName = focused
-                  ? 'md-barcode'
-                  : 'ios-barcode'
-              }
+                if (route.name === "My Cart") {
+                  iconName = focused ? "ios-basket" : "ios-basket";
+                } else if (route.name === "My List") {
+                  iconName = focused ? "ios-list" : "ios-list-box";
+                } else if (route.name === "Profile") {
+                  iconName = focused ? "md-person" : "md-person";
+                } else if (route.name === "Shop") {
+                  iconName = focused ? "md-barcode" : "ios-barcode";
+                }
 
+                return <Ionicons name={iconName} size={size} color={color} />;
+              },
+            })}
+            //Icon change when clicking the button
+            tabBarOptions={{
+              activeTintColor: "#BDC667",
 
-              return <Ionicons name={iconName} size={size} color={color} />;
-            },
-          })}
-          //Icon change when clicking the button
-          tabBarOptions={{
-            activeTintColor: '#BDC667',
-            
-            inactiveTintColor: '#5f758e',
-          }}>
-
-
-          <Tab.Screen name="Shop" component={Scan} />
-          <Tab.Screen name="My List" component={ListScreen} />
-          <Tab.Screen name="My Cart" component={CartScreen} />
-          <Tab.Screen name="Profile" component={ProfileScreen} />
-
-        </Tab.Navigator>
-      </NavigationContainer>
+              inactiveTintColor: "#5f758e",
+            }}
+          >
+            <Tab.Screen name="Shop" component={Scan} />
+            <Tab.Screen name="My List" component={ListScreen} />
+            <Tab.Screen name="My Cart" component={CartScreen} />
+            <Tab.Screen name="Profile" component={ProfileScreen} />
+          </Tab.Navigator>
+        </NavigationContainer>
+      </Provider>
     );
-
   }
 }
 export default MainTabs;

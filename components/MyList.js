@@ -3,11 +3,6 @@ import { StyleSheet, Text, View, Button, TextInput, ActivityIndicator, FlatList,
 import { SearchBar } from 'react-native-elements';
 import NumericInput from 'react-native-numeric-input'
 
-
-import Amplify from '@aws-amplify/core'
-import config from './aws-exports'
-Amplify.configure(config)
-
 export default function MyList() {
 
   const [isLoading, setLoading] = useState(true);

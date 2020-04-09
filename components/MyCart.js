@@ -12,61 +12,71 @@ import {
 import { Button } from "react-native-elements";
 import Checkout from "./Checkout";
 import Barcode from "react-native-barcode-expo";
-import { Navigation } from "react-navigation";
-import { useNavigation } from "@react-navigation/native";
 import Header from "./Header";
 import ListItem from "./ListItem";
-import { foundItem } from "./Scan";
 
+//redux
+import { useSelector, useDispatch } from 'react-redux'
+import {addItem, deleteItem} from '../redux/ducks'
 const MyCart = () => {
-  //check to seen when MyCart renders
-  let itemToAdd = foundItem;
-  console.log(`founditem imported from Scan ${itemToAdd.NAME}}`);
+  //redux: 
+const items = useSelector(state => state)
+const dispatch = useDispatch()
+const add_item = item => dispatch(addItem(item))
+const delete_item = id => dispatch(deleteItem(id))
+  
+ 
+  //render
   useEffect(() => {
     console.log("MyCart.js finshished rendering");
-  }, [itemToAdd]);
-  //since we need an array of object in order for FlatList to work
-  //we need to make an array to push the scanned objectt in
+  }, []);
   
-  console.log("------------mycart----------------");
-  console.log(`itemtoADd in Mycart  ${itemToAdd}`);
-  let arrayOfItems = [];
-  arrayOfItems.push(itemToAdd);
+   console.log("------------mycart----------------");
+  console.log(`items in Mycart  ${items}`);
+  // let arrayOfItems = [];
+  // arrayOfItems.push(itemToAdd);
 
-  //console.log(arrayOfItems);
-  const [items, setItems] = useState(arrayOfItems);
-  const [isdefined, setisdefined] = useState(false);
-  console.log(items);
+  // //console.log(arrayOfItems);
+  // const [items, setItems] = useState(arrayOfItems);
+  // const [isdefined, setisdefined] = useState(false);
+  // console.log(items);
 
-  if (itemToAdd != undefined) {
-    setisdefined(true); 
-  }
+  // if (itemToAdd != undefined) {
+  //   setisdefined(true); 
+  // }
   //function to delete item from my cart
-  const deleteItem = (ID) => {
-    setItems((prevItems) => {
-      return prevItems.filter((itemToAdd) => itemToAdd.ID !== ID);
-    });
-  };
-  //total
+  // const deleteItem = (ID) => {
+  //   setItems((prevItems) => {
+  //     return prevItems.filter((itemToAdd) => itemToAdd.ID !== ID);
+  //   });
+  // };
+  // total
 
   let totalPrice = 0;
 
   //======================Returns========================================
-
+  function Item({ title }) {
+    return (
+      <View style={styles.item}>
+        <Text style={styles.title}>{title}</Text>
+      </View>
+    );
+  }
   return (
     <View style={styles.container}>
       <Header title="My Cart" />
-      {isdefined && (
-        <ScrollView style={styles.container}>
-          <FlatList
+      
+        <View style={styles.container}>
+          <FlatList 
             data={items}
             renderItem={({ item }) => (
-              <ListItem item={item} deleteItem={deleteItem} />
+              
+              <ListItem item={item} />
             )}
             keyExtractor={(item, index) => index.toString()}
           />
-        </ScrollView>
-      )}
+        </View>
+      
       <Text style={styles.text}> TOTAL PRICE: ${totalPrice} </Text>
 
       <Text style={styles.input}> Scan this barcode to check out! </Text>
@@ -74,6 +84,7 @@ const MyCart = () => {
     </View>
   );
 }; //end mycart
+
 export default MyCart;
 
 //===================Styles===============================================
