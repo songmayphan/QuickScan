@@ -1,29 +1,23 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, {useEffect } from "react";
 import {
   StyleSheet,
   Text,
   View,
   FlatList,
-  TouchableOpacity,
-  NativeAppEventEmitter,
-  Alert,
-  ScrollView,
 } from "react-native";
-import { Button } from "react-native-elements";
-import Checkout from "./Checkout";
 import Barcode from "react-native-barcode-expo";
 import Header from "./Header";
 import ListItem from "./ListItem";
 
 //redux
 import { useSelector, useDispatch } from 'react-redux'
-import {addItem, deleteItem} from '../redux/ducks'
+import {changeTotal} from '../redux/ducks'
 const MyCart = () => {
   //redux: 
 const items = useSelector(state => state)
 const dispatch = useDispatch()
-const add_item = item => dispatch(addItem(item))
-const delete_item = id => dispatch(deleteItem(id))
+const change_total = item => dispatch(changeTotal(item))
+
   
  
   //render
@@ -32,7 +26,8 @@ const delete_item = id => dispatch(deleteItem(id))
   }, []);
   
    console.log("------------mycart----------------");
-  console.log(`items in Mycart  ${items}`);
+   console.log(JSON.stringify(items))
+   
   // let arrayOfItems = [];
   // arrayOfItems.push(itemToAdd);
 
@@ -50,8 +45,8 @@ const delete_item = id => dispatch(deleteItem(id))
   //     return prevItems.filter((itemToAdd) => itemToAdd.ID !== ID);
   //   });
   // };
-  // total
 
+  // total
   let totalPrice = 0;
 
   //======================Returns========================================
@@ -117,7 +112,7 @@ const styles = StyleSheet.create({
     padding: 8,
     margin: 5,
     textAlign: "left",
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: "bold",
   },
 });

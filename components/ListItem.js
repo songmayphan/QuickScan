@@ -9,30 +9,37 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import NumericInput from "react-native-numeric-input";
 import { useSelector, useDispatch } from "react-redux";
-import { addItem, deleteItem } from "../redux/ducks";
+import { addItem, deleteItem, changeQuantity } from "../redux/ducks";
 
 const ListItem = ({ item }) => {
-  const [quantity, setQuantity] = useState(1); //default quantity is 1
-  const [totalItem, settotalItem] = useState(0); //total item default is 0
+  //const [quantity, setQuantity] = useState(1); //default quantity is 1
+  //const [totalItem, settotalItem] = useState(0); //total item default is 0
   const items = useSelector((state) => state);
   const dispatch = useDispatch();
   const add_item = (item) => dispatch(addItem(item));
   const delete_item = (id) => dispatch(deleteItem(id));
+  const change_quantity = (quantity, id, price) =>dispatch(changeQuantity(quantity, id, price))
   //console.log(`Quantity ${quantity}`)
+  console.log(item.price)
+  console.log(item.quantity)
+
+  let updatedPrice = item.price * item.quantity;
+  updatedPrice = updatedPrice.toFixed(2);
+
   return (
     <TouchableOpacity style={styles.listItem}>
       <View style={styles.listItemView}>
-        <Text> {item.NAME} </Text>
-        <Text> ${item.PRICE}</Text>
+        <Text> {item.name} </Text>
+        <Text> ${updatedPrice}</Text>
         <View style={styles.iconView}>
           <NumericInput
-            value={quantity}
-            onChange={(value) => setQuantity(value)}
+            value={item.quantity}
+            onChange={(value) => change_quantity(value, item.id, item.price)}
             onLimitReached={(isMax, msg) => console.log(isMax, msg)}
             minValue={0}
-            totalWidth={100}
+            totalWidth={90}
             totalHeight={40}
-            iconSize={25}
+            iconSize={20}
             step={1}
             valueType="real"
             rounded
@@ -47,7 +54,7 @@ const ListItem = ({ item }) => {
             name="md-remove-circle"
             size={35}
             color="#d00000"
-            onPress={() => delete_item(item.ID)}
+            onPress={() => delete_item(item.id)}
           />
         </View>
       </View>

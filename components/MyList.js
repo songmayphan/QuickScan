@@ -44,7 +44,9 @@ export default function MyList() {
               <Text>Item: {item.NAME}</Text>
               <Text>Manufacturer: {item.MANUFACTURER}</Text>
               <View style={styles.addButtonContainer}>
-                <NumericInput onChange={(value) => {
+                <NumericInput 
+                rounded
+                onChange={(value) => {
                   item.QUANTITY = value;
                   }} />
                 <TouchableOpacity onPress={()=> {addItem(item)}} style={styles.button} >

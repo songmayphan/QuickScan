@@ -6,7 +6,6 @@ import {
   StyleSheet,
   Button,
   ActivityIndicator,
-  NativeModules
 } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import {
@@ -18,13 +17,6 @@ import {
 import { useSelector, useDispatch } from 'react-redux'
 import {addItem, deleteItem} from '../redux/ducks'
 
-//import axios from "axios";
-//import DialogInput from "react-native-dialog-input";
-//import Prompt from "react-native-prompt-crossplatform";
-//import Dialog from "react-native-dialog";
-//import prompt from "react-native-prompt-android";
-//import { NavigationContainer, navigation } from "@react-navigation/native";
-//import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 //Components:
 import MyCart from "./MyCart";
@@ -54,9 +46,8 @@ const Scan = () => {
 const items = useSelector(state => state)
 const dispatch = useDispatch()
 const add_item = item => dispatch(addItem(item))
-const delete_item = id => dispatch(deleteItem(id))
-  
 
+  
   
   //scanner REQUEST CAMERA
   useEffect(() => {
@@ -88,7 +79,7 @@ const delete_item = id => dispatch(deleteItem(id))
       ],
       { cancelable: false }
     );
-    console.log(`items array is now ${items}`);
+    
   }
 
   //FunctionS to fetch --------------------------------------
@@ -103,7 +94,7 @@ const delete_item = id => dispatch(deleteItem(id))
         setisLoading(false);
         // cleaning the response
         data.map(item => {
-          delete item._id;
+          //delete item._id;
           delete item.DESCRIPTION;
           delete item.STORE;
           delete item.MANUFACTURER;
@@ -120,8 +111,10 @@ const delete_item = id => dispatch(deleteItem(id))
           if (data[i].ID == dataScanned_trimmed) {
             // we found it
             // item[i].ID is the matched result
+            console.log("----------------in fetch API------------------")
             console.log(data[i]);
             console.log(data[i].NAME);
+            console.log(typeof(data[i]))
             //console.log(typeof(data[i].NAME))
             printItem(data[i]);
           }

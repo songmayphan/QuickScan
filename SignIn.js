@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     color: '#FFFF',
     //fontFamily: 'Times New Roman',
-    fontWeight: 'bold',
+    fontWeight: 'normal',
     //padding: 20,
     //lineHeight: 25,
   },
