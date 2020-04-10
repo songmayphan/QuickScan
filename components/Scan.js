@@ -5,27 +5,22 @@ import {
   View,
   StyleSheet,
   Button,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import {
   TouchableOpacity,
   TouchableHighlight
 } from "react-native-gesture-handler";
-import { useNavigation } from "@react-navigation/native"
-import { NativeRouter, Switch, Route } from "react-router-native";
 
-//import axios from "axios";
-//import DialogInput from "react-native-dialog-input";
-//import Prompt from "react-native-prompt-crossplatform";
-//import Dialog from "react-native-dialog";
-//import prompt from "react-native-prompt-android";
-//import { NavigationContainer, navigation } from "@react-navigation/native";
-//import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+//redux
+import { useSelector, useDispatch } from 'react-redux'
+import {addItem, deleteItem} from '../redux/ducks'
+
 
 //Components:
-
 import MyCart from "./MyCart";
+
 
 const Scan = () => {
   //inintial states----------------------------------------------
@@ -40,7 +35,6 @@ const Scan = () => {
 
   //After api called states-------------
   const [addToCart, setaddToCart] = useState(false);
-  const navigation = useNavigation();
 
   //API STATES==============================================
   const [isLoading, setisLoading] = useState(true);
@@ -48,6 +42,13 @@ const Scan = () => {
   const [fetchedItems, setFetcheditems] = useState([]);
   const [foundItem, setfoundItem] = useState("");
 
+//reedux
+const items = useSelector(state => state)
+const dispatch = useDispatch()
+const add_item = item => dispatch(addItem(item))
+
+  
+  
   //scanner REQUEST CAMERA
   useEffect(() => {
     (async () => {
@@ -56,8 +57,15 @@ const Scan = () => {
     })();
   }, []);
 
+  //useEffect for when foundItem changes
+  useEffect(() => {
+    console.log(`founditem in USEEFFECT ${foundItem.NAME}`)
+    
+  }, [foundItem]);
   //function to print item to screen
-
+  //function to export added item
+  
+  
   function printItem(itemToAdd) {
     //console.log(`product param in printItem is ${itemToAdd}`);
     //console.log( typeof(itemToAdd))
@@ -67,10 +75,11 @@ const Scan = () => {
 
       [
         { text: "Cancel", onPress: () => console.log("cancel")},
-        { text: "Yes",  onPress: () => console.log("item will be added to cart")},
+        { text: "Yes",  onPress: () => add_item(itemToAdd)},
       ],
       { cancelable: false }
     );
+    
   }
 
   //FunctionS to fetch --------------------------------------
@@ -85,7 +94,7 @@ const Scan = () => {
         setisLoading(false);
         // cleaning the response
         data.map(item => {
-          delete item._id;
+          //delete item._id;
           delete item.DESCRIPTION;
           delete item.STORE;
           delete item.MANUFACTURER;
@@ -102,10 +111,11 @@ const Scan = () => {
           if (data[i].ID == dataScanned_trimmed) {
             // we found it
             // item[i].ID is the matched result
+            console.log("----------------in fetch API------------------")
             console.log(data[i]);
             console.log(data[i].NAME);
+            console.log(typeof(data[i]))
             //console.log(typeof(data[i].NAME))
-            setfoundItem(data[i])
             printItem(data[i]);
           }
         }
@@ -252,7 +262,6 @@ const Scan = () => {
     setScanAgain(false);
     setScanned(true);
     setShowStore(false);
-    setfoundItem("")
   }
   //done shopping---------------------------------------------------------
   function Done({ navigate }) {
@@ -321,11 +330,31 @@ Therefore, if the condition is true, the element right after && will appear
         </View>
       )}
       
+      
 
       {/* condition ? true : false. */}   
     </View>
   );
+
 }; //end scan=====================================================================
+
+// export const returnScannedItem = (foundItem) =>{
+//   console.log("------------------export function---------")
+//   if (!foundItem){
+    
+//     console.log("foundItem IS undefined IN EXPORT")
+//     return {"ID": "00000",
+//             "NAME" : "TestName",
+//             "PRICE": 0.00,
+//             "UPC" : "000000000"}
+//   }else{
+//     console.log("FOUNDITEM!!!!!!!!!!!!!!!!!!")
+//     console.log(`FOUNDITEM NAME IS ${foundItem.NAME}`)
+//     return foundItem;
+
+//   }
+// }
+
 
 export default Scan;
 

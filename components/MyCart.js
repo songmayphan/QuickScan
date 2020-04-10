@@ -1,69 +1,77 @@
-import React, { useState, useRef } from "react";
+import React, {useEffect } from "react";
 import {
   StyleSheet,
   Text,
   View,
   FlatList,
-  TouchableOpacity,
-  NativeAppEventEmitter,
-  Alert
 } from "react-native";
-import { Button } from "react-native-elements";
-import Checkout from "./Checkout";
 import Barcode from "react-native-barcode-expo";
-import { Navigation } from "react-navigation";
-import { useNavigation } from "@react-navigation/native";
 import Header from "./Header";
 import ListItem from "./ListItem";
 
-
+//redux
+import { useSelector, useDispatch } from 'react-redux'
+import {changeTotal} from '../redux/ducks'
 const MyCart = () => {
-  const [items, setItems] = useState([
-    {
-      NAME: "Milk",
-      ID: "1234",
-      PRICE: 5.0,
-      QUAN: 0
-    },
-    {
-      NAME: "Cheese",
-      ID: "3216",
-      PRICE: 4.0,
-      QUAN: 0
-    },
-    {
-      NAME: "Orange",
-      ID: "5454",
-      PRICE: 2.0,
-      QUAN: 0
-    }
-  ]);
+  //redux: 
+const items = useSelector(state => state)
+const dispatch = useDispatch()
+const change_total = item => dispatch(changeTotal(item))
 
-  //function to delete item from my cart
-  const deleteItem = ID => {
-    setItems(prevItems => {
-      return prevItems.filter(item => item.ID !== ID);
-    });
-  };
-  //total
-
-  let totalPrice = 0 
-
+  
  
-//======================Returns========================================  
+  //render
+  useEffect(() => {
+    console.log("MyCart.js finshished rendering");
+  }, []);
+  
+   console.log("------------mycart----------------");
+   console.log(JSON.stringify(items))
+   
+  // let arrayOfItems = [];
+  // arrayOfItems.push(itemToAdd);
 
+  // //console.log(arrayOfItems);
+  // const [items, setItems] = useState(arrayOfItems);
+  // const [isdefined, setisdefined] = useState(false);
+  // console.log(items);
 
+  // if (itemToAdd != undefined) {
+  //   setisdefined(true); 
+  // }
+  //function to delete item from my cart
+  // const deleteItem = (ID) => {
+  //   setItems((prevItems) => {
+  //     return prevItems.filter((itemToAdd) => itemToAdd.ID !== ID);
+  //   });
+  // };
+
+  // total
+  let totalPrice = 0;
+
+  //======================Returns========================================
+  function Item({ title }) {
+    return (
+      <View style={styles.item}>
+        <Text style={styles.title}>{title}</Text>
+      </View>
+    );
+  }
   return (
     <View style={styles.container}>
-       <Header  title= "My Cart" /> 
-
-      <FlatList
-        data={items}
-        renderItem={({ item }) => (
-          <ListItem item={item} deleteItem={deleteItem} />
-        )}
-        keyExtractor={(item, index) => index.toString()}
-      />
+      <Header title="My Cart" />
+      
+        <View style={styles.container}>
+          <FlatList 
+            data={items}
+            renderItem={({ item }) => (
+              
+              <ListItem item={item} />
+            )}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </View>
+      
       <Text style={styles.text}> TOTAL PRICE: ${totalPrice} </Text>
 
       <Text style={styles.input}> Scan this barcode to check out! </Text>
@@ -71,15 +79,14 @@ const MyCart = () => {
     </View>
   );
 }; //end mycart
-export default MyCart;
 
+export default MyCart;
 
 //===================Styles===============================================
 const styles = StyleSheet.create({
-
   container: {
     flex: 1,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 10,
     height: 35,
     padding: 8,
@@ -94,18 +101,18 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 5,
 
-    textAlign: 'center',
-    color: '#3b1f2b',
-    fontWeight: 'bold',
+    textAlign: "center",
+    color: "#3b1f2b",
+    fontWeight: "bold",
 
-    textAlign: "center"
+    textAlign: "center",
   },
   text: {
     height: 60,
     padding: 8,
     margin: 5,
     textAlign: "left",
-    fontSize: 30,
-    fontWeight: 'bold',
-  }
+    fontSize: 25,
+    fontWeight: "bold",
+  },
 });

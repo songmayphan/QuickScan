@@ -1,138 +1,98 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button, TextInput, ScrollView, ActivityIndicator } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, Button, TextInput, ActivityIndicator, FlatList, TouchableOpacity } from 'react-native';
 import { SearchBar } from 'react-native-elements';
-
+import NumericInput from 'react-native-numeric-input'
 
 export default function MyList() {
 
-  // States
-  const [enteredItem, setEnteredItem] = useState('');
-  const [desiredItems, setDesiredItems] = useState([]);
-  const [fetchedItems, setFetcheditems] = useState([]);
-  const [isItLoading, setIfItsLoading] = useState(true);
-  const [searchbarState, setSearchBarState] = useState({
-    search: ''
-  });
+  const [isLoading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
+  const [list, setList] = useState([]);
 
+  const addItem = (item) => {
+    setList(oldList => [...oldList, item]);
+    console.log('item added', item)
+  }
 
-  // Get function for the items
-  const componentDidMount = async () => {
-    try {
-      const response = await fetch('http://18.189.32.71:3000/items/')
-      await response.json()
-      .then((data) => {
-        //setFetcheditems(data);
-        setIfItsLoading(false);
-        // cleaning the response
-        data.map((item) =>{
-          delete item._id;
+  useEffect(() => {
+    fetch('http://18.189.32.71:3000/items/')
+      .then((response) => response.json())
+      .then((json) => { 
+        json.map((item) =>{
           delete item.DESCRIPTION;
-          setFetcheditems(() => [...fetchedItems, item])
-          console.log(item);
+          item.QUANTITY = 0;
         })
-      });
-    }
-    catch (error) {
-      console.error(error);
-    }
-  }
-  
-  // Searchbar function handlers
-  const itemInputHandler = (textEntered)=> {
-    setEnteredItem(textEntered);
-  };
-
-  const addItemHandler = () =>{
-    setDesiredItems(currentItems => [...desiredItems, enteredItem]);
-  };
-
-  const SearchFilterFunction = (text) => {
-    //passing the inserted text in textinput
-    const newData = fetchedItems.filter((item) => {
-      //applying filter for the inserted text in search bar
-      const itemData = item.NAME ? item.NAME.toUpperCase() : ''.toUpperCase();
-      const textData = text.toUpperCase();
-      return itemData.indexOf(textData) > -1;
-    });
-    //setSearchBarState(() => [...searchbarState, {search: data}])
-  }
-
-    if (isItLoading === true) {
-      componentDidMount();
-      return (
-        <View style={{ flex: 1, paddingTop: 300 }}>
-          <ActivityIndicator />
-        </View>
-      );
-    }
+        setData(json)
+      })
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
+  });
 
   return (
     <View style={styles.screen}>
-
       <View>
-      <SearchBar
-          onChangeText={itemInputHandler} 
-          value={enteredItem}
-          onChangeText={text => SearchFilterFunction(text)}
-          onClear={text => SearchFilterFunction('')}
-          placeholder="Type Here..."
+          <SearchBar
+            placeholder="Type Here..."
           />
-      </View>
-
-      <View style={styles.inputContainer}> 
-        <TextInput placeholder="ITEM" style={styles.input} 
-          onChangeText={itemInputHandler} 
-            value={enteredItem}
-        />
-
-        <Button title="ADD" onPress={addItemHandler}/>
-
-      </View>
-
-      <ScrollView>
-        {desiredItems.map((item)=> 
-        <View style={styles.itemList} key={item}> 
-        <Text> {item}  </Text> 
         </View>
-         )}
-      </ScrollView>
-
+      {isLoading ? <ActivityIndicator/> : (
+        <FlatList
+          data={data}
+          keyExtractor={({ _id }, index) => _id}
+          renderItem={({ item }) => (
+            <View style={styles.itemList} >
+              <Text>Item: {item.NAME}</Text>
+              <Text>Manufacturer: {item.MANUFACTURER}</Text>
+              <View style={styles.addButtonContainer}>
+                <NumericInput 
+                rounded
+                onChange={(value) => {
+                  item.QUANTITY = value;
+                  }} />
+                <TouchableOpacity onPress={()=> {addItem(item)}} style={styles.button} >
+                  <Text>Add Item</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          )}
+        />
+      )}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   screen: {
-    padding: 60
+    padding: 40
   },
-  inputContainer:{
-    flexDirection: 'row', 
-    justifyContent: 'space-between', 
-    alignItems: 'center',
-    textAlign: 'center',
-    fontWeight: 'bold',
-    
-    
+  inputContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
-  input:{
+  input: {
     borderBottomColor: 'black',
-   borderBottomWidth: 1, 
-   padding: 10, 
-   width: '80%',
-   textAlign: 'center',
-    fontSize: 25,
-    color: 'black',
-    fontWeight: 'bold',
-    
-    
-  }, 
-  itemList:{
+    borderBottomWidth: 1,
     padding: 10,
-    backgroundColor: '#5f758e',
+    width: '80%'
+  },
+  itemList: {
+    padding: 10,
+    backgroundColor: '#ccc',
     borderColor: 'black',
-    borderWidth: 1,   
+    borderWidth: 1,
     marginVertical: 10,
-    
-    
+    flexDirection: 'column'
+  },
+  addButtonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 20,
+    alignItems: 'center'
+  },
+  button: {
+    alignItems: "center",
+    backgroundColor: "#DDDDDD",
+    padding: 10
   }
 });
