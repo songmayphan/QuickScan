@@ -18,7 +18,7 @@ export default function SignUpPage() {
   const onChangeText = (key, value) => {
     setUserInfo({...userInfo, [key]: value})
 };
-//=================sign-up alerts=========================
+//=================sign-up alerts====================================
   const signUp = () => {
     if(!userInfo.username || !userInfo.password || !userInfo.email || !userInfo.phone_number 
       || !userInfo.name )
@@ -36,7 +36,7 @@ export default function SignUpPage() {
 
       else{ 
 
-//===================Authentication================================
+//===================Authentication======================================
     Auth.signUp({
       username: userInfo.username,
       password: userInfo.password,
