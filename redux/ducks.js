@@ -1,10 +1,10 @@
-import remove from "lodash/remove";
+
 //action types
 
 export const ADD_ITEM = "ADD_ITEM";
 export const DELETE_ITEM = "DELETE_ITEM";
 export const CHANGE_QUANTITY = "CHANGE_QUANTITY";
-export const TOTAL_PRICE = "TOTAL_PRICE";
+export const CHANGE_TOTAL = "CHANGE_TOTAL";
 
 //create actions
 
@@ -26,11 +26,11 @@ console.log(`duckssssss ${id}`)
     payload: id,
   };
 }
-export function changeTotal(id) {
-console.log(`duckssssss ${id}`)
+export function changeTotal(updated_price) {
+console.log(`duckssssss ${updated_price}`)
   return {
-    type: DELETE_ITEM,
-    payload: id,
+    type: CHANGE_TOTAL,
+    updated_price: updated_price
   };
 }
 export function changeQuantity(quantity, id, price) {
@@ -66,14 +66,17 @@ function itemReducer(state = initState, action) {
       let item = state.find(item => item.id == action.payload);
       //let newCart = state.filter(item => item.id != action.payload);
       item.quantity = action.quantity;
-    //   const fixedPrice = item.price
-    //   console.log(item.price)
-    //   console.log(item.quantity)
-    //   item.price = fixedPrice * item.quantity;
-      
-      //newCart.push(item);
       return [...state];
-      
+    case CHANGE_TOTAL:
+        let total = action.updated_price
+        let newTotal = total + action.updated_price
+        return [
+            ...state,
+            {
+                newTotal
+            },
+        ];
+        
     default:
       return state;
   }

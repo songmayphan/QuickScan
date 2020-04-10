@@ -9,7 +9,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import NumericInput from "react-native-numeric-input";
 import { useSelector, useDispatch } from "react-redux";
-import { addItem, deleteItem, changeQuantity } from "../redux/ducks";
+import { addItem, deleteItem, changeQuantity, changeTotal } from "../redux/ducks";
 
 const ListItem = ({ item }) => {
   //const [quantity, setQuantity] = useState(1); //default quantity is 1
@@ -19,6 +19,7 @@ const ListItem = ({ item }) => {
   const add_item = (item) => dispatch(addItem(item));
   const delete_item = (id) => dispatch(deleteItem(id));
   const change_quantity = (quantity, id, price) =>dispatch(changeQuantity(quantity, id, price))
+  //const change_total = (updated_price) => dispatch(changeTotal(updated_price))
   //console.log(`Quantity ${quantity}`)
   console.log(item.price)
   console.log(item.quantity)
@@ -26,6 +27,10 @@ const ListItem = ({ item }) => {
   let updatedPrice = item.price * item.quantity;
   updatedPrice = updatedPrice.toFixed(2);
 
+  function handleChange(value , updatedPrice){
+    change_quantity(value, item.id, item.price);
+    //change_total(updatedPrice)
+  }
   return (
     <TouchableOpacity style={styles.listItem}>
       <View style={styles.listItemView}>
@@ -34,7 +39,7 @@ const ListItem = ({ item }) => {
         <View style={styles.iconView}>
           <NumericInput
             value={item.quantity}
-            onChange={(value) => change_quantity(value, item.id, item.price)}
+            onChange={(value) => handleChange(value, updatedPrice)}
             onLimitReached={(isMax, msg) => console.log(isMax, msg)}
             minValue={0}
             totalWidth={90}
