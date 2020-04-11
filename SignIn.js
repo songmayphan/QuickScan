@@ -7,6 +7,7 @@ import {AuthenticationContext} from "./contexts/Authentication"
 
 export default function SignInPage (){
 
+  
  
 
   const [userInfo, setUserInfo] = useState({
@@ -23,19 +24,36 @@ export default function SignInPage (){
   const onChangeText= (key, value) => {
       setUserInfo({...userInfo, [key]: value})
   };
+
+
   const signIn = () => {
-    //console.log(userInfo.username, userInfo.password)
-    Auth.signIn(userInfo.username, userInfo.password)
-    .then(user => {
-        setUserInfo({...userInfo, user: {user}, isAuthenticated: true});
-        setAuthentication(true);
-    })
-    .then(() => {
-      console.log(userInfo.isAuthenticated)
-    })
-    .catch(err => {console.log('error', err)
-    Alert.alert('Invalid Sign-In','User Name or Password is Incorrect')
-  })
+
+    if(!userInfo.username || !userInfo.password )
+      {
+        Alert.alert('Missing fields', 'Please fill in all fields in the form')
+      }
+
+  
+
+      else{ 
+
+        //console.log(userInfo.username, userInfo.password)
+        Auth.signIn(userInfo.username, userInfo.password)
+
+        .then(user => {
+          setUserInfo({...userInfo, user: {user}, isAuthenticated: true});
+          setAuthentication(true);
+        })
+        .then(() => {
+        console.log(userInfo.isAuthenticated)
+        })
+        .catch(err => {console.log('error', err)
+        Alert.alert('Invalid Sign-In','User Name or Password is Incorrect')
+        })
+
+
+      }  
+  
   } ; 
 
     return (
