@@ -4,7 +4,7 @@
 export const ADD_ITEM = "ADD_ITEM";
 export const DELETE_ITEM = "DELETE_ITEM";
 export const CHANGE_QUANTITY = "CHANGE_QUANTITY";
-export const CHANGE_TOTAL = "CHANGE_TOTAL";
+
 
 //create actions
 
@@ -23,7 +23,7 @@ export function deleteItem(id) {
 console.log(`duckssssss ${id}`)
   return {
     type: DELETE_ITEM,
-    payload: id,
+    id: id,
   };
 }
 export function changeTotal(updated_price) {
@@ -38,13 +38,17 @@ console.log(`duckssssss quantity ${quantity}`)
   return {
     type: CHANGE_QUANTITY,
     quantity: quantity,
-    payload: id,
-    price: price
+    id: id,
+    price: price,
+    total: quantity * price
   };
 }
 
 //reducer
-const initState = [];
+const initState = []
+  
+
+
 
 function itemReducer(state = initState, action) {
   switch (action.type) {
@@ -57,25 +61,20 @@ function itemReducer(state = initState, action) {
           price: action.price,
           quantity: 1
         },
+        
       ];
+      
+     
+
     case DELETE_ITEM:
-      const itemID = action.payload;
+      const itemID = action.id;
       return state.filter(item => item.id !== itemID);
     
     case CHANGE_QUANTITY:
-      let item = state.find(item => item.id == action.payload);
+      let item = state.find(item => item.id == action.id);
       //let newCart = state.filter(item => item.id != action.payload);
       item.quantity = action.quantity;
       return [...state];
-    case CHANGE_TOTAL:
-        let total = action.updated_price
-        let newTotal = total + action.updated_price
-        return [
-            ...state,
-            {
-                newTotal
-            },
-        ];
         
     default:
       return state;

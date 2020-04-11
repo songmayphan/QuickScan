@@ -1,29 +1,32 @@
-import React, { Component } from 'react';
-import Barcode from 'react-native-barcode-expo';
+import React, { Component, useState, useRef } from 'react';
 
-import { StyleSheet, View, TextInput, Text } from 'react-native';
+import Barcode from './Barcode.js';
 
-export default class BarcodeGen extends Component {
-  state = {
-    text: 'Check Out',
-  };
+import { StyleSheet, View, Text } from 'react-native';
 
-  render() {
-    return (
-      <View style={styles.container}>
+const Checkout = total => {
+  let totalString = total.toString();
+  console.log(total.total)
+  return <View style={styles.container}>
         <Text style={styles.input}> Scan this barcode to check out! </Text>
-        <Barcode value="Your checkout Barcode" format="CODE128" />
-      </View>
-    );
-  }
-}
+        
+       <Barcode
+        value= {total.total}
+        options={{ format: 'CODE128', background: 'pink' }}
+        />
+         
+      </View>;
+};
+
+export default Checkout;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    padding: 40,
+    margin: 10
   },
 
   input: {
@@ -34,5 +37,10 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 5,
     textAlign: 'center'
+  },
+  barcode:{
+    flex:1, 
+    justifyContent: 'center',
+    margin: 20, 
   }
 });

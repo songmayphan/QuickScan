@@ -15,7 +15,7 @@ import {
 
 //redux
 import { useSelector, useDispatch } from 'react-redux'
-import {addItem, deleteItem} from '../redux/ducks'
+import {addItem} from '../redux/ducks'
 
 
 //Components:
@@ -34,11 +34,9 @@ const Scan = () => {
   const [isDone, setisDone] = useState(false);
 
   //After api called states-------------
-  const [addToCart, setaddToCart] = useState(false);
 
   //API STATES==============================================
   const [isLoading, setisLoading] = useState(true);
-  const [dataSource, setdataSource] = useState(null);
   const [fetchedItems, setFetcheditems] = useState([]);
   const [foundItem, setfoundItem] = useState("");
 
@@ -113,8 +111,8 @@ const add_item = item => dispatch(addItem(item))
             // item[i].ID is the matched result
             console.log("----------------in fetch API------------------")
             console.log(data[i]);
-            console.log(data[i].NAME);
-            console.log(typeof(data[i]))
+            //console.log(data[i].NAME);
+            //console.log(typeof(data[i]))
             //console.log(typeof(data[i].NAME))
             printItem(data[i]);
           }
@@ -330,30 +328,13 @@ Therefore, if the condition is true, the element right after && will appear
         </View>
       )}
       
-      
-
+    
       {/* condition ? true : false. */}   
     </View>
   );
 
 }; //end scan=====================================================================
 
-// export const returnScannedItem = (foundItem) =>{
-//   console.log("------------------export function---------")
-//   if (!foundItem){
-    
-//     console.log("foundItem IS undefined IN EXPORT")
-//     return {"ID": "00000",
-//             "NAME" : "TestName",
-//             "PRICE": 0.00,
-//             "UPC" : "000000000"}
-//   }else{
-//     console.log("FOUNDITEM!!!!!!!!!!!!!!!!!!")
-//     console.log(`FOUNDITEM NAME IS ${foundItem.NAME}`)
-//     return foundItem;
-
-//   }
-// }
 
 
 export default Scan;

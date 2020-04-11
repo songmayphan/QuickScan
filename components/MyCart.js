@@ -1,81 +1,78 @@
-import React, {useEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-} from "react-native";
-import Barcode from "react-native-barcode-expo";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, Text, View, FlatList } from "react-native";
 import Header from "./Header";
 import ListItem from "./ListItem";
+import Checkout from "./Checkout";
 
 //redux
-import { useSelector, useDispatch } from 'react-redux'
-import {changeTotal} from '../redux/ducks'
+import { useSelector, useDispatch } from "react-redux";
+import { changeTotal } from "../redux/ducks";
+import { TouchableHighlight } from "react-native-gesture-handler";
 const MyCart = () => {
-  //redux: 
-const items = useSelector(state => state)
-const dispatch = useDispatch()
-const change_total = item => dispatch(changeTotal(item))
+  //redux:
+  const items = useSelector((state) => state);
 
-  
- 
+
+
+  //render barcode
+  const [isDone, setisDone] = useState(false);
+
   //render
   useEffect(() => {
     console.log("MyCart.js finshished rendering");
   }, []);
-  
-   console.log("------------mycart----------------");
-   console.log(JSON.stringify(items))
-   
-  // let arrayOfItems = [];
-  // arrayOfItems.push(itemToAdd);
 
-  // //console.log(arrayOfItems);
-  // const [items, setItems] = useState(arrayOfItems);
-  // const [isdefined, setisdefined] = useState(false);
-  // console.log(items);
-
-  // if (itemToAdd != undefined) {
-  //   setisdefined(true); 
-  // }
-  //function to delete item from my cart
-  // const deleteItem = (ID) => {
-  //   setItems((prevItems) => {
-  //     return prevItems.filter((itemToAdd) => itemToAdd.ID !== ID);
-  //   });
-  // };
-
-  // total
+  console.log("------------mycart----------------");
+  console.log(JSON.stringify(items));
   let totalPrice = 0;
+  for (let i = 0; i < items.length; i++) {
+    totalPrice += items[i].price * items[i].quantity;
+  }
 
-  //======================Returns========================================
-  function Item({ title }) {
+  
+  //listEmptycomponent
+
+  const ListEmptyView = () => {
     return (
-      <View style={styles.item}>
-        <Text style={styles.title}>{title}</Text>
+      <View>
+        <Text style={styles.text}>
+          {" "}
+          Your cart is empty. Scan item to add to cart
+        </Text>
       </View>
     );
-  }
+  };
+  //======================Returns========================================
   return (
     <View style={styles.container}>
       <Header title="My Cart" />
-      
-        <View style={styles.container}>
-          <FlatList 
-            data={items}
-            renderItem={({ item }) => (
-              
-              <ListItem item={item} />
-            )}
-            keyExtractor={(item, index) => index.toString()}
-          />
-        </View>
-      
-      <Text style={styles.text}> TOTAL PRICE: ${totalPrice} </Text>
 
-      <Text style={styles.input}> Scan this barcode to check out! </Text>
-      <Barcode value="Your checkout Barcode" format="CODE128" />
+      <View style={styles.container}>
+        <FlatList
+          data={items}
+          renderItem={({ item }) => <ListItem item={item} />}
+          keyExtractor={(item, index) => index.toString()}
+          ListEmptyComponent={ListEmptyView}
+        />
+      </View>
+
+      { !isDone && (
+        <View>
+          <Text style={styles.text}>
+            TOTAL PRICE: ${totalPrice.toFixed(2)}
+          </Text>
+          <TouchableHighlight
+            style={styles.btn_done}
+            onPress={() => {
+              setisDone(true);
+            }}
+          >
+            <Text style={styles.btnText}> Checkout </Text>
+          </TouchableHighlight>
+        </View>
+      )}
+
+      {isDone && <Checkout total={totalPrice} />}
     </View>
   );
 }; //end mycart
@@ -107,12 +104,24 @@ const styles = StyleSheet.create({
 
     textAlign: "center",
   },
+  btn_done: {
+    backgroundColor: "#D00000",
+    padding: 15,
+    margin: 10,
+    marginLeft: 10,
+    borderRadius: 10,
+  },
   text: {
-    height: 60,
-    padding: 8,
+    height: 80,
+    padding: 10,
     margin: 5,
-    textAlign: "left",
+    textAlign: "center",
     fontSize: 25,
     fontWeight: "bold",
+  },
+  btnText: {
+    color: "#ffffff",
+    fontSize: 20,
+    textAlign: "center",
   },
 });

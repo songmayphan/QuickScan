@@ -19,17 +19,12 @@ const ListItem = ({ item }) => {
   const add_item = (item) => dispatch(addItem(item));
   const delete_item = (id) => dispatch(deleteItem(id));
   const change_quantity = (quantity, id, price) =>dispatch(changeQuantity(quantity, id, price))
-  //const change_total = (updated_price) => dispatch(changeTotal(updated_price))
-  //console.log(`Quantity ${quantity}`)
-  console.log(item.price)
-  console.log(item.quantity)
 
   let updatedPrice = item.price * item.quantity;
   updatedPrice = updatedPrice.toFixed(2);
 
   function handleChange(value , updatedPrice){
     change_quantity(value, item.id, item.price);
-    //change_total(updatedPrice)
   }
   return (
     <TouchableOpacity style={styles.listItem}>
