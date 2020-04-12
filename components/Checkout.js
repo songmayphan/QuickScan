@@ -20,10 +20,12 @@ const Checkout = total => {
   // console.log(total.total)
   // console.log(roundedTotal)
 
-  
+
   //function to post barcode with  total price to database
   function postBarcode(barcodeID, totalPrice){
-    fetch('http://18.189.32.71:3000/barcode/'),{
+    console.log("POST barcode successfully")
+    fetch('http://18.189.32.71:3000/barcode/',
+      {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -37,8 +39,18 @@ const Checkout = total => {
         //pass in the current state 
 
         })
-    }
+
+        
+    })
+    .then((response) => response.json())
+.then((data) => {
+  console.log('Success:', data);
+})
   }
+  //posting the barcode
+  postBarcode(barcodeID, roundedTotal)
+  
+  //return==============================================
   return <View style={styles.container}>
         <Text style={styles.input}> Scan this barcode to check out! </Text>
         
