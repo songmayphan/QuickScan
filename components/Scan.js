@@ -32,6 +32,7 @@ const Scan = () => {
   const [isMa, setisMa] = useState(false);
   const [isWW, setisWW] = useState(false);
   const [isDone, setisDone] = useState(false);
+  
 
   //After api called states-------------
 
@@ -223,7 +224,7 @@ const add_item = item => dispatch(addItem(item))
   if (hasPermission === false) {
     return <Text style={styles.text}>No access to camera</Text>;
   }
-
+//-------------------------------------------------------------WW handle
   function handleWW() {
     console.log("got in WW");
     setisWW(true);
@@ -240,6 +241,8 @@ const add_item = item => dispatch(addItem(item))
       { cancelable: false }
     );
   } //end handleWW
+
+
   //handleMa=======================================================
   function handleMalarasa() {
     setisMa(true);
@@ -255,6 +258,7 @@ const add_item = item => dispatch(addItem(item))
       { cancelable: false }
     );
   } //end handleMa
+
   //scan again------------------------------------------------------------------
   function again() {
     setScanAgain(false);
@@ -262,15 +266,23 @@ const add_item = item => dispatch(addItem(item))
     setShowStore(false);
   }
   //done shopping---------------------------------------------------------
-  function Done({ navigate }) {
-    return (
-      <View style={{ flex: 3, justifyContent: "center", alignItems: "center" }}>
-        <Button title="Go to My Cart" onPress={() => navigate(MyCart)} />
-      </View>
-    );
+  function noMore(){
+    setScanAgain(false);
+    setScanned(false);
+    setShowStore(false);
+    setisDone(true);
+    
   }
-  if (isDone) {
-    return Done({ navigate });
+  //------------------
+  function Done() {
+    Alert.alert(
+      "Done Shopping",
+      "Please go to My Cart tab to review your items",
+      [
+        { text: "OK", onPress: () => noMore() }
+      ],
+      { cancelable: false }
+    );
   }
   // ------------------------------------Scan--------Render-----------------------SCAN RENDER----------------------
 
@@ -310,9 +322,7 @@ Therefore, if the condition is true, the element right after && will appear
         <View style={styles.container_buttons}>
           <View style={styles.btn_done}>
             <TouchableHighlight
-              onPress={() => {
-              setisDone(true);
-              }}
+              onPress={Done}
             >
               <Text style={styles.btnText}> I'm done shopping</Text>
             </TouchableHighlight>
@@ -327,6 +337,13 @@ Therefore, if the condition is true, the element right after && will appear
           </View>
         </View>
       )}
+      {isDone && (
+      <View style={styles.container}>
+        <Text style={styles.text}>
+          Thank you for shopping with us!
+        </Text>
+      </View>
+    )}
       
     
       {/* condition ? true : false. */}   

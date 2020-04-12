@@ -1,11 +1,10 @@
-import React, { useEffect, PropTypes } from "react";
+import React from "react";
 
 //Navivgation
 import { StyleSheet, View, FlatList, TextInput, Button } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
-import { SearchBar } from "react-native-elements";
 
 //redux
 import { Provider } from "react-redux";

@@ -30,7 +30,7 @@ const ListItem = ({ item }) => {
     <TouchableOpacity style={styles.listItem}>
       <View style={styles.listItemView}>
         <Text> {item.name} </Text>
-        <Text> ${updatedPrice}</Text>
+        <Text style={{fontWeight: "bold"}}> ${updatedPrice} </Text>
         <View style={styles.iconView}>
           <NumericInput
             value={item.quantity}
@@ -64,10 +64,11 @@ const ListItem = ({ item }) => {
 
 const styles = StyleSheet.create({
   listItem: {
-    padding: 15,
+    padding: 7,
     backgroundColor: "#f8f8f8",
-    borderBottomWidth: 1,
+    borderBottomWidth: 2,
     borderColor: "#eee",
+    borderRadius: 10
   },
   listItemView: {
     flex: 1,

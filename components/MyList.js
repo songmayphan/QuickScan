@@ -63,18 +63,20 @@ export default function MyList() {
 
 const styles = StyleSheet.create({
   screen: {
-    padding: 40
+    padding: 10
   },
   inputContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center', 
+    borderRadius: 10
   },
   input: {
     borderBottomColor: 'black',
     borderBottomWidth: 1,
     padding: 10,
-    width: '80%'
+    width: '80%',
+    borderRadius: 10
   },
   itemList: {
     padding: 10,
@@ -82,7 +84,8 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     borderWidth: 1,
     marginVertical: 10,
-    flexDirection: 'column'
+    flexDirection: 'column',
+    borderRadius: 10
   },
   addButtonContainer: {
     flexDirection: 'row',

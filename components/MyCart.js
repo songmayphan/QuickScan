@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import { StyleSheet, Text, View, FlatList } from "react-native"
+//components
 import Header from "./Header";
 import ListItem from "./ListItem";
 import Checkout from "./Checkout";
 
+
 //redux
 import { useSelector, useDispatch } from "react-redux";
-import { changeTotal } from "../redux/ducks";
 import { TouchableHighlight } from "react-native-gesture-handler";
 const MyCart = () => {
   //redux:
@@ -36,13 +37,12 @@ const MyCart = () => {
     return (
       <View>
         <Text style={styles.text}>
-          {" "}
           Your cart is empty. Scan item to add to cart
         </Text>
       </View>
     );
   };
-  //======================Returns========================================
+  //======================Returns=======================================
   return (
     <View style={styles.container}>
       <Header title="My Cart" />
@@ -54,13 +54,14 @@ const MyCart = () => {
           keyExtractor={(item, index) => index.toString()}
           ListEmptyComponent={ListEmptyView}
         />
-      </View>
-
-      { !isDone && (
-        <View>
-          <Text style={styles.text}>
+        <Text style={styles.text}>
             TOTAL PRICE: ${totalPrice.toFixed(2)}
           </Text>
+      </View>
+
+      {!isDone && (
+        <View>
+          
           <TouchableHighlight
             style={styles.btn_done}
             onPress={() => {
@@ -116,7 +117,7 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 5,
     textAlign: "center",
-    fontSize: 25,
+    fontSize: 15,
     fontWeight: "bold",
   },
   btnText: {
