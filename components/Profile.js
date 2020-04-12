@@ -4,18 +4,25 @@ import { StyleSheet, Text, View } from 'react-native';
 import { withAuthenticator } from 'aws-amplify-react-native'
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
+import { Avatar, ListItem } from 'react-native-elements';
 
 
 const Stack = createStackNavigator();
 
 function HomeScreen() {
+
+  
   
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    
+
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#8baab5', }}>
       <Text>Home Screen</Text>
+
     </View>
   );
 }
+
 
 
 //Profile class--------------------------------------------
@@ -30,12 +37,13 @@ const hours = date.getHours()
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#8baab5',
     alignItems: 'center',
     justifyContent: 'center',
     color: "#ffff",
   },
 });
+
 
 
 //time of day-----------------------------------------
@@ -56,10 +64,31 @@ else {
 }
   
     return (
+
+
+
+
+
+
       <View>
+
+        <Avatar
+            size="large"
+            rounded
+            center
+            source={{
+              uri:
+                'https://i.imgur.com/icikekY.jpg',
+              }}
+            //showEditButton
+          />
+
+
             <Text style = {{textAlign: 'center', textAlignVertical: 'center', 
-            color: '#383961', fontWeight: 'bold',  flex: 0, marginTop: 140, 
-            fontWeight: 'bold', fontSize: 30, backgroundColor: '#5f758e'}}>
+            color: '#383961', fontWeight: 'bold',  flex: 0, marginTop: 40, 
+            fontWeight: 'bold', fontSize: 30, backgroundColor: '#8baab5'}}>
+
+
               {"\n"}
               {"\n"}
               Good {timeOfDay}! 

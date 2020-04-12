@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#5f758e',
+    backgroundColor: '#8baab5',
     justifyContent: 'center',
   },
   logo: {
