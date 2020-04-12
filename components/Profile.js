@@ -11,7 +11,7 @@ const Stack = createStackNavigator();
 function HomeScreen() {
   
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#8baab5', }}>
       <Text>Home Screen</Text>
     </View>
   );
@@ -30,7 +30,7 @@ const hours = date.getHours()
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#8baab5',
     alignItems: 'center',
     justifyContent: 'center',
     color: "#ffff",
@@ -59,7 +59,7 @@ else {
       <View>
             <Text style = {{textAlign: 'center', textAlignVertical: 'center', 
             color: '#383961', fontWeight: 'bold',  flex: 0, marginTop: 140, 
-            fontWeight: 'bold', fontSize: 30, backgroundColor: '#5f758e'}}>
+            fontWeight: 'bold', fontSize: 30, backgroundColor: '#8baab5'}}>
               {"\n"}
               {"\n"}
               Good {timeOfDay}! 

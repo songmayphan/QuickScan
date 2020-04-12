@@ -33,8 +33,6 @@ export default function SignInPage (){
         Alert.alert('Missing fields', 'Please fill in all fields in the form')
       }
 
-  
-
       else{ 
 
         //console.log(userInfo.username, userInfo.password)
@@ -125,7 +123,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#5f758e',
+    backgroundColor: '#8baab5',
     justifyContent: 'center',
     //borderWidth: 2,
     //borderColor: '#bdc667',

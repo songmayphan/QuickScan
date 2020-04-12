@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   },
   itemList: {
     padding: 10,
-    backgroundColor: '#ccc',
+    backgroundColor: '#8baab5',
     borderColor: 'black',
     borderWidth: 1,
     marginVertical: 10,
@@ -95,7 +95,8 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: "center",
-    backgroundColor: "#DDDDDD",
-    padding: 10
+    backgroundColor: "#BDC667",
+    padding: 10,
+    borderRadius: 5,
   }
 });

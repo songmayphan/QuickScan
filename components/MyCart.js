@@ -37,7 +37,8 @@ const MyCart = () => {
     return (
       <View>
         <Text style={styles.text}>
-          Your cart is empty. Scan item to add to cart
+        Your cart is empty. {"\n"}
+          Scan item to add to cart
         </Text>
       </View>
     );
@@ -89,6 +90,7 @@ const styles = StyleSheet.create({
     height: 35,
     padding: 8,
     margin: 5,
+    textAlign: "center"
   },
 
   input: {
@@ -117,7 +119,7 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 5,
     textAlign: "center",
-    fontSize: 15,
+    fontSize: 20,
     fontWeight: "bold",
   },
   btnText: {
