@@ -42,7 +42,7 @@ const Scan = () => {
   const [foundItem, setfoundItem] = useState("");
 
 //reedux
-const items = useSelector(state => state)
+const items = useSelector(state => state.cart)
 const dispatch = useDispatch()
 const add_item = item => dispatch(addItem(item))
 

@@ -11,8 +11,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { TouchableHighlight } from "react-native-gesture-handler";
 const MyCart = () => {
   //redux:
-  const items = useSelector((state) => state);
-
+  const items = useSelector((state) => state.cart);
+  
 
 
   //render barcode
@@ -24,6 +24,7 @@ const MyCart = () => {
   }, []);
 
   console.log("------------mycart----------------");
+  console.log(typeof(items))
   console.log(JSON.stringify(items));
   let totalPrice = 0;
   for (let i = 0; i < items.length; i++) {
