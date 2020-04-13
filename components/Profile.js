@@ -65,16 +65,12 @@ else {
   
     return (
 
-
-
-
-
-
       <View>
 
         <Avatar
             size="large"
             rounded
+          
             
             source={{
               uri:
