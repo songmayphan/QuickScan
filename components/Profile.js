@@ -75,7 +75,7 @@ else {
         <Avatar
             size="large"
             rounded
-            center
+            
             source={{
               uri:
                 'https://i.imgur.com/icikekY.jpg',

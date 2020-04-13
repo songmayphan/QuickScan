@@ -28,6 +28,11 @@ export default function MyList() {
       .finally(() => setLoading(false));
   });
 
+    const SeacrhScreen = () =>{
+
+      
+    }
+
   return (
     <View style={styles.screen}>
       <View>
