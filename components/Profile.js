@@ -20,8 +20,8 @@ function Profile() {
   const onChangeText = (key, value) => {
     setUserInfo({...userInfo, [key]: value})
   };
-  
-  //New function---------------------------------------------
+
+//New function---------------------------------------------
   function changePassword (currentPassword, newPassword) {
     //find url needed ex /changepassword
     fetch('http://18.189.32.71:3000/barcode/',
@@ -83,9 +83,9 @@ else {
 }
   
     return (
-
+//Profile image, time, password button------------------------------------
       <View style = {{backgroundColor: '#8baab5'}}>
-
+        
         <Avatar
             size="large"
             rounded   
@@ -98,10 +98,8 @@ else {
 
 
             <Text style = {{textAlign: 'center', textAlignVertical: 'center', 
-            color: '#383961', fontWeight: 'bold',  flex: 0, marginTop: 40, 
-            fontWeight: 'bold', fontSize: 30, }}>
-
-    
+              color: '#383961', fontWeight: 'bold',  flex: 0, marginTop: 40, 
+              fontWeight: 'bold', fontSize: 30, }}>
               Good {timeOfDay}! 
               {"\n"}
               {"\n"}
@@ -161,24 +159,24 @@ else {
               }}>
           </TextInput>
 
-    <TouchableOpacity  title = 'Change Password' 
-          onPress = {() => {changePassword(userInfo.currentPassword, userInfo.newPassword)} }
-          style = {{backgroundColor: "#bdc667",margin: 5, 
-          color: 'yellow', borderWidth: 1, borderColor: '#2196F3', 
-          height: 50, width: 140, alignSelf: 'center', 
-          justifyContent: 'center', borderRadius: 6}} 
-      > 
+          <TouchableOpacity  title = 'Change Password' 
+              onPress = {() => {changePassword(userInfo.currentPassword, userInfo.newPassword)} }
+              style = {{backgroundColor: "#bdc667",margin: 5, 
+              color: 'yellow', borderWidth: 1, borderColor: '#2196F3', 
+              height: 50, width: 140, alignSelf: 'center', 
+              justifyContent: 'center', borderRadius: 6}} 
+            > 
 
-        <Text 
-          style = {{textAlign: 'center', 
-          textAlignVertical: 'center', color: '#FFFF', 
-          fontWeight: 'bold' }}>
-            Change Password
-        </Text>  
+            <Text 
+              style = {{textAlign: 'center', 
+              textAlignVertical: 'center', color: '#FFFF', 
+              fontWeight: 'bold' }}>
+                Change Password
+            </Text>  
 
-    </TouchableOpacity>
+          </TouchableOpacity>
 
-     </View>
+      </View>
       
     );
   
