@@ -76,7 +76,7 @@ export default function SignUpPage() {
     if(!userInfo.username || !userInfo.password || !userInfo.email || !userInfo.phone_number 
       || !userInfo.name || !userInfo.confirmationCode)
       {
-        Alert.alert('Missing Confirmation Code', 'Please fill in code field in the form')
+        Alert.alert('Missing Confirmation Code', 'Please fill in code field ')
       }
       else if( !validateEmail(userInfo.email)){ console.log('entered else if')
       Alert.alert('Please enter valid email','')}
