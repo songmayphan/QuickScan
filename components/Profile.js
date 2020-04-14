@@ -20,7 +20,8 @@ function Profile() {
   const onChangeText = (key, value) => {
     setUserInfo({...userInfo, [key]: value})
   };
-  //New function
+  
+  //New function---------------------------------------------
   function changePassword (currentPassword, newPassword) {
     //find url needed ex /changepassword
     fetch('http://18.189.32.71:3000/barcode/',
@@ -64,9 +65,6 @@ const styles = StyleSheet.create({
   },
 });
 
-
-
-
 //time of day-----------------------------------------
 let timeOfDay
 
@@ -103,31 +101,26 @@ else {
             color: '#383961', fontWeight: 'bold',  flex: 0, marginTop: 40, 
             fontWeight: 'bold', fontSize: 30, }}>
 
-
-
-
-              
+    
               Good {timeOfDay}! 
               {"\n"}
               {"\n"}
-              It's currently {date.getHours()%12}:{date.getMinutes().toString().length === 2? 
+              It's currently 
+              {date.getHours()%12}:{date.getMinutes().toString().length === 2? 
               date.getMinutes(): '0' + date.getMinutes()} 
-              { date.getHours() >= 12 && date.getMinutes() >0? ' PM': date.getHours() > 12? ' PM'
-              : ' AM'
-              }
+              { date.getHours() >= 12 && date.getMinutes() >0? ' PM': 
+              date.getHours() > 12? ' PM': ' AM'}
 
               {"\n"}
               {"\n"}
-          </Text>
+            </Text>
+
           <Text style = {{alignSelf: 'center', fontSize: 25, marginBottom: 20}}>
               Change Password 
-              
-
           </Text>
 
           <Text style = {{alignSelf: 'center'}}>
               Current Password
-
           </Text>
 
           <TextInput onChangeText={value=> onChangeText({currentPassword: value})} style = {{
@@ -145,12 +138,12 @@ else {
               //padding: 20,
               //lineHeight: 25,
             }}>
-
           </TextInput >
+
           <Text style = {{alignSelf: 'center'}}> 
             New Password
-            
           </Text>
+
           <TextInput  onChangeText={value=> onChangeText({newPassword: value})} style = {{
               height: 50,
               borderWidth: 1,
