@@ -11,7 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { TouchableHighlight } from "react-native-gesture-handler";
 const MyCart = () => {
   //redux:
-  const items = useSelector((state) => state.cart);
+  const items = useSelector(state => state.cart);
   
 
 
@@ -27,6 +27,7 @@ const MyCart = () => {
   console.log(typeof(items))
   console.log(JSON.stringify(items));
   let totalPrice = 0;
+
   for (let i = 0; i < items.length; i++) {
     totalPrice += items[i].price * items[i].quantity;
   }
