@@ -22,6 +22,13 @@ function Profile() {
   };
 
 //New function---------------------------------------------
+
+
+//MAY'S COMMENT: 
+//changpassword should be using the API from Amplify
+//fetching from our user pools to get password
+//take a look at how Sandro's calling context
+
   function changePassword (currentPassword, newPassword) {
     //find url needed ex /changepassword
     fetch('http://18.189.32.71:3000/barcode/',
@@ -54,17 +61,6 @@ const date = new Date()
 const hours = date.getHours()
 
 
-//Styling------------------------------------------
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#8baab5',
-    alignItems: 'center',
-    justifyContent: 'center',
-    color: "#ffff",
-  },
-});
-
 //time of day-----------------------------------------
 let timeOfDay
 
@@ -96,9 +92,9 @@ else {
             //showEditButton
         />
 
-
-            <Text style = {{textAlign: 'center', textAlignVertical: 'center', 
-              color: '#383961', fontWeight: 'bold',  flex: 0, marginTop: 40, 
+            {/* don't need this anymore */}
+            {/* <Text style = {{textAlign: 'center', textAlignVertical: 'center', 
+              color: '#383961', fontWeight: 'bold',  flex: 1, marginTop: 0, 
               fontWeight: 'bold', fontSize: 30, }}>
               Good {timeOfDay}! 
               {"\n"}
@@ -111,8 +107,12 @@ else {
 
               {"\n"}
               {"\n"}
-            </Text>
+            </Text> */}
 
+          {/* need a button to change password 
+            ideally, we'll have a flag, to indicate the button is pressed, then render
+            the change password form
+          */}
           <Text style = {{alignSelf: 'center', fontSize: 25, marginBottom: 20}}>
               Change Password 
           </Text>
@@ -181,6 +181,8 @@ else {
     );
   
 }
+//Styling------------------------------------------
+
 const styles = StyleSheet.create ({ 
   input: {
     height: 50,
@@ -196,6 +198,13 @@ const styles = StyleSheet.create ({
     fontWeight: 'normal',
     //padding: 20,
     //lineHeight: 25,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: '#8baab5',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: "#ffff",
   },
 
 })
