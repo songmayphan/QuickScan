@@ -8,26 +8,48 @@ import {
   ActivityIndicator,
   FlatList,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { SearchBar } from "react-native-elements";
 // import NumericInput from "react-native-numeric-input";
-// import { ListContext } from "../contexts/itemlist";
+import { ListContext } from "../contexts/itemlist";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
 import { addToList } from "../redux/ducks";
 
 export default function List({ navigation }) {
-  //const { setList, List } = useContext(ListContext);
+  const setList  = useContext(ListContext);
+  const itemsInList = useSelector(state => state.list);
+  console.log(`items in list as of now (state.list) ${JSON.stringify(itemsInList)}`)
 
+  //useState
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
 
+  console.log("=========list render===========")
+  //i still dont know why it renders 3 times
+
+  //MAY'S COMMENT: add item to list is now functional
+
+  // console.log(`DATA IN LIST RIGHT NOW IS ${data}`);
+  // console.log(`type of an item in data ${typeof(data[0])}`)
+  // console.log(`type of DATA ITSELF IS ${typeof(data)}`)
+  // console.log(`DATA LENGTH IS ${data.length}`)
+
+  // for (let i = 0; i < data.length; i++) {
+  //   console.log(data[i]);
+  // }
+
+  //MAY'S COMMENT: 
+  //Data has all the items in the stores,
   //redux with hooks 
   const items = useSelector(state => state.list)
   const dispatch = useDispatch();
-  const add_to_list = (item) => dispatch(addToList(item));
-
+  const add_to_list = (item) => {
+    dispatch(addToList(item))
+    Alert.alert(item.NAME, "has been added to the list")
+  };
 
   useEffect(() => {
     fetch("http://18.189.32.71:3000/items/")
@@ -45,8 +67,8 @@ export default function List({ navigation }) {
   
   //I still don't know why it render 3 times
   
-  console.log("============LIST============")
-  console.log(`items in List right now ${items}`)
+  // console.log("============LIST============")
+  // console.log(`items in List right now ${items}`)
 
   return (
     <View style={styles.screen}>
