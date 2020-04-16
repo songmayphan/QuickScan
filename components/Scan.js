@@ -16,12 +16,6 @@ import {
 //redux
 import { useSelector, useDispatch } from 'react-redux'
 import {addItem} from '../redux/ducks'
-
-
-//Components:
-import MyCart from "./MyCart";
-
-
 const Scan = () => {
   //inintial states----------------------------------------------
 
@@ -58,7 +52,7 @@ const add_item = item => dispatch(addItem(item))
 
   //useEffect for when foundItem changes
   useEffect(() => {
-    console.log(`founditem in USEEFFECT ${foundItem.NAME}`)
+    console.log(`Scanned Item after rendering in Scan.js${foundItem.NAME}`)
     
   }, [foundItem]);
   //function to print item to screen
@@ -69,7 +63,7 @@ const add_item = item => dispatch(addItem(item))
     //console.log(`product param in printItem is ${itemToAdd}`);
     //console.log( typeof(itemToAdd))
     Alert.alert(
-      "Scanned",
+      "Item scanned",
       `You scanned ${itemToAdd.NAME}. Add this to cart?`,
 
       [
@@ -117,7 +111,8 @@ const add_item = item => dispatch(addItem(item))
             //console.log(typeof(data[i].NAME))
             printItem(data[i]);
           }
-        }
+
+        }//end for loop
       }); //end try
     } catch (error) {
       console.error(error);
@@ -176,7 +171,7 @@ const add_item = item => dispatch(addItem(item))
     //if Malarasa is picked------------------------------------------------MALARASA---------------------------
 
     if (isMa) {
-      console.log("is MA is true");
+      //console.log("is MA is true");
       fetchMA(data);
       if (isLoading) {
         console.log("API is loading");
@@ -226,7 +221,7 @@ const add_item = item => dispatch(addItem(item))
   }
 //-------------------------------------------------------------WW handle
   function handleWW() {
-    console.log("got in WW");
+    console.log("Wally World chosen");
     setisWW(true);
 
     Alert.alert(
@@ -246,7 +241,7 @@ const add_item = item => dispatch(addItem(item))
   //handleMa=======================================================
   function handleMalarasa() {
     setisMa(true);
-    console.log("got in MALARASA");
+    console.log("Malarasa chosen");
     Alert.alert(
       "Store",
       "Malarasa picked",
