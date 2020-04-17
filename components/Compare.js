@@ -10,8 +10,14 @@ import { deleteFromList } from '../redux/ducks';
 
 export default function Compare() {
 
- //redux with hooks 
+  const [isLoading, setLoading] = useState(true);
+  const [data, setData] = useState({});
+
+
+ /////////////STATE MGMT WITH REDUX//////////////// 
  //use this variable to loop through the list in redux
+
+ // retrieve list
  const items = useSelector(state => state.list)
  console.log(items);
  const dispatch = useDispatch();
@@ -20,13 +26,12 @@ export default function Compare() {
  //IMPORTTANT!!! CALL THIS FUNCTION TO DELETE FROM LIST
  const delete_item = (id) => dispatch(deleteFromList(id));
 
- // comparing
+ //////////////////////////////////////////////////
 
-
-//  not final, just testing
- useEffect(() =>  {
+// comparing
+ const compare = () =>  {
   console.log("comparing");
-  fetch("http://127.0.0.1:3000/compare/", {
+  fetch("http://18.189.32.71:3000/compare/", {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -39,37 +44,26 @@ export default function Compare() {
     .then((response) => response.json())
     .then((data) => {
       console.log("Success:", data);
-      
+      setData(data)
     });
-  })
+  }
 
 
 
-  
     return (
       <View style={styles.screen}>
          <FlatList
           data={items}
-          removeClippedSubviews={true}
+          removeClippedSubviews={false}
           keyExtractor={({ _id }, index) => _id}
           renderItem={({ item }) => (
             <View style={styles.itemList}>
               <Text>Item: {item.name}</Text>
               <Text>manufacturer: {item.manufacturer}</Text>
-              <View style={styles.addButtonContainer}>
-                <TouchableOpacity
-                  onPress={() => 
-                    //caaling redux right here
-                    delete_item(item.id)
-                  }
-                  style={styles.button}
-                >
-                  <Text>Delete</Text>
-                </TouchableOpacity>
-              </View>
               </View>
           )}
         />
+      <Button title='COMPARE' onPress={compare}/>
       </View>
     );
   };
