@@ -33,7 +33,7 @@ const Scan = () => {
   //API STATES==============================================
   const [isLoading, setisLoading] = useState(true);
   const [fetchedItems, setFetcheditems] = useState([]);
-  const [foundItem, setfoundItem] = useState("");
+  const [foundItem, setfoundItem] = useState(false);
 
 //reedux
 const items = useSelector(state => state.cart)
@@ -52,13 +52,13 @@ const add_item = item => dispatch(addItem(item))
 
   //useEffect for when foundItem changes
   useEffect(() => {
-    console.log(`Scanned Item after rendering in Scan.js${foundItem.NAME}`)
-    
-  }, [foundItem]);
+      console.log("Rendered sCan,js")    
+  },[]);
+
+
+
   //function to print item to screen
   //function to export added item
-  
-  
   function printItem(itemToAdd) {
     //console.log(`product param in printItem is ${itemToAdd}`);
     //console.log( typeof(itemToAdd))
@@ -93,27 +93,50 @@ const add_item = item => dispatch(addItem(item))
           delete item.MANUFACTURER;
           delete item.QUANTITY;
           setFetcheditems(() => [...fetchedItems, item]);
-          //console.log(` data.length = ${data.length}`);
+          
         }); //end item function
-
+       
         //console.log(data[1]);
         var dataScanned_trimmed = dataScanned.slice(1, -1);
         //console.log(`trimmed data is now ${dataScanned_trimmed}`);
+        let count = 0;
         for (var i = 0; i < data.length; i++) {
           // look for the entry with a matching `dataScanned` value
           if (data[i].ID == dataScanned_trimmed) {
             // we found it
             // item[i].ID is the matched result
-            console.log("----------------in fetch API------------------")
+            console.log("----------------ITEM IS FOUND------------------")
             console.log(data[i]);
-            //console.log(data[i].NAME);
+            console.log(data[i].NAME);
             //console.log(typeof(data[i]))
             //console.log(typeof(data[i].NAME))
+            
             printItem(data[i]);
+            setfoundItem(true);
           }
+          else{
+              count++;
+              //console.log(count)
+            if (foundItem == false && i == data.length - 1 ){
+              Alert.alert(
+                "Item Not Found",
+                `The item you scanned is not found. Please try another item!`,
+          
+                [ 
+                  { text: "OK", onPress: () => console.log("item not found ok pressed")},
+                ],
+                { cancelable: false }
+              );
+            }
 
+          }
+          
         }//end for loop
+
+    
+        //console.log(`fetchedItems = ${JSON.stringify(fetchedItems )}`);
       }); //end try
+
     } catch (error) {
       console.error(error);
     }
