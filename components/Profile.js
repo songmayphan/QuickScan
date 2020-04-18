@@ -8,7 +8,7 @@ import { Avatar, ListItem } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { Auth } from 'aws-amplify';
-import {AuthenticationContext} from "./contexts/Authentication"
+import {AuthenticationContext} from "../contexts/Authentication"
 
 
 //Profile class--------------------------------------------

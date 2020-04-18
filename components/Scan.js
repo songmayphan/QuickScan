@@ -52,7 +52,7 @@ const add_item = item => dispatch(addItem(item))
 
   //useEffect for when foundItem changes
   useEffect(() => {
-      console.log("Rendered sCan,js")    
+      console.log("Rendered Scan.js")    
   },[]);
 
 
@@ -116,8 +116,9 @@ const add_item = item => dispatch(addItem(item))
           }
           else{
               count++;
-              //console.log(count)
-            if (foundItem == false && i == data.length - 1 ){
+              console.log(count)
+            if (count == data.length){
+              console.log("item does not exist in this list")
               Alert.alert(
                 "Item Not Found",
                 `The item you scanned is not found. Please try another item!`,
