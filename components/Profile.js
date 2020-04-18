@@ -1,11 +1,14 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Alert } from 'react-native';
 //AWS
 import { withAuthenticator } from 'aws-amplify-react-native'
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { Avatar, ListItem } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+
+import { Auth } from 'aws-amplify';
+import {AuthenticationContext} from "./contexts/Authentication"
 
 
 //Profile class--------------------------------------------
@@ -16,6 +19,8 @@ function Profile() {
     newPassword: '',
 
   });
+
+  const {setAuthentication} = useContext(AuthenticationContext)
 
   const onChangeText = (key, value) => {
     setUserInfo({...userInfo, [key]: value})
@@ -29,10 +34,35 @@ function Profile() {
 //fetching from our user pools to get password
 //take a look at how Sandro's calling context
 
-  function changePassword (currentPassword, newPassword) {
-    //find url needed ex /changepassword
-    fetch('http://18.189.32.71:3000/barcode/',
-      {
+  const changePassword=  (currentPassword, newPassword) =>{
+
+  //function changePassword (currentPassword, newPassword) {
+   
+
+    if(!userInfo.currentPassword || !userInfo.newPassword )
+    {
+      Alert.alert('Missing fields', 'Please fill in all fields')
+    }
+
+    else{
+    Auth.currentAuthenticatedUser()
+    .then(user => {
+        return Auth.changePassword(user, 'oldPassword', 'newPassword');
+    })
+    //.then(data => console.log(data))
+    .then((data) => {
+      console.log('Success:', data);
+    })
+    .catch(err => {console.log('error', err)
+    Alert.alert('Invalid','Current Password')
+    })
+  } 
+    //.then((response) => response.json())
+
+    //changePassword = () => {
+     // Auth.changePassword();
+    //};
+      /*{
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -49,11 +79,11 @@ function Profile() {
 
         
     })
-    .then((response) => response.json())
+    
     .then((data) => {
     console.log('Success:', data);
-})
-
+})*/
+  
   }
   
 //create a new Date instance----------------------
