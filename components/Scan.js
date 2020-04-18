@@ -10,7 +10,7 @@ import {
 import { BarCodeScanner } from "expo-barcode-scanner";
 import {
   TouchableOpacity,
-  TouchableHighlight
+  
 } from "react-native-gesture-handler";
 
 //redux
@@ -116,7 +116,7 @@ const add_item = item => dispatch(addItem(item))
           }
           else{
               count++;
-              console.log(count)
+              // console.log(count)
             if (count == data.length){
               console.log("item does not exist in this list")
               Alert.alert(
@@ -340,19 +340,19 @@ Therefore, if the condition is true, the element right after && will appear
       {scanAgain && (
         <View style={styles.container_buttons}>
           <View style={styles.btn_done}>
-            <TouchableHighlight
+            <TouchableOpacity
               onPress={Done}
             >
               <Text style={styles.btnText}> I'm done shopping</Text>
-            </TouchableHighlight>
+            </TouchableOpacity>
           </View>
 
           <View style={styles.btn_again}>
-            <TouchableHighlight 
+            <TouchableOpacity 
             onPress={again}
             >
               <Text style={styles.btnText}> Tap to scan again </Text>
-            </TouchableHighlight>
+            </TouchableOpacity>
           </View>
         </View>
       )}

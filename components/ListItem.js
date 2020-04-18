@@ -29,7 +29,7 @@ const ListItem = ({ item }) => {
   return (
     <TouchableOpacity style={styles.listItem}>
       <View style={styles.listItemView}>
-        <Text> {item.name} </Text>
+        <Text style={styles.itemText}> {item.name} </Text>
         <Text style={{fontWeight: "bold"}}> ${updatedPrice} </Text>
         <View style={styles.iconView}>
           <NumericInput
@@ -93,6 +93,11 @@ const styles = StyleSheet.create({
     padding: 0,
     fontSize: 18,
   },
+  itemText: {
+    textAlign: 'left',
+    maxWidth: 100, 
+    marginVertical: 10
+  }
 });
 
 export default ListItem;
