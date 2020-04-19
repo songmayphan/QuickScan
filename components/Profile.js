@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import { StyleSheet, Text, View, TextInput, Alert } from 'react-native';
 //AWS
 import { withAuthenticator } from 'aws-amplify-react-native'
@@ -20,6 +20,8 @@ function Profile() {
 
   });
 
+  console.log(userInfo)
+
   const {setAuthentication} = useContext(AuthenticationContext)
 
   const onChangeText = (key, value) => {
@@ -34,10 +36,11 @@ function Profile() {
 //fetching from our user pools to get password
 //take a look at how Sandro's calling context
 
-  const changePassword=  (currentPassword, newPassword) =>{
+  //const changePassword=  (currentPassword, newPassword) =>{
 
-  //function changePassword (currentPassword, newPassword) {
+  function changePassword (currentPassword, newPassword) {
    
+    console.log (currentPassword, newPassword)
 
     if(!userInfo.currentPassword || !userInfo.newPassword )
     {
@@ -59,30 +62,9 @@ function Profile() {
   } 
     //.then((response) => response.json())
 
-    //changePassword = () => {
-     // Auth.changePassword();
-    //};
-      /*{
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          "currentPassword": currentPassword,
-          "newPassword" : newPassword
-          //needs to have another attribute (array of onjects) here to ppost
-          //the list of items that are stored in cart at checkout time
-        //pass in the current state 
-
-        })
-
-        
-    })
-    
-    .then((data) => {
-    console.log('Success:', data);
-})*/
+    changePassword = () => {
+      Auth.changePassword();
+    };
   
   }
   
