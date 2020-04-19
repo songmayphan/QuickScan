@@ -9,22 +9,24 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { Auth } from 'aws-amplify';
 import {AuthenticationContext} from "../contexts/Authentication"
-
+console.log("------------------PROFILE-----------------------------")
 
 //Profile class--------------------------------------------
 function Profile() {
   
   const [userInfo, setUserInfo] = useState({
-    currentPassword: '',
-    newPassword: '',
+    currentPassword: 'test_password',
+    newPassword: 'test_new',
 
   });
 
-  console.log(userInfo)
+  
+  // console.log(`userInfor.currentPassword:                ${userInfo.currentPassword}`)
+  // console.log(`userInfor.newPassword:                    ${userInfo.newPassword}`)
 
   const {setAuthentication} = useContext(AuthenticationContext)
 
-  const onChangeText = (key, value) => {
+  const onChange_new = (key, value) => {
     setUserInfo({...userInfo, [key]: value})
   };
 
@@ -40,7 +42,7 @@ function Profile() {
 
   function changePassword (currentPassword, newPassword) {
    
-    console.log (currentPassword, newPassword)
+    console.log (` in changePassword            ${currentPassword, newPassword}`)
 
     if(!userInfo.currentPassword || !userInfo.newPassword )
     {
@@ -50,7 +52,7 @@ function Profile() {
     else{
     Auth.currentAuthenticatedUser()
     .then(user => {
-        return Auth.changePassword(user, 'oldPassword', 'newPassword');
+        return Auth.changePassword(user, currentPassword, newPassword);
     })
     //.then(data => console.log(data))
     .then((data) => {
@@ -62,9 +64,9 @@ function Profile() {
   } 
     //.then((response) => response.json())
 
-    changePassword = () => {
-      Auth.changePassword();
-    };
+    // changePassword = () => {
+    //   Auth.changePassword();
+    // };
   
   }
   
@@ -104,23 +106,6 @@ else {
             //showEditButton
         />
 
-            {/* don't need this anymore */}
-            {/* <Text style = {{textAlign: 'center', textAlignVertical: 'center', 
-              color: '#383961', fontWeight: 'bold',  flex: 1, marginTop: 0, 
-              fontWeight: 'bold', fontSize: 30, }}>
-              Good {timeOfDay}! 
-              {"\n"}
-              {"\n"}
-              It's currently 
-              {date.getHours()%12}:{date.getMinutes().toString().length === 2? 
-              date.getMinutes(): '0' + date.getMinutes()} 
-              { date.getHours() >= 12 && date.getMinutes() >0? ' PM': 
-              date.getHours() > 12? ' PM': ' AM'}
-
-              {"\n"}
-              {"\n"}
-            </Text> */}
-
           {/* need a button to change password 
             ideally, we'll have a flag, to indicate the button is pressed, then render
             the change password form
@@ -133,56 +118,29 @@ else {
               Current Password
           </Text>
 
-          <TextInput onChangeText={value=> onChangeText({currentPassword: value})} style = {{
-              height: 50,
-              borderWidth: 1,
-              borderColor: '#3b1f2b',
-              margin: 23,
-              marginTop: 1,
-              borderRadius: 3,
-              textAlign: 'center',
-              fontSize: 25,
-              color: '#FFFF',
-              //fontFamily: 'Times New Roman',
-              fontWeight: 'normal',
-              //padding: 20,
-              //lineHeight: 25,
-            }}>
+          <TextInput 
+          onChangeText=
+          {value=> onChange_new('currentPassword', value)}
+          
+          style = {styles.textInput}>
           </TextInput >
 
           <Text style = {{alignSelf: 'center'}}> 
             New Password
           </Text>
 
-          <TextInput  onChangeText={value=> onChangeText({newPassword: value})} style = {{
-              height: 50,
-              borderWidth: 1,
-              borderColor: '#3b1f2b',
-              margin: 23,
-              marginTop: 1,
-              borderRadius: 3,
-              textAlign: 'center',
-              fontSize: 25,
-              color: '#FFFF',
-              //fontFamily: 'Times New Roman',
-              fontWeight: 'normal',
-              //padding: 20,
-              //lineHeight: 25,
-              }}>
+          <TextInput  
+          onChangeText={value=> onChange_new('newPassword', value)} 
+          style = {styles.textInput}>
           </TextInput>
 
           <TouchableOpacity  title = 'Change Password' 
-              onPress = {() => {changePassword(userInfo.currentPassword, userInfo.newPassword)} }
-              style = {{backgroundColor: "#bdc667",margin: 5, 
-              color: 'yellow', borderWidth: 1, borderColor: '#2196F3', 
-              height: 50, width: 140, alignSelf: 'center', 
-              justifyContent: 'center', borderRadius: 6}} 
+              onPress = {() => changePassword(userInfo.currentPassword, userInfo.newPassword) }
+              style = {styles.button} 
             > 
 
             <Text 
-              style = {{textAlign: 'center', 
-              textAlignVertical: 'center', color: '#FFFF', 
-              fontWeight: 'bold' }}>
+              style = {styles.text}>
                 Change Password
             </Text>  
 
@@ -211,6 +169,9 @@ const styles = StyleSheet.create ({
     //padding: 20,
     //lineHeight: 25,
   },
+  text: {textAlign: 'center', 
+  textAlignVertical: 'center', color: '#FFFF', 
+  fontWeight: 'bold' },
   container: {
     flex: 1,
     backgroundColor: '#8baab5',
@@ -218,6 +179,25 @@ const styles = StyleSheet.create ({
     justifyContent: 'center',
     color: "#ffff",
   },
+  textInput: {
+    height: 50,
+    borderWidth: 1,
+    borderColor: '#3b1f2b',
+    margin: 23,
+    marginTop: 1,
+    borderRadius: 3,
+    textAlign: 'center',
+    fontSize: 25,
+    color: '#FFFF',
+    //fontFamily: 'Times New Roman',
+    fontWeight: 'normal',
+    //padding: 20,
+    //lineHeight: 25,
+  },
+  button: {backgroundColor: "#bdc667",margin: 5, 
+  color: 'yellow', borderWidth: 1, borderColor: '#2196F3', 
+  height: 50, width: 140, alignSelf: 'center', 
+  justifyContent: 'center', borderRadius: 6}
 
 })
 
