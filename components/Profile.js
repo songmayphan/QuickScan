@@ -53,6 +53,7 @@ function Profile() {
     Auth.currentAuthenticatedUser()
     .then(user => {
         return Auth.changePassword(user, currentPassword, newPassword);
+        
     })
     //.then(data => console.log(data))
     .then((data) => {
