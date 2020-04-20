@@ -98,6 +98,7 @@ function Profile() {
 
   }
   console.log(onSignOut);
+  
 //create a new Date instance----------------------
 const date = new Date()
 const hours = date.getHours()
