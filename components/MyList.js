@@ -22,7 +22,18 @@ export default function MyList() {
   return (
     <ListContextProvider>
     <Stack.Navigator>
-      <Stack.Screen name="List" component={List} />
+      <Stack.Screen name="List" component={List} options={{
+            title: 'My List',
+            headerStyle: {
+              backgroundColor: '#5f758e',
+              
+            },
+            headerTitleStyle: {
+              fontWeight: 'normal',
+              fontSize: 30
+            },
+            headerTintColor: '#fff',
+          }}/>
       <Stack.Screen name="Compare" component={Compare}/>
     </Stack.Navigator>
     </ListContextProvider>
