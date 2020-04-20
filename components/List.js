@@ -49,21 +49,7 @@ export default function Compare() {
       setLoading(false);
     });
   }
-
-  //separator 
-  const renderSeparator = () => {
-    return (
-      <View
-        style={{
-          flex: 4,
-          justifyContent: "space-around"
-        }}
-      />
-    );
-  };
-
-
-
+ 
     return (
       <View style={styles.screen}>
          <FlatList
