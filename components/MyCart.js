@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native"
+
 //components
 import Header from "./Header";
 import ListItem from "./ListItem";
 import Checkout from "./Checkout";
 
 
+
 //redux
 import { useSelector, useDispatch } from "react-redux";
-import { TouchableHighlight } from "react-native-gesture-handler";
-const MyCart = () => {
+import { TouchableOpacity } from "react-native-gesture-handler";
+const MyCart = ({navigation}) => {
   //redux:
-  const items = useSelector((state) => state.cart);
+  const items = useSelector(state => state.cart);
   
-
+  
 
   //render barcode
   const [isDone, setisDone] = useState(false);
@@ -24,9 +26,10 @@ const MyCart = () => {
   }, []);
 
   console.log("------------mycart----------------");
-  console.log(typeof(items))
+  //console.log(typeof(items))
   console.log(JSON.stringify(items));
   let totalPrice = 0;
+
   for (let i = 0; i < items.length; i++) {
     totalPrice += items[i].price * items[i].quantity;
   }
@@ -37,7 +40,7 @@ const MyCart = () => {
   const ListEmptyView = () => {
     return (
       <View>
-        <Text style={styles.text}>
+        <Text style={styles.input}>
         Your cart is empty. {"\n"}
           Scan item to add to cart
         </Text>
@@ -47,35 +50,40 @@ const MyCart = () => {
   //======================Returns=======================================
   return (
     <View style={styles.container}>
-      <Header title="My Cart" />
+  
 
-      <View style={styles.container}>
-        <FlatList
-          data={items}
-          renderItem={({ item }) => <ListItem item={item} />}
-          keyExtractor={(item, index) => index.toString()}
-          ListEmptyComponent={ListEmptyView}
-        />
-        <Text style={styles.text}>
-            TOTAL PRICE: ${totalPrice.toFixed(2)}
-          </Text>
-      </View>
+      {!isDone &&(
+        <View style={styles.container}>
+         <Header title="My Cart" />
 
-      {!isDone && (
-        <View>
+         
+           <FlatList
+             data={items}
+             renderItem={({ item }) => <ListItem item={item} />}
+             keyExtractor={(item, index) => index.toString()}
+             ListEmptyComponent={ListEmptyView}
+           />
+           <Text style={styles.text}>
+               TOTAL PRICE:   ${totalPrice.toFixed(2)}
+             </Text>
+        
+        
           
-          <TouchableHighlight
+          <TouchableOpacity
             style={styles.btn_done}
             onPress={() => {
               setisDone(true);
+              
             }}
           >
             <Text style={styles.btnText}> Checkout </Text>
-          </TouchableHighlight>
-        </View>
+          </TouchableOpacity>
+          </View>
       )}
 
-      {isDone && <Checkout total={totalPrice} />}
+      {isDone && (
+       <Checkout total={totalPrice}/>
+      ) }
     </View>
   );
 }; //end mycart
@@ -89,24 +97,19 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 10,
     height: 35,
-    padding: 8,
-    margin: 5,
-    textAlign: "center"
+    padding: 5,
+    margin: 2,
+    textAlign: "center", 
+    marginBottom: 10
   },
 
   input: {
-    height: 30,
-    borderColor: "gray",
-    borderWidth: 1,
-    margin: 10,
-    borderRadius: 5,
-    padding: 5,
-
+    height: 80,
+    padding: 10,
+    margin: 5,
     textAlign: "center",
-    color: "#3b1f2b",
+    fontSize: 20,
     fontWeight: "bold",
-
-    textAlign: "center",
   },
   btn_done: {
     backgroundColor: "#D00000",
@@ -119,7 +122,7 @@ const styles = StyleSheet.create({
     height: 80,
     padding: 10,
     margin: 5,
-    textAlign: "center",
+    textAlign: "left",
     fontSize: 20,
     fontWeight: "bold",
   },

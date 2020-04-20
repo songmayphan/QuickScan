@@ -31,7 +31,7 @@ const CartScreen = (props) => {
 //ProfileScreen------------------------------------------------------
 const ProfileScreen = (props) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor: '#8baab5'}]}>
       <Profile />
     </View>
   );

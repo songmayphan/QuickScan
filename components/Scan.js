@@ -10,18 +10,12 @@ import {
 import { BarCodeScanner } from "expo-barcode-scanner";
 import {
   TouchableOpacity,
-  TouchableHighlight
+  
 } from "react-native-gesture-handler";
 
 //redux
 import { useSelector, useDispatch } from 'react-redux'
 import {addItem} from '../redux/ducks'
-
-
-//Components:
-import MyCart from "./MyCart";
-
-
 const Scan = () => {
   //inintial states----------------------------------------------
 
@@ -39,7 +33,7 @@ const Scan = () => {
   //API STATES==============================================
   const [isLoading, setisLoading] = useState(true);
   const [fetchedItems, setFetcheditems] = useState([]);
-  const [foundItem, setfoundItem] = useState("");
+  const [foundItem, setfoundItem] = useState(false);
 
 //reedux
 const items = useSelector(state => state.cart)
@@ -58,18 +52,18 @@ const add_item = item => dispatch(addItem(item))
 
   //useEffect for when foundItem changes
   useEffect(() => {
-    console.log(`founditem in USEEFFECT ${foundItem.NAME}`)
-    
-  }, [foundItem]);
+      console.log("Rendered Scan.js")    
+  },[]);
+
+
+
   //function to print item to screen
   //function to export added item
-  
-  
   function printItem(itemToAdd) {
     //console.log(`product param in printItem is ${itemToAdd}`);
     //console.log( typeof(itemToAdd))
     Alert.alert(
-      "Scanned",
+      "Item scanned",
       `You scanned ${itemToAdd.NAME}. Add this to cart?`,
 
       [
@@ -99,26 +93,51 @@ const add_item = item => dispatch(addItem(item))
           delete item.MANUFACTURER;
           delete item.QUANTITY;
           setFetcheditems(() => [...fetchedItems, item]);
-          //console.log(` data.length = ${data.length}`);
+          
         }); //end item function
-
+       
         //console.log(data[1]);
         var dataScanned_trimmed = dataScanned.slice(1, -1);
         //console.log(`trimmed data is now ${dataScanned_trimmed}`);
+        let count = 0;
         for (var i = 0; i < data.length; i++) {
           // look for the entry with a matching `dataScanned` value
           if (data[i].ID == dataScanned_trimmed) {
             // we found it
             // item[i].ID is the matched result
-            console.log("----------------in fetch API------------------")
+            console.log("----------------ITEM IS FOUND------------------")
             console.log(data[i]);
-            //console.log(data[i].NAME);
+            console.log(data[i].NAME);
             //console.log(typeof(data[i]))
             //console.log(typeof(data[i].NAME))
+            
             printItem(data[i]);
+            setfoundItem(true);
           }
-        }
+          else{
+              count++;
+              // console.log(count)
+            if (count == data.length){
+              console.log("item does not exist in this list")
+              Alert.alert(
+                "Item Not Found",
+                `The item you scanned is not found. Please try another item!`,
+          
+                [ 
+                  { text: "OK", onPress: () => console.log("item not found ok pressed")},
+                ],
+                { cancelable: false }
+              );
+            }
+
+          }
+          
+        }//end for loop
+
+    
+        //console.log(`fetchedItems = ${JSON.stringify(fetchedItems )}`);
       }); //end try
+
     } catch (error) {
       console.error(error);
     }
@@ -176,7 +195,7 @@ const add_item = item => dispatch(addItem(item))
     //if Malarasa is picked------------------------------------------------MALARASA---------------------------
 
     if (isMa) {
-      console.log("is MA is true");
+      //console.log("is MA is true");
       fetchMA(data);
       if (isLoading) {
         console.log("API is loading");
@@ -226,7 +245,7 @@ const add_item = item => dispatch(addItem(item))
   }
 //-------------------------------------------------------------WW handle
   function handleWW() {
-    console.log("got in WW");
+    console.log("Wally World chosen");
     setisWW(true);
 
     Alert.alert(
@@ -246,7 +265,7 @@ const add_item = item => dispatch(addItem(item))
   //handleMa=======================================================
   function handleMalarasa() {
     setisMa(true);
-    console.log("got in MALARASA");
+    console.log("Malarasa chosen");
     Alert.alert(
       "Store",
       "Malarasa picked",
@@ -321,19 +340,19 @@ Therefore, if the condition is true, the element right after && will appear
       {scanAgain && (
         <View style={styles.container_buttons}>
           <View style={styles.btn_done}>
-            <TouchableHighlight
+            <TouchableOpacity
               onPress={Done}
             >
               <Text style={styles.btnText}> I'm done shopping</Text>
-            </TouchableHighlight>
+            </TouchableOpacity>
           </View>
 
           <View style={styles.btn_again}>
-            <TouchableHighlight 
+            <TouchableOpacity 
             onPress={again}
             >
               <Text style={styles.btnText}> Tap to scan again </Text>
-            </TouchableHighlight>
+            </TouchableOpacity>
           </View>
         </View>
       )}

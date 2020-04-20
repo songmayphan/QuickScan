@@ -6,9 +6,13 @@ import NumericInput from 'react-native-numeric-input'
 import { useSelector, useDispatch } from "react-redux";
 import { deleteFromList } from '../redux/ducks';
 
+
 export default function Compare() {
 
+
+  //useState
   const [isLoading, setLoading] = useState(true);
+
   const [data, setData] = useState({});
 
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext, ScrollView } from 'react';
 import { StyleSheet, Text, View, Button, TextInput, ActivityIndicator, FlatList, TouchableOpacity } from 'react-native';
 import NumericInput from 'react-native-numeric-input'
 
+
 //redux
 import { useSelector, useDispatch } from "react-redux";
 import { deleteFromList } from '../redux/ducks';

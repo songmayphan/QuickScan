@@ -36,7 +36,7 @@ export default function SignUpPage() {
 
       else{ 
 
-//===================Authentication======================================
+//===================sign up Authentication======================================
     Auth.signUp({
       username: userInfo.username,
       password: userInfo.password,
@@ -72,7 +72,19 @@ export default function SignUpPage() {
     }
 //====================Confirm Sig-up====================================
   const confirmSignUp = () => {
-    Auth.confirmSignUp(userInfo.username, userInfo.confirmationCode)
+
+    if(!userInfo.username || !userInfo.password || !userInfo.email || !userInfo.phone_number 
+      || !userInfo.name || !userInfo.confirmationCode)
+      {
+        Alert.alert('Missing Confirmation Code', 'Please fill in code field ')
+      }
+      else if( !validateEmail(userInfo.email)){ console.log('entered else if')
+      Alert.alert('Please enter valid email','')}
+      else{
+
+      Auth.confirmSignUp(userInfo.username, userInfo.confirmationCode)
+
+
     .then(() => {
       console.log('success')
       Alert.alert('Sign-up Successful','Please go to sign-in page')
@@ -82,6 +94,8 @@ export default function SignUpPage() {
       Alert.alert('Sign-up code error',err)
   
   })
+}//else
+
   }
 
   //===============Returns================================================
