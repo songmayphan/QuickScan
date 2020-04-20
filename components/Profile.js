@@ -11,6 +11,8 @@ import { StackNavigator } from "react-navigation";
 import { Auth } from 'aws-amplify';
 import {AuthenticationContext} from "../contexts/Authentication"
 
+/*jshint esversion: 6 */
+
 
 //Profile class--------------------------------------------
 function Profile() {
@@ -59,15 +61,15 @@ function Profile() {
     else{
     Auth.currentAuthenticatedUser()
     .then(user => {
-        return Auth.changePassword(user, currentPassword, newPassword);
+        return Auth.changePassword(user, currentPassword, newPassword);  
         
-    })
+      })
     //.then(data => console.log(data))
     .then((data) => {
-      //console.log('Success:', data);
+      Alert.alert('Confirmed','Password has been Change') 
     })
     .catch(err => {console.log('error', err)
-    Alert.alert('Invalid','Current Password')
+      Alert.alert('Invalid','Current Password')
     })
   } 
   
