@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, Text, View, Button, TextInput, ActivityIndicator, FlatList, TouchableOpacity } from 'react-native';
-import { SearchBar } from 'react-native-elements';
 import NumericInput from 'react-native-numeric-input'
 import {ListContext} from "../contexts/itemlist"
 
@@ -12,6 +11,9 @@ export default function Compare() {
 
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState({});
+
+
+
 
 
  /////////////STATE MGMT WITH REDUX//////////////// 
@@ -28,7 +30,8 @@ export default function Compare() {
 
  //////////////////////////////////////////////////
 
-// comparing
+ // comparing
+//  not final, just testing
  const compare = () =>  {
   console.log("comparing");
   fetch("http://18.189.32.71:3000/compare/", {
@@ -45,6 +48,7 @@ export default function Compare() {
     .then((data) => {
       console.log("Success:", data);
       setData(data)
+      setLoading(false);
     });
   }
 
@@ -63,7 +67,22 @@ export default function Compare() {
               </View>
           )}
         />
-      <Button title='COMPARE' onPress={compare}/>
+      {isLoading ? (
+        <Button title='COMPARE' onPress={compare}/>
+      ) : ( 
+        <FlatList
+        data={data}
+        removeClippedSubviews={false}
+        horizontal={true}
+        keyExtractor={({ store }, index) => store}
+        renderItem={({ item }) => (
+          <View style={styles.itemList}>
+            <Text>{item.store}</Text>
+            <Text>Final Price: ${item.finalPrice.toFixed(2)}</Text>
+            </View>
+        )}
+      />
+      )}
       </View>
     );
   };
