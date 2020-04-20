@@ -27,7 +27,7 @@ export default function List({ navigation }) {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
 
-  console.log("=========list render===========")
+  //console.log("=========list render===========")
   //i still dont know why it renders 3 times
 
   //MAY'S COMMENT: add item to list is now functional
@@ -116,35 +116,42 @@ export default function List({ navigation }) {
 const styles = StyleSheet.create({
   screen: {
     padding: 40,
+    borderRadius: 10, 
+    
   },
   inputContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    borderRadius: 10
   },
   input: {
     borderBottomColor: "black",
     borderBottomWidth: 1,
     padding: 10,
     width: "80%",
+    borderRadius: 10
   },
   itemList: {
     padding: 10,
-    backgroundColor: "#ccc",
+    backgroundColor: "#bdc667",
     borderColor: "black",
     borderWidth: 1,
     marginVertical: 10,
     flexDirection: "column",
+    borderRadius: 10
   },
   addButtonContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     padding: 20,
     alignItems: "center",
+    borderRadius: 10
   },
   button: {
     alignItems: "center",
     backgroundColor: "#DDDDDD",
     padding: 10,
+    borderRadius: 10
   },
 });
