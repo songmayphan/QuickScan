@@ -8,17 +8,18 @@ import {
   ActivityIndicator,
   FlatList,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { SearchBar } from "react-native-elements";
 // import NumericInput from "react-native-numeric-input";
-// import { ListContext } from "../contexts/itemlist";
+import { ListContext } from "../contexts/itemlist";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
 import { addToList } from "../redux/ducks";
 
 export default function List({ navigation }) {
-  //const { setList, List } = useContext(ListContext);
+  const setList  = useContext(ListContext);
   const itemsInList = useSelector(state => state.list);
   console.log(`items in list as of now (state.list) ${JSON.stringify(itemsInList)}`)
 
@@ -45,8 +46,10 @@ export default function List({ navigation }) {
   //redux with hooks 
   const items = useSelector(state => state.list)
   const dispatch = useDispatch();
-  const add_to_list = (item) => dispatch(addToList(item));
-
+  const add_to_list = (item) => {
+    dispatch(addToList(item))
+    Alert.alert(item.NAME, "has been added to the list")
+  };
 
   useEffect(() => {
     fetch("http://18.189.32.71:3000/items/")
@@ -71,12 +74,14 @@ export default function List({ navigation }) {
     <View style={styles.screen}>
       <View>
         <SearchBar placeholder="Type Here..." />
-        <TouchableOpacity
+        <View>
+             <TouchableOpacity
           onPress={() => navigation.navigate("Compare")}
           style={styles.button}
         >
           <Text>Continue</Text>
         </TouchableOpacity>
+          </View>
       </View>
       {isLoading ? (
         <ActivityIndicator />
