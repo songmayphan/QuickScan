@@ -177,11 +177,16 @@ else {
           </TouchableOpacity>
 
       
-          <Button
-            backgroundColor="#03A9F4"
-            title="SIGN OUT"
+          <TouchableOpacity
+            style ={styles.button_signout}
+            
+            
             onPress={() => userSignOut (userInfo.signOut)}
-          />
+          >
+            <Text
+            style={styles.text}
+            > SIGN OUT </Text>
+          </TouchableOpacity>
         
 
       </View>
@@ -236,9 +241,13 @@ const styles = StyleSheet.create ({
   button: {backgroundColor: "#bdc667",margin: 5, 
   color: 'yellow', borderWidth: 1, borderColor: '#2196F3', 
   height: 50, width: 140, alignSelf: 'center', 
+  justifyContent: 'center', borderRadius: 6},
+
+  button_signout: {backgroundColor: "#03A9F4",margin: 5, 
+  color: 'yellow', borderWidth: 1, borderColor: '#2196F3', 
+  height: 50, width: 140, alignSelf: 'center', 
   justifyContent: 'center', borderRadius: 6}
 
 })
 
 export default Profile;
-
