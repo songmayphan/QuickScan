@@ -11,6 +11,8 @@ import { StackNavigator } from "react-navigation";
 import { Auth } from 'aws-amplify';
 import {AuthenticationContext} from "../contexts/Authentication"
 
+/*jshint esversion: 6 */
+
 
 //Profile class--------------------------------------------
 function Profile() {
@@ -19,17 +21,13 @@ function Profile() {
     currentPassword: 'test_password',
     newPassword: 'test_new',
     signOut: 'test_signOut'
-
-
   });
 
-  //Sign-out--------------------------------------------------------
+//Sign-out--------------------------------------------------------
 
   const onSignOut = () => AsyncStorage.removeItem(userInfo);
 
- 
-
-  
+//Authecntication----------------------------------------------------- 
   // console.log(`userInfor.currentPassword:                ${userInfo.currentPassword}`)
   // console.log(`userInfor.newPassword:                    ${userInfo.newPassword}`)
 
@@ -40,7 +38,6 @@ function Profile() {
   };
 
 //New function---------------------------------------------
-
 
 //MAY'S COMMENT: 
 //changpassword should be using the API from Amplify
@@ -59,19 +56,21 @@ function Profile() {
     else{
     Auth.currentAuthenticatedUser()
     .then(user => {
-        return Auth.changePassword(user, currentPassword, newPassword);
+        return Auth.changePassword(user, currentPassword, newPassword);  
         
-    })
+      })
     //.then(data => console.log(data))
     .then((data) => {
-      //console.log('Success:', data);
+      Alert.alert('Confirmed','Password has been Change') 
     })
     .catch(err => {console.log('error', err)
-    Alert.alert('Invalid','Current Password')
+      Alert.alert('Invalid','Current Password')
     })
   } 
   
   }
+
+
 //-------------Sign-out function---------------
   function userSignOut (onSignOut){
 
@@ -95,9 +94,9 @@ function Profile() {
     })
   } 
   
-
   }
   console.log(onSignOut);
+  
 //create a new Date instance----------------------
 const date = new Date()
 const hours = date.getHours()
@@ -172,15 +171,11 @@ else {
                 Change Password
             </Text>  
 
-     
-
           </TouchableOpacity>
 
       
           <TouchableOpacity
-            style ={styles.button_signout}
-            
-            
+            style ={styles.button_signout}       
             onPress={() => userSignOut (userInfo.signOut)}
           >
             <Text
@@ -246,8 +241,8 @@ const styles = StyleSheet.create ({
   button_signout: {backgroundColor: "#03A9F4",margin: 5, 
   color: 'yellow', borderWidth: 1, borderColor: '#2196F3', 
   height: 50, width: 140, alignSelf: 'center', 
-  justifyContent: 'center', borderRadius: 6}
+  justifyContent: 'center', borderRadius: 6, marginTop: 100}
 
 })
-
+//Export----------------------------------------------------
 export default Profile;

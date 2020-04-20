@@ -8,6 +8,8 @@ import { StyleSheet, View, Text, Alert } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
+
+
 const Checkout = (total) => {
   //current state of items in cart, lock and print this
   const items = useSelector((state) => state);

@@ -2,6 +2,8 @@ import React from 'react';
 import Svg, { G, Rect, Text } from 'react-native-svg';
 import JSBarcode from 'jsbarcode';
 
+
+
 /* Based on JsBarcode's svg.js etc. */
 
 const merge = (old, replaceObj) => ({ ...old, ...replaceObj });
@@ -206,7 +208,7 @@ function Barcode({ value, options }) {
     // format: "auto",
     displayValue: true,
     fontOptions: 'bold',
-    font: 'monospace',
+    //font: 'monospace',
     text: '',
     textAlign: 'center',
     textPosition: 'bottom',
