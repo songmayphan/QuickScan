@@ -19,7 +19,8 @@ export function addToList(item) {
       price: item.PRICE,
       manufacturer: item.MANUFACTURER,
       id: item._id,
-      UPC: item.UPC
+      UPC: item.UPC,
+      quantity: 1
     };
   }
   //IMPORTTANT!!! CALL THIS FUNCTION TO DELETE FROM LIST
@@ -111,16 +112,21 @@ function itemReducer(state = initState, action) {
               {
                 _id: action.id,
                 name: action.name,
-                manufacturer: action.manufacturer 
+                manufacturer: action.manufacturer,
+                quantity: 1
 
               }
           ]
             
         };
       case DELETE_FROM_LIST:
-        const itemID_list = action.id;
         return {
-          list: state.list.filter(item => item.id !== itemID_list)
+          list: state.list.filter(item =>{ 
+            console.log(action.id._id, item._id)
+
+           return item._id != action.id._id
+          }
+            )
         }
         //action.id is stil undefined because the id is different in 2 stores
         //we might need to use UPC instead to delete
@@ -133,3 +139,4 @@ function itemReducer(state = initState, action) {
 }
 
 export default itemReducer;
+
