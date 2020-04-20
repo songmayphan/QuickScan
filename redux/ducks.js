@@ -17,7 +17,10 @@ export function addToList(item) {
       type: ADD_TO_LIST,
       name: item.NAME,
       price: item.PRICE,
-      manufacturer: item.MANUFACTURER
+      manufacturer: item.MANUFACTURER,
+      id: item._id,
+      UPC: item.UPC,
+      quantity: 1
     };
   }
   //IMPORTTANT!!! CALL THIS FUNCTION TO DELETE FROM LIST
@@ -32,6 +35,8 @@ export function addToList(item) {
 //CART actyions========================================================================
 
 export function addItem(item) {
+
+=======
   // console.log(`duckssssss addtocart ${item.NAME}`)
 return {
   type: ADD_ITEM,
@@ -98,19 +103,8 @@ function itemReducer(state = initState, action) {
      }
      else {
       console.log("no duplicate items")
-      return {
-        cart: [...state.cart, 
-          {
-          id: action.id,
-          name: action.name,
-          price: action.price,
-          quantity: 1
-          }
-        ]
-        
-      };
 
-     }
+      
       
       
     case DELETE_ITEM:
@@ -133,23 +127,25 @@ function itemReducer(state = initState, action) {
           
           list: [ ...state.list,
               {
-                //id: action.id,
+
+                _id: action.id,
                 name: action.name,
-                //price: action.price, 
+                manufacturer: action.manufacturer,
+                quantity: 1
+                
 
               }
           ]
             
         };
       case DELETE_FROM_LIST:
-        const itemID_list = action.id;
         return {
-          list: state.list.filter(item => item.id !== itemID_list)
-        }
-        //action.id is stil undefined because the id is different in 2 stores
-        //we might need to use UPC instead to delete
+          list: state.list.filter(item =>{ 
+            console.log(action.id._id, item._id)
 
-
+           return item._id != action.id._id
+          }
+            )     
         
     default:
       return state;
@@ -157,3 +153,4 @@ function itemReducer(state = initState, action) {
 }
 
 export default itemReducer;
+
