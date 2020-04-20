@@ -78,7 +78,32 @@ function itemReducer(state = initState, action) {
     
     case ADD_ITEM:
       console.log(`typeof state.cart is ${typeof(state.cart)}`)
-      return {
+      //flag for found duplicate to return
+        let isFound = false;
+     //state.cart = [ ...new Set(state.cart.id) ] // [remove duplicate item]
+     //for loop to count duplicate htne add duplicate to quantity
+     for (let i = 0; i< state.cart.length; i++){
+       if (state.cart[i].id == action.id){
+         //if there is an existing item in state.cart
+         //that matches the item being added to the state
+        state.cart[i].quantity += 1; //increase quantity by 1 
+        isFound = true;
+        break; //break the loop to return
+       }
+       else {
+         continue; //continue if item is not duplicate
+       }
+     }//end for loop
+
+     if (isFound) {
+       console.log("duplicate item found")
+       return{
+         cart: [...state.cart]
+       }
+     }
+     else {
+      console.log("no duplicate items")
+     return {
         cart: [...state.cart, 
           {
           id: action.id,
@@ -87,8 +112,9 @@ function itemReducer(state = initState, action) {
           quantity: 1
           }
         ]
-        
+
       };
+    };
       
     case DELETE_ITEM:
       const itemID = action.id;
