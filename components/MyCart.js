@@ -19,8 +19,7 @@ const MyCart = ({navigation}) => {
 
   //render barcode
   const [isDone, setisDone] = useState(false);
-
-  //render
+ 
   useEffect(() => {
     console.log("MyCart.js finshished rendering");
   }, []);
@@ -38,6 +37,7 @@ const MyCart = ({navigation}) => {
   //listEmptycomponent
 
   const ListEmptyView = () => {
+   
     return (
       <View>
         <Text style={styles.input}>
@@ -66,10 +66,7 @@ const MyCart = ({navigation}) => {
            <Text style={styles.text}>
                TOTAL PRICE:   ${totalPrice.toFixed(2)}
              </Text>
-        
-        
-          
-          <TouchableOpacity
+             <TouchableOpacity
             style={styles.btn_done}
             onPress={() => {
               setisDone(true);
@@ -80,6 +77,7 @@ const MyCart = ({navigation}) => {
           </TouchableOpacity>
           </View>
       )}
+      
 
       {isDone && (
        <Checkout total={totalPrice}/>

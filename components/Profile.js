@@ -21,17 +21,13 @@ function Profile() {
     currentPassword: 'test_password',
     newPassword: 'test_new',
     signOut: 'test_signOut'
-
-
   });
 
-  //Sign-out--------------------------------------------------------
+//Sign-out--------------------------------------------------------
 
   const onSignOut = () => AsyncStorage.removeItem(userInfo);
 
- 
-
-  
+//Authecntication----------------------------------------------------- 
   // console.log(`userInfor.currentPassword:                ${userInfo.currentPassword}`)
   // console.log(`userInfor.newPassword:                    ${userInfo.newPassword}`)
 
@@ -42,7 +38,6 @@ function Profile() {
   };
 
 //New function---------------------------------------------
-
 
 //MAY'S COMMENT: 
 //changpassword should be using the API from Amplify
@@ -74,6 +69,8 @@ function Profile() {
   } 
   
   }
+
+
 //-------------Sign-out function---------------
   function userSignOut (onSignOut){
 
@@ -97,7 +94,6 @@ function Profile() {
     })
   } 
   
-
   }
   console.log(onSignOut);
   
@@ -248,5 +244,5 @@ const styles = StyleSheet.create ({
   justifyContent: 'center', borderRadius: 6, marginTop: 100}
 
 })
-
+//Export----------------------------------------------------
 export default Profile;

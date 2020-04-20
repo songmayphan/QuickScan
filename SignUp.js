@@ -18,7 +18,7 @@ export default function SignUpPage() {
   const onChangeText = (key, value) => {
     setUserInfo({...userInfo, [key]: value})
 };
-//=================sign-up alerts====================================
+//sign-up alerts--------------------------------------------------
   const signUp = () => {
     if(!userInfo.username || !userInfo.password || !userInfo.email || !userInfo.phone_number 
       || !userInfo.name )
@@ -36,7 +36,7 @@ export default function SignUpPage() {
 
       else{ 
 
-//===================sign up Authentication======================================
+//sign up Authentication-------------------------------------
     Auth.signUp({
       username: userInfo.username,
       password: userInfo.password,
@@ -48,7 +48,7 @@ export default function SignUpPage() {
     })
 
   
-//=================sign up messages=================================
+//sign up messages--------------------------------------------------
     .then(() => {console.log('success') 
       Alert.alert('email confirmation', 'Please check email box for confirmation code')
       } )
@@ -58,7 +58,7 @@ export default function SignUpPage() {
   })
       }    
   } 
-//=================Validate email and phone number===================
+//Validate email and phone number--------------------------------
   function validateEmail(elementValue){      
     var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     return emailPattern.test(elementValue); 
@@ -70,7 +70,7 @@ export default function SignUpPage() {
     return phonePattern.test(number)
     //return true
     }
-//====================Confirm Sig-up====================================
+//Confirm sign-up---------------------------------------
   const confirmSignUp = () => {
 
     if(!userInfo.username || !userInfo.password || !userInfo.email || !userInfo.phone_number 
@@ -98,7 +98,7 @@ export default function SignUpPage() {
 
   }
 
-  //===============Returns================================================
+  //Returns---------------------------------------
     return (
       <View style={styles.container}>
         <Image
@@ -163,7 +163,7 @@ export default function SignUpPage() {
 //export default withAuthenticator(App, { includeGreetings: true })
 
 
-//==================+Styels ============================================
+//Styles---------------------------------------
 const styles = StyleSheet.create({
   input: {
     height: 35,

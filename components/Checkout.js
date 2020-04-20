@@ -2,7 +2,7 @@ import React, { Component, useState, useRef } from "react";
 
 import Barcode from "./Barcode.js";
 
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Alert } from "react-native";
 //redux
 
 import { useSelector, useDispatch } from "react-redux";
@@ -63,15 +63,22 @@ const Checkout = (total) => {
         value={barcodeID}
         options={{ format: "CODE128", background: "pink" }}
       />
-      {/* <TouchableOpacity
+       <TouchableOpacity
       style={styles.btn_done}
       onPress={() => {
-        printReceipt(items)
+        Alert.alert(
+          "Shopping Done!",
+          "Thank you for shopping with QuickScan",
+          [ 
+            { text: "OK", onPress: () => console.log("ok")}
+          ],
+          { cancelable: false }
+        );
       }}
       >
-         <Text style={styles.btnText}> My Receipt </Text>
+         <Text style={styles.btnText}> Done </Text>
 
-      </TouchableOpacity> */}
+      </TouchableOpacity> 
     </View>
   );
 };
