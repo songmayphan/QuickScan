@@ -284,6 +284,11 @@ const add_item = item => dispatch(addItem(item))
     setScanned(true);
     setShowStore(false);
   }
+  function shopnow() {
+    setShowStore(true);
+    setisDone(false)
+    
+  }
   //done shopping---------------------------------------------------------
   function noMore(){
     setScanAgain(false);
@@ -361,6 +366,12 @@ Therefore, if the condition is true, the element right after && will appear
         <Text style={styles.text}>
           Thank you for shopping with us!
         </Text>
+        <TouchableOpacity
+        style={styles.btn_again}
+        onPress={shopnow}
+        >
+          <Text> I'm going shopping now </Text>
+        </TouchableOpacity>
       </View>
     )}
       
