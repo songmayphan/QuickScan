@@ -1,24 +1,33 @@
 import React, {useState, useContext} from 'react';
-import { StyleSheet, Text, View, TextInput, Alert } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Alert, Button, Card, AsyncStorage } from 'react-native';
 //AWS
 import { withAuthenticator } from 'aws-amplify-react-native'
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { Avatar, ListItem } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { StackNavigator } from "react-navigation";
 
 import { Auth } from 'aws-amplify';
 import {AuthenticationContext} from "../contexts/Authentication"
-console.log("------------------PROFILE-----------------------------")
+
 
 //Profile class--------------------------------------------
 function Profile() {
   
-  const [userInfo, setUserInfo] = useState({
+  const [userInfo, setUserInfo, setSignOut] = useState({
     currentPassword: 'test_password',
     newPassword: 'test_new',
+    signOut: 'test_signOut'
+
 
   });
+
+  //Sign-out--------------------------------------------------------
+
+  const onSignOut = () => AsyncStorage.removeItem(userInfo);
+
+ 
 
   
   // console.log(`userInfor.currentPassword:                ${userInfo.currentPassword}`)
@@ -38,11 +47,9 @@ function Profile() {
 //fetching from our user pools to get password
 //take a look at how Sandro's calling context
 
-  //const changePassword=  (currentPassword, newPassword) =>{
-
   function changePassword (currentPassword, newPassword) {
    
-    console.log (` in changePassword            ${currentPassword, newPassword}`)
+    //console.log (` in changePassword            ${currentPassword, newPassword}`)
 
     if(!userInfo.currentPassword || !userInfo.newPassword )
     {
@@ -57,20 +64,40 @@ function Profile() {
     })
     //.then(data => console.log(data))
     .then((data) => {
-      console.log('Success:', data);
+      //console.log('Success:', data);
     })
     .catch(err => {console.log('error', err)
     Alert.alert('Invalid','Current Password')
     })
   } 
-    //.then((response) => response.json())
-
-    // changePassword = () => {
-    //   Auth.changePassword();
-    // };
   
   }
+//-------------Sign-out function---------------
+  function userSignOut (onSignOut){
+
+    if(!userInfo.onSignOut )
+    {
+      Alert.alert('Signed Out', 'Thank you')
+    }
+    
+    else{
+    Auth.currentAuthenticatedUser()
+    .then(user => {
+        return Auth.userSignOut(user, onSignOut);
+        
+    })
+    //.then(data => console.log(data))
+    .then((data) => {
+      //console.log('Signed out:', data);
+    })
+    .catch(err => {console.log('error', err)
+    Alert.alert('Invalid','Still signed in')
+    })
+  } 
   
+
+  }
+  console.log(onSignOut);
 //create a new Date instance----------------------
 const date = new Date()
 const hours = date.getHours()
@@ -104,7 +131,7 @@ else {
               uri:
                 'https://i.imgur.com/icikekY.jpg',
               }}
-            //showEditButton
+            showEditButton
         />
 
           {/* need a button to change password 
@@ -145,11 +172,22 @@ else {
                 Change Password
             </Text>  
 
+     
+
           </TouchableOpacity>
+
+      
+          <Button
+            backgroundColor="#03A9F4"
+            title="SIGN OUT"
+            onPress={() => userSignOut (userInfo.signOut)}
+          />
+        
 
       </View>
       
-    );
+    ); 
+     
   
 }
 //Styling------------------------------------------
