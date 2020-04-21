@@ -38,7 +38,10 @@ signUp() {
 //
 signOut() {
   Auth.signOut()
-    .then(data => console.log(data))
+    .then(data => {console.log(data)
+      this.authenticate(false)
+    })
+
     .catch(err => console.log(err));
 }
 //----------------------------------------CONFIRM SIGN UP---------------------------------
