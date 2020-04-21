@@ -1,17 +1,13 @@
 import React, {useState, useContext} from 'react';
-import { StyleSheet, Text, View, TextInput, Alert, Button, Card, AsyncStorage } from 'react-native';
-//AWS
-import { withAuthenticator } from 'aws-amplify-react-native'
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
+import { StyleSheet, Text, View, TextInput, Alert} from 'react-native';
+
+
 import { Avatar, ListItem } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { StackNavigator } from "react-navigation";
+
 
 import { Auth } from 'aws-amplify';
 import {AuthenticationContext} from "../contexts/Authentication"
-
-/*jshint esversion: 6 */
 
 
 //Profile class--------------------------------------------
@@ -23,13 +19,9 @@ function Profile() {
     signOut: 'test_signOut'
   });
 
-//Sign-out--------------------------------------------------------
-
-  const onSignOut = () => AsyncStorage.removeItem(userInfo);
 
 //Authecntication----------------------------------------------------- 
-  // console.log(`userInfor.currentPassword:                ${userInfo.currentPassword}`)
-  // console.log(`userInfor.newPassword:                    ${userInfo.newPassword}`)
+
 
   const {setAuthentication} = useContext(AuthenticationContext)
 
@@ -39,14 +31,7 @@ function Profile() {
 
 //New function---------------------------------------------
 
-//MAY'S COMMENT: 
-//changpassword should be using the API from Amplify
-//fetching from our user pools to get password
-//take a look at how Sandro's calling context
-
   function changePassword (currentPassword, newPassword) {
-   
-    //console.log (` in changePassword            ${currentPassword, newPassword}`)
 
     if(!userInfo.currentPassword || !userInfo.newPassword )
     {
@@ -56,12 +41,13 @@ function Profile() {
     else{
     Auth.currentAuthenticatedUser()
     .then(user => {
+        Alert.alert('Confirmed','Password has been Change') 
         return Auth.changePassword(user, currentPassword, newPassword);  
         
       })
-    //.then(data => console.log(data))
+    
     .then((data) => {
-      Alert.alert('Confirmed','Password has been Change') 
+     
     })
     .catch(err => {console.log('error', err)
       Alert.alert('Invalid','Current Password')
@@ -72,30 +58,22 @@ function Profile() {
 
 
 //-------------Sign-out function---------------
-  function userSignOut (onSignOut){
-
-    if(!userInfo.onSignOut )
-    {
-      Alert.alert('Signed Out', 'Thank you')
-    }
-    
-    else{
-    Auth.currentAuthenticatedUser()
-    .then(user => {
-        return Auth.userSignOut(user, onSignOut);
-        
-    })
-    //.then(data => console.log(data))
-    .then((data) => {
-      //console.log('Signed out:', data);
-    })
-    .catch(err => {console.log('error', err)
-    Alert.alert('Invalid','Still signed in')
-    })
-  } 
+  function userSignOut(){
   
-  }
-  console.log(onSignOut);
+    
+    Auth.signOut()
+      .then((data) => {
+          console.log(data) 
+          //Alert.alert("data", data) 
+          setAuthentication(false)
+        })
+
+      .catch(err => {
+        console.log(err) 
+        Alert.alert("Logout error!!", err)
+      });
+  
+    }
   
 //create a new Date instance----------------------
 const date = new Date()
@@ -132,11 +110,6 @@ else {
               }}
             showEditButton
         />
-
-          {/* need a button to change password 
-            ideally, we'll have a flag, to indicate the button is pressed, then render
-            the change password form
-          */}
           <Text style = {{alignSelf: 'center', fontSize: 25, marginBottom: 20}}>
               Change Password 
           </Text>
@@ -176,7 +149,7 @@ else {
       
           <TouchableOpacity
             style ={styles.button_signout}       
-            onPress={() => userSignOut (userInfo.signOut)}
+            onPress={() => {userSignOut()}}
           >
             <Text
             style={styles.text}
