@@ -1,6 +1,6 @@
 import React, {useState, useContext} from 'react';
 import { StyleSheet, Text, View, TextInput, Alert} from 'react-native';
-//AWS
+
 
 import { Avatar, ListItem } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -8,8 +8,6 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { Auth } from 'aws-amplify';
 import {AuthenticationContext} from "../contexts/Authentication"
-
-//settings button, 
 
 
 //Profile class--------------------------------------------
@@ -23,8 +21,7 @@ function Profile() {
 
 
 //Authecntication----------------------------------------------------- 
-  // console.log(`userInfor.currentPassword:                ${userInfo.currentPassword}`)
-  // console.log(`userInfor.newPassword:                    ${userInfo.newPassword}`)
+
 
   const {setAuthentication} = useContext(AuthenticationContext)
 
@@ -35,8 +32,6 @@ function Profile() {
 //New function---------------------------------------------
 
   function changePassword (currentPassword, newPassword) {
-   
-    //console.log (` in changePassword            ${currentPassword, newPassword}`)
 
     if(!userInfo.currentPassword || !userInfo.newPassword )
     {
@@ -50,7 +45,7 @@ function Profile() {
         return Auth.changePassword(user, currentPassword, newPassword);  
         
       })
-    //.then(data => console.log(data))
+    
     .then((data) => {
      
     })
@@ -115,11 +110,6 @@ else {
               }}
             showEditButton
         />
-
-          {/* need a button to change password 
-            ideally, we'll have a flag, to indicate the button is pressed, then render
-            the change password form
-          */}
           <Text style = {{alignSelf: 'center', fontSize: 25, marginBottom: 20}}>
               Change Password 
           </Text>
