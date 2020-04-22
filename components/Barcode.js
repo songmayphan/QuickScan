@@ -208,7 +208,6 @@ function Barcode({ value, options }) {
     // format: "auto",
     displayValue: true,
     fontOptions: 'bold',
-    //font: 'monospace',
     text: '',
     textAlign: 'center',
     textPosition: 'bottom',

@@ -1,5 +1,6 @@
 import React, {useState, useContext} from 'react';
-import { StyleSheet, Text, View, TextInput, Alert} from 'react-native';
+import { StyleSheet, Text, View, TextInput, Alert, Image} from 'react-native';
+
 
 
 import { Avatar, ListItem } from 'react-native-elements';
@@ -8,6 +9,8 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { Auth } from 'aws-amplify';
 import {AuthenticationContext} from "../contexts/Authentication"
+
+
 
 
 //Profile class--------------------------------------------
@@ -100,7 +103,7 @@ else {
     return (
 //Profile image, time, password button------------------------------------
       <View style = {{backgroundColor: '#8baab5'}}>
-        
+      
         <Avatar
             size="large"
             rounded   
@@ -110,6 +113,8 @@ else {
               }}
             showEditButton
         />
+
+
           <Text style = {{alignSelf: 'center', fontSize: 25, marginBottom: 20}}>
               Change Password 
           </Text>

@@ -24,7 +24,7 @@ const MyCart = ({navigation}) => {
     console.log("MyCart.js finshished rendering");
   }, []);
 
-  console.log("------------mycart----------------");
+ 
   //console.log(typeof(items))
   console.log(JSON.stringify(items));
   let totalPrice = 0;
