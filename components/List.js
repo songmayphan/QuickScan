@@ -1,150 +1,190 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, Text, View, Button, TextInput, ActivityIndicator, FlatList, TouchableOpacity } from 'react-native';
-import NumericInput from 'react-native-numeric-input'
+import React, { useState, useEffect} from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ActivityIndicator,
+  FlatList,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
+import { SearchBar } from "react-native-elements";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
-import { deleteFromList } from '../redux/ducks';
+import { addToList } from "../redux/ducks";
 
+export default function List({ navigation }) {
 
-export default function Compare() {
+  const itemsInList = useSelector(state => state.list);
+  console.log(`items in list as of now (state.list) ${JSON.stringify(itemsInList)}`)
 
-
-  //useState
+  ////////////////LOCALSTATE////////////////////
   const [isLoading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
+  const [search, setSearch] = useState('');
+  const [queryResult, setQueryResult] = useState([]);
+  ///////////////////////////////////////////
 
-  const [data, setData] = useState({});
+  //Data has all the items in the stores,
+  //redux with hooks 
+  const items = useSelector(state => state.list)
+  const dispatch = useDispatch();
 
 
 
+  //////////////ADD TO LIST////////////////////
+  const add_to_list = (item) => {
 
+    let itsInList = false;
+      //check the list for repeated items
+      itemsInList.map((itemInList) => {
+        itemInList.name == item.NAME ? itsInList = true : itsInList = false
+    })
 
- /////////////STATE MGMT WITH REDUX//////////////// 
- //use this variable to loop through the list in redux
-
- // retrieve list
- const items = useSelector(state => state.list)
- console.log(items);
- const dispatch = useDispatch();
- //use this function to add to list
- const add_to_list = (item) => dispatch(addToList(item));
- //IMPORTTANT!!! CALL THIS FUNCTION TO DELETE FROM LIST
- const delete_item = (id) => dispatch(deleteFromList(id));
-
- //////////////////////////////////////////////////
-
- // comparing
- const compare = () =>  {
-  console.log("comparing");
-  fetch("http://18.189.32.71:3000/compare/", {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      items: items
-    }),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Success:", data);
-      setData(data)
-      setLoading(false);
-    });
-  }
-
-  //separator 
-  const renderSeparator = () => {
-    return (
-      <View
-        style={{
-          flex: 4,
-          justifyContent: "space-around"
-        }}
-      />
-    );
+    if(itsInList){
+    Alert.alert(item.NAME, "Item is already in the list")
+    } else {
+      dispatch(addToList(item))
+      Alert.alert(item.NAME, "Item has been added to your list")
+   }
   };
+  ////////////////////////////////////////////////
+
+  //////////////////SEARCHBAR/////////////////////
+  const SearchFilterFunction = text => {
+    //passing the inserted text in textinput
+    const newData = data.filter(function(item) {
+      //applying filter for the inserted text in search bar
+      const itemData = item.NAME ? item.NAME.toUpperCase() : ''.toUpperCase();
+      const textData = text.toUpperCase();
+      return itemData.indexOf(textData) > -1;
+    })
+      setQueryResult(newData)
+      setSearch(text)
+  }
+  /////////////////////////////////////////////////////////
 
 
 
-    return (
-      <View style={styles.screen}>
-         <FlatList
-          data={items}
-          removeClippedSubviews={false}
+///////////////////// FETCH FROM API //////////////////////
+  useEffect(() => {
+    fetch("http://18.189.32.71:3000/items/")
+      .then((response) => response.json())
+      .then((json) => {
+        json.map((item) => {
+          delete item.DESCRIPTION;
+        });
+        setData(json);
+        setQueryResult(json)
+      })
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
+  },[]);
+  
+
+  return (
+    <View style={styles.screen}>
+       <View>
+        <SearchBar 
+        round
+        lightTheme
+        searchIcon={{ size: 24 }}
+        onChangeText={SearchFilterFunction}
+        onClear={text => {SearchFilterFunction('')}}
+        placeholder="Search"
+        value={search}
+        />
+        <View>
+             <TouchableOpacity
+          onPress={() => navigation.navigate("Compare")}
+          style={styles.continueButton}
+        >
+          <Text style={{fontSize: 18}}>Continue</Text>
+        </TouchableOpacity>
+          </View>
+      </View>
+      {isLoading ? (
+        <ActivityIndicator />
+      ) : (
+        <FlatList
+          data={queryResult}
+          removeClippedSubviews={true}
           keyExtractor={({ _id }, index) => _id}
           renderItem={({ item }) => (
             <View style={styles.itemList}>
-              <Text>Item: {item.name}</Text>
-              <Text>manufacturer: {item.manufacturer}</Text>
+              <Text style={styles.nameText}>{item.NAME}</Text>
+              <Text style={styles.manufacturerText}>{item.MANUFACTURER}</Text>
+              <View style={styles.addButtonContainer}>
+                <TouchableOpacity
+                  onPress={() => 
+
+                    add_to_list(item)
+                  }
+                  style={styles.button}
+                >
+                  <Text style={{fontSize: 18}}>Add item</Text>
+                </TouchableOpacity>
               </View>
+            </View>
           )}
         />
-      {isLoading ? (
-        <TouchableOpacity
-         onPress={compare}
-         style={styles.button}
-      >
-        <Text>Add Item</Text>
-      </TouchableOpacity>
-        
-      ) : ( 
-        <FlatList
-        data={data}
-        removeClippedSubviews={false}
-        numColumns={2}
-        columnWrapperStyle={styles.row}
-        keyExtractor={({ store }, index) => store}
-        renderItem={({ item }) => (
-          <View style={styles.itemList}>
-            <Text>{item.store}</Text>
-            <Text>Final Price: ${item.finalPrice.toFixed(2)}</Text>
-            </View>
-        )}
-      />
       )}
-      </View>
-    );
-  };
-
+    </View>
+  );
+}
 
 const styles = StyleSheet.create({
-    screen: {
-      padding: 40
-    },
-    inputContainer: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center'
-    },
-    input: {
-      borderBottomColor: 'black',
-      borderBottomWidth: 1,
-      padding: 10,
-      width: '80%'
-    },
-    itemList: {
-      padding: 10,
-      backgroundColor: '#ccc',
-      borderColor: 'black',
-      borderWidth: 1,
-      marginVertical: 10,
-      flexDirection: 'column'
-    },
-    addButtonContainer: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      padding: 20,
-      alignItems: 'center'
-    },
-    button: {
-      alignItems: "center",
-      backgroundColor: "#DDDDDD",
-      padding: 10
-    },
-    row: {
-      flex: 1,
-      justifyContent: "space-around"
-    }
-  });
+  screen: {
+    padding: 40,
+    borderRadius: 10,
+    backgroundColor: "#E3E2DF"
+    
+  },
+  inputContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    borderRadius: 10
+  },
+  input: {
+    borderBottomColor: "black",
+    borderBottomWidth: 1,
+    padding: 10,
+    width: "80%",
+    borderRadius: 10
+  },
+  itemList: {
+    padding: 10,
+    backgroundColor: "#E3AFBC",
+    marginVertical: 10,
+    flexDirection: "column",
+    borderRadius: 10, 
+
+  },
+  addButtonContainer: {
+
+    justifyContent: "space-between",
+    padding: 20,
+    alignItems: "center",
+    borderRadius: 10
+  },
+  button: {
+    alignItems: "center",
+    backgroundColor: "#EC3B61",
+    padding: 10,
+    borderRadius: 10
+  },
+  continueButton: {
+    alignItems: "center",
+    backgroundColor: "#EDC7B7",
+    padding: 20,
+    borderRadius: 10,
+  },
+  nameText: {
+    fontSize: 25
+  },
+  manufacturerText: {
+    fontSize: 15
+  }
+});
