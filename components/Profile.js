@@ -106,7 +106,8 @@ else {
             rounded   
             source={{
               uri:
-                'https://i.imgur.com/icikekY.jpg',
+                // 
+                'https://imgur.com/t/earth_day/3SOrwqu'
               }}
             showEditButton
         />

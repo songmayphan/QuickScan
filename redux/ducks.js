@@ -68,7 +68,7 @@ console.log(`duckssssss quantity ${quantity}`)
 //reducer===============================================================
 const initState = {
   cart: [],
-  list: []
+  list: [],
 }
   
 
@@ -160,7 +160,7 @@ function itemReducer(state = initState, action) {
 
         
     default:
-      return state;
+      return {...state};
   }
 }
 
