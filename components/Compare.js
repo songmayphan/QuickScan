@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useContext, ScrollView } from 'react';
-import { StyleSheet, Text, View, Button, TextInput, ActivityIndicator, FlatList, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity, Alert } from 'react-native';
 import NumericInput from 'react-native-numeric-input'
-
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -9,6 +8,8 @@ import { deleteFromList } from '../redux/ducks';
 
 export default function Compare() {
 
+
+  ///////////STATE WITH HOOKS//////////////////
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState({});
 
@@ -17,21 +18,18 @@ export default function Compare() {
 
 
   /////////////STATE MGMT WITH REDUX//////////////// 
-  //use this variable to loop through the list in redux
 
   // retrieve list
   const items = useSelector(state => state.list)
-  console.log(items);
   const dispatch = useDispatch();
-  //use this function to add to list
-  const add_to_list = (item) => dispatch(addToList(item));
   //IMPORTTANT!!! CALL THIS FUNCTION TO DELETE FROM LIST
   const delete_item = (id) => dispatch(deleteFromList(id));
 
   //////////////////////////////////////////////////
 
-  // comparing
+  /////////FETCHING COMPARE FROM API/////////////////
   const compare = () => {
+    if(items.length != 0){
     console.log("comparing");
     fetch("http://18.189.32.71:3000/compare/", {
       method: "POST",
@@ -45,11 +43,14 @@ export default function Compare() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Success:", data);
         setData(data)
         setLoading(false);
       });
+  } else {
+    Alert.alert("Nothing to compare yet, go back and add items");
   }
+}
+
 
   const renderFooter = () => {
     return (
@@ -63,10 +64,10 @@ export default function Compare() {
         />
         {isLoading ? (
           <TouchableOpacity
-            onPress={compare}
+            onPress={ compare }
             style={styles.button}
           >
-            <Text>COMPARE</Text>
+            <Text style={{fontSize: 20}}>COMPARE</Text>
           </TouchableOpacity>
 
         ) : (
@@ -77,9 +78,9 @@ export default function Compare() {
               columnWrapperStyle={styles.row}
               keyExtractor={({ store }, index) => store}
               renderItem={({ item }) => (
-                <View style={styles.itemList}>
-                  <Text>{item.store}</Text>
-                  <Text>Final Price: ${item.finalPrice.toFixed(2)}</Text>
+                <View style={styles.finalList}>
+                  <Text style={{fontSize: 20}}>{item.store}</Text>
+                  <Text style={{fontSize: 13, fontStyle: 'italic'}}>Final Price: ${item.finalPrice.toFixed(2)}</Text>
                 </View>
               )}
             />
@@ -99,10 +100,15 @@ export default function Compare() {
         keyExtractor={({ _id }, index) => _id}
         renderItem={({ item }) => (
           <View style={styles.itemList}>
-            <Text>Item: {item.name}</Text>
-            <Text>manufacturer: {item.manufacturer}</Text>
+            <Text style={styles.nameText}>{item.name}</Text>
+            <Text style={styles.manufacturerText}>{item.manufacturer}</Text>
             <View style={styles.addButtonContainer}>
               <NumericInput 
+              rightButtonBackgroundColor='#EA3788'
+              leftButtonBackgroundColor='#E56B70'
+              textColor='#B0228C'
+              rounded
+              iconStyle={{ color: 'white' }} 
               initValue = {item.quantity}
               minValue = {1}
               onChange={value => {
@@ -116,7 +122,7 @@ export default function Compare() {
                 }}
                 style={styles.button}
               >
-                <Text>Remove</Text>
+                <Text style={{fontStyle: 'italic', fontSize: 15}}>REMOVE</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -129,7 +135,9 @@ export default function Compare() {
 
 const styles = StyleSheet.create({
   screen: {
-    padding: 40
+    padding: 40,
+    borderRadius: 10,
+    backgroundColor: "#E3E2DF"
   },
   inputContainer: {
     flexDirection: 'row',
@@ -144,11 +152,17 @@ const styles = StyleSheet.create({
   },
   itemList: {
     padding: 10,
-    backgroundColor: '#ccc',
-    borderColor: 'black',
-    borderWidth: 1,
+    backgroundColor: "#BAB2B5",
     marginVertical: 10,
-    flexDirection: 'column'
+    flexDirection: "column",
+    borderRadius: 10,
+  },
+  finalList: {
+    padding: 10,
+    backgroundColor: "#EC3B61",
+    marginVertical: 10,
+    flexDirection: "column",
+    borderRadius: 10,
   },
   addButtonContainer: {
     flexDirection: 'row',
@@ -158,12 +172,19 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: "center",
-    backgroundColor: "#DDDDDD",
-    padding: 10
+    backgroundColor: "#EDC7B7",
+    padding: 10,
+    borderRadius: 10
   },
   row: {
     flex: 1,
     justifyContent: "space-around",
     padding: 10
   },
+  nameText: {
+    fontSize: 25
+  },
+  manufacturerText: {
+    fontSize: 15
+  }
 });
