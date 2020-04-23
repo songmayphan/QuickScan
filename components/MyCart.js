@@ -11,10 +11,12 @@ import Checkout from "./Checkout";
 //redux
 import { useSelector, useDispatch } from "react-redux";
 import { TouchableOpacity } from "react-native-gesture-handler";
-const MyCart = ({navigation}) => {
+const MyCart = () => {
   //redux:
-  const items = useSelector(state => state.cart);
-  
+  const items = useSelector(state => state.cartReducer);
+  console.log("------------mycart----------------");
+  //console.log(typeof(items))
+  console.log(JSON.stringify(items));
   
 
   //render barcode
@@ -24,9 +26,7 @@ const MyCart = ({navigation}) => {
     console.log("MyCart.js finshished rendering");
   }, []);
 
-  console.log("------------mycart----------------");
-  //console.log(typeof(items))
-  console.log(JSON.stringify(items));
+ 
   let totalPrice = 0;
 
   for (let i = 0; i < items.length; i++) {

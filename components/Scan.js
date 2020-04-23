@@ -15,7 +15,7 @@ import {
 
 //redux
 import { useSelector, useDispatch } from 'react-redux'
-import {addItem} from '../redux/ducks'
+import {addItem} from '../redux/cart/actions'
 const Scan = () => {
   //inintial states----------------------------------------------
 
@@ -36,7 +36,7 @@ const Scan = () => {
   const [foundItem, setfoundItem] = useState(false);
 
 //reedux
-const items = useSelector(state => state.cart)
+const items = useSelector(state => state.cartReducer)
 const dispatch = useDispatch()
 const add_item = item => dispatch(addItem(item))
 
