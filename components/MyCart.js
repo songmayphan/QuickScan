@@ -24,31 +24,10 @@ const MyCart = ({navigation}) => {
     console.log("MyCart.js finshished rendering");
   }, []);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
- 
-  //console.log(typeof(items))
-  console.log(JSON.stringify(items));
-  let totalPrice = 0;
-=======
-export function addItem(item) {
-  console.log(`duckssssss addtocart ${item.NAME}`)
-return {
-  type: ADD_ITEM,
-  //id: Math.random(),
-  name: item.NAME,
-  price: item.PRICE,
-  id: item._id,
-  quantity: 1
-};
-}
->>>>>>> 615044581c94d0ec430ae9d4bc84d33a1e2a7122
-=======
   console.log("------------mycart----------------");
   //console.log(typeof(items))
   console.log(JSON.stringify(items));
   let totalPrice = 0;
->>>>>>> 042ddb8834c552e22a04c72c0e824c460824ff30
 
   for (let i = 0; i < items.length; i++) {
     totalPrice += items[i].price * items[i].quantity;
