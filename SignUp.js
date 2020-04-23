@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TextInput, Button, Image, Alert } from 'react-n
 import Dialog, { DialogContent } from 'react-native-popup-dialog'
 
 import { Auth } from 'aws-amplify';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 export default function SignUpPage() {
@@ -133,13 +134,15 @@ export default function SignUpPage() {
         placeholder='name'
         />
 
-        <Button 
-          color= '#FFFF'
+        <TouchableOpacity 
           
+          style = {styles.btn}
           fontWeight= 'bold'
-          title='sign up' 
+          
           onPress={signUp}
-        />
+        >
+          <Text style={styles.text}>Sign Up </Text>
+        </TouchableOpacity>
 
 
         <TextInput
@@ -149,12 +152,15 @@ export default function SignUpPage() {
           placeholder='code'
         />
 
-        <Button 
+<TouchableOpacity 
           
-          color= '#FFFF'
-          title='confirm sign up' 
+          style = {styles.btn}
+          fontWeight= 'bold'
+          
           onPress={confirmSignUp}
-        />
+        >
+          <Text style={styles.text}>Confirm sign up </Text>
+        </TouchableOpacity>
 
       </View>
     );
@@ -179,6 +185,17 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
 
 
+  },
+  text: {
+    textAlign: 'center', 
+          textAlignVertical: 'center', color: '#FFFF', 
+          fontWeight: 'bold' 
+  },
+  btn: {
+    backgroundColor: "#bdc667",margin: 5, 
+          color: 'yellow', borderWidth: 1, borderColor: '#2196F3', 
+          height: 50, width: 140, alignSelf: 'center', 
+          justifyContent: 'center', borderRadius: 6
   },
   container: {
     flex: 1,
