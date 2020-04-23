@@ -20,13 +20,16 @@ function listReducer (state = initList, action){
         ];
 
       case DELETE_FROM_LIST:
-        return [
+        return (
           state.filter((item) => {
             console.log(action.id._id, item._id);
 
             return item._id != action.id._id;
-          }),
-        ];
+          })
+
+        );
+          
+          
       //action.id is stil undefined because the id is different in 2 stores
       //we might need to use UPC instead to delete
 
