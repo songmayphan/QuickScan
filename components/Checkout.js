@@ -48,7 +48,7 @@ const Checkout = (total) => {
       });
   }
   //posting the barcode
-  //postBarcode(barcodeID, roundedTotal);
+  postBarcode(barcodeID, roundedTotal);
 
   //function to print receipts: 
   // function printReceipt(items){
