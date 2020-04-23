@@ -1,38 +1,30 @@
-//action types
+import React, { useEffect, useState } from "react";
+import { StyleSheet, Text, View, FlatList } from "react-native"
 
-export const ADD_ITEM = "ADD_ITEM";
-export const DELETE_ITEM = "DELETE_ITEM";
-export const CHANGE_QUANTITY = "CHANGE_QUANTITY";
-export const ADD_TO_LIST ="ADD_TO_LIST";
-export const DELETE_FROM_LIST = "DELETE_FROM_LIST";
+//components
+import Header from "./Header";
+import ListItem from "./ListItem";
+import Checkout from "./Checkout";
 
 
-//create actions
 
-//LIST actions======================================================================
-export function addToList(item) {
-  console.log(`duckssssss addtoList ${item.NAME}`)
-    return {
-      type: ADD_TO_LIST,
-      name: item.NAME,
-      price: item.PRICE,
-      manufacturer: item.MANUFACTURER,
-      id: item._id,
-      UPC: item.UPC,
-      quantity: 1
-    };
-  }
-  //IMPORTTANT!!! CALL THIS FUNCTION TO DELETE FROM LIST
-  export function deleteFromList(id) {
-    console.log(`duckssssss ${id}`)
-      return {
-        type: DELETE_FROM_LIST,
-        id: id,
-      };
-    }
+//redux
+import { useSelector, useDispatch } from "react-redux";
+import { TouchableOpacity } from "react-native-gesture-handler";
+const MyCart = ({navigation}) => {
+  //redux:
+  const items = useSelector(state => state.cart);
+  
+  
 
-//CART actyions========================================================================
+  //render barcode
+  const [isDone, setisDone] = useState(false);
+ 
+  useEffect(() => {
+    console.log("MyCart.js finshished rendering");
+  }, []);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
  
   //console.log(typeof(items))
@@ -51,97 +43,111 @@ return {
 };
 }
 >>>>>>> 615044581c94d0ec430ae9d4bc84d33a1e2a7122
+=======
+  console.log("------------mycart----------------");
+  //console.log(typeof(items))
+  console.log(JSON.stringify(items));
+  let totalPrice = 0;
+>>>>>>> 042ddb8834c552e22a04c72c0e824c460824ff30
 
-export function deleteItem(id) {
-console.log(`duckssssss ${id}`)
-  return {
-    type: DELETE_ITEM,
-    id: id,
+  for (let i = 0; i < items.length; i++) {
+    totalPrice += items[i].price * items[i].quantity;
+  }
+
+  
+  //listEmptycomponent
+
+  const ListEmptyView = () => {
+   
+    return (
+      <View>
+        <Text style={styles.input}>
+        Your cart is empty. {"\n"}
+          Scan item to add to cart
+        </Text>
+      </View>
+    );
   };
-}
-
-export function changeQuantity(quantity, id, price) {
-console.log(`duckssssss quantity ${quantity}`)
-  return {
-    type: CHANGE_QUANTITY,
-    quantity: quantity,
-    id: id,
-    price: price,
-    //total: quantity * price
-  };
-}
-
-//reducer===============================================================
-const initState = {
-  cart: [],
-  list: []
-}
+  //======================Returns=======================================
+  return (
+    <View style={styles.container}>
   
 
-function itemReducer(state = initState, action) {
-  switch (action.type) {
-    //CART REDUCERS
-    
-    case ADD_ITEM:
-      console.log(`typeof state.cart is ${typeof(state.cart)}`)
-      return {
-        cart: [...state.cart, 
-          {
-          id: action.id,
-          name: action.name,
-          price: action.price,
-          quantity: 1
-          }
-        ]
-        
-      };
+      {!isDone &&(
+        <View style={styles.container}>
+         <Header title="My Cart" />
+
+         
+           <FlatList
+             data={items}
+             renderItem={({ item }) => <ListItem item={item} />}
+             keyExtractor={(item, index) => index.toString()}
+             ListEmptyComponent={ListEmptyView}
+           />
+           <Text style={styles.text}>
+               TOTAL PRICE:   ${totalPrice.toFixed(2)}
+             </Text>
+             <TouchableOpacity
+            style={styles.btn_done}
+            onPress={() => {
+              setisDone(true);
+              
+            }}
+          >
+            <Text style={styles.btnText}> Checkout </Text>
+          </TouchableOpacity>
+          </View>
+      )}
       
-    case DELETE_ITEM:
-      const itemID = action.id;
-      return {
-        cart:  state.cart.filter(item => item.id !== itemID)
-      }
-    
-    case CHANGE_QUANTITY:
-      let item = state.cart.find(item => item.id == action.id);
-      //let newCart = state.filter(item => item.id != action.payload);
-      item.quantity = action.quantity;
-      return {cart: [...state.cart]};
 
-      //LIST REDUCERS=====================================================
+      {isDone && (
+       <Checkout total={totalPrice}/>
+      ) }
+    </View>
+  );
+}; //end mycart
 
-      case ADD_TO_LIST:
-       
-        return {
-          
-          list: [ ...state.list,
-              {
-                _id: action.id,
-                name: action.name,
-                manufacturer: action.manufacturer,
-                quantity: 1
+export default MyCart;
 
-              }
-          ]
-            
-        };
-      case DELETE_FROM_LIST:
-        return {
-          list: state.list.filter(item =>{ 
-            console.log(action.id._id, item._id)
+//===================Styles===============================================
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    fontWeight: "bold",
+    fontSize: 10,
+    height: 35,
+    padding: 5,
+    margin: 2,
+    textAlign: "center", 
+    marginBottom: 10
+  },
 
-           return item._id != action.id._id
-          }
-            )
-        }
-        //action.id is stil undefined because the id is different in 2 stores
-        //we might need to use UPC instead to delete
-
-
-        
-    default:
-      return state;
-  }
-}
-
-export default itemReducer;
+  input: {
+    height: 80,
+    padding: 10,
+    margin: 5,
+    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  btn_done: {
+    backgroundColor: "#D00000",
+    padding: 15,
+    margin: 10,
+    marginLeft: 10,
+    borderRadius: 10,
+  },
+  text: {
+    height: 80,
+    padding: 10,
+    margin: 5,
+    textAlign: "left",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  btnText: {
+    color: "#ffffff",
+    fontSize: 20,
+    textAlign: "center",
+  },
+});
