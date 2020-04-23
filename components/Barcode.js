@@ -208,10 +208,10 @@ function Barcode({ value, options }) {
     // format: "auto",
     displayValue: true,
     fontOptions: 'bold',
-<<<<<<< HEAD
-=======
+
+
     font: 'Roboto',
->>>>>>> 149155e91412e520afc01f597a438a91bfbf8c03
+
     text: '',
     textAlign: 'center',
     textPosition: 'bottom',

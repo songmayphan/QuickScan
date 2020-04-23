@@ -54,10 +54,10 @@ function cartReducer(state = initCart, action) {
         case DELETE_ITEM:
           const itemID = action.id;
           return(
-            [
+            
                 state.filter(item => item.id !== itemID)
 
-            ]   
+             
             );
           
         //change quan---------------------------------------
