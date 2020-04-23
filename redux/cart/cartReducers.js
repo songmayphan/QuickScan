@@ -38,7 +38,7 @@ function cartReducer(state = initCart, action) {
          else {
           console.log("no duplicate items")
          return(
-            [...state.cart, 
+            [...state, 
               {
               id: action.id,
               name: action.name,
@@ -65,7 +65,7 @@ function cartReducer(state = initCart, action) {
           let item = state.find(item => item.id == action.id);
           //let newCart = state.filter(item => item.id != action.payload);
           item.quantity = action.quantity;
-          return ([...state.cart]);
+          return ([...state]);
 
         default:
             return [...state]
