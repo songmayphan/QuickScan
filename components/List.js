@@ -12,11 +12,13 @@ import { SearchBar } from "react-native-elements";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
-import { addToList } from "../redux/ducks";
+import { addToList } from "../redux/list/actions";
+
 
 export default function List({ navigation }) {
 
-  const itemsInList = useSelector(state => state.list);
+  const itemsInList = useSelector(state => state.listReducer);
+  
   console.log(`items in list as of now (state.list) ${JSON.stringify(itemsInList)}`)
 
   ////////////////LOCALSTATE////////////////////
@@ -28,7 +30,7 @@ export default function List({ navigation }) {
 
   //Data has all the items in the stores,
   //redux with hooks 
-  const items = useSelector(state => state.list)
+  const items = useSelector(state => state)
   const dispatch = useDispatch();
 
 

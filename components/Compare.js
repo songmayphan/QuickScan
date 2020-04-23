@@ -4,7 +4,7 @@ import NumericInput from 'react-native-numeric-input'
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
-import { deleteFromList } from '../redux/ducks';
+import { deleteFromList } from '../redux/list/actions';
 
 export default function Compare() {
 
@@ -20,7 +20,7 @@ export default function Compare() {
   /////////////STATE MGMT WITH REDUX//////////////// 
 
   // retrieve list
-  const items = useSelector(state => state.list)
+  const items = useSelector(state => state.listReducer)
   const dispatch = useDispatch();
   //IMPORTTANT!!! CALL THIS FUNCTION TO DELETE FROM LIST
   const delete_item = (id) => dispatch(deleteFromList(id));

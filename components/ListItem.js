@@ -9,7 +9,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import NumericInput from "react-native-numeric-input";
 import { useSelector, useDispatch } from "react-redux";
-import { addItem, deleteItem, changeQuantity, changeTotal } from "../redux/ducks";
+import { addItem, deleteItem, changeQuantity } from "../redux/cart/actions";
 
 const ListItem = ({ item }) => {
   //const [quantity, setQuantity] = useState(1); //default quantity is 1
